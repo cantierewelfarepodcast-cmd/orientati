@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cantiere del Welfare — Orientati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --text: #1A1A18;
+  --text-muted: #6B6B65;
+  --accent: #2B4C3F;
+  --accent-light: #E8F0ED;
+  --border: #E2DDD6;
+  --sc-bg: #EDE8F5;
+  --sc-c: #3A1A5C;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Karla', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 17px; }
+
+header { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 100; }
+
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+.step { display: none; } .step.active { display: block; }
+
+.hero { padding: 1.5rem 0 2.5rem; text-align: center; }
+.hero-claim { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: 10px; }
+
+.temi { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 2rem 0; }
+.tema-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; cursor: pointer; text-align: left; transition: all 0.2s; display: flex; flex-direction: column; min-height: 140px; }
+.tema-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+.tema-btn.selected { border: 3px solid var(--accent); background: var(--accent-light); }
+.tema-btn .tl { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.tema-btn .ts { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+.btn-vai { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 1rem 2.5rem; font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer; display: block; margin: 2rem auto; }
+.btn-vai:disabled { opacity: 0.3; }
+
+.sez { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.sez-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 2px solid var(--accent-light); padding-bottom: 5px; }
+.sez-header h3 { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); }
+
+.card { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.card:last-child { border-bottom: none; }
+.card-title { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.card-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
+.card-link { font-weight: 700; color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+
+/* LAYOUT SCARICABILI */
+.scard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.scard { background: var(--sc-bg); border-radius: 10px; padding: 1.2rem; display: flex; flex-direction: column; gap: 8px; }
+.scard .card-title { color: var(--sc-c); font-size: 1rem; }
+.scard .card-desc { color: #5a4a7a; font-size: 0.85rem; }
+.scard .card-link { color: var(--sc-c); font-weight: 700; text-decoration: none; font-size: 0.85rem; }
+
+@media (max-width: 680px) { .temi { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:1rem;max-width:900px;margin:0 auto;">
+    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" style="height:35px;">
+    <span style="font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;">Il Cantiere del Welfare</span>
+  </div>
+</header>
+
+<main>
+
+<div class="step active" id="step-tema">
+  <div class="hero">
+    <h1 class="hero-claim">Un ecosistema editoriale per chi lavora nel welfare.</h1>
+  </div>
+  <div class="temi">
+    <button class="tema-btn" data-tema="nonAutosufficienza"><div class="tl">Non autosufficienza</div><div class="ts">Anziani, RSA e domiciliarità.</div></button>
+    <button class="tema-btn" data-tema="coprogettazione"><div class="tl">Co-progettazione e terzo settore</div><div class="ts">ETS, cooperative e sussidiarietà.</div></button>
+    <button class="tema-btn" data-tema="innovazione"><div class="tl">Innovazione e futuro</div><div class="ts">Welfare generativo e impresa sociale.</div></button>
+    <button class="tema-btn" data-tema="strumenti"><div class="tl">Strumenti e governance</div><div class="ts">Piani di zona e programmazione.</div></button>
+    <button class="tema-btn" data-tema="demografia"><div class="tl">Demografia e disuguaglianze</div><div class="ts">Povertà e sfide demografiche.</div></button>
+    <button class="tema-btn" data-tema="giovani"><div class="tl">Giovani e futuro</div><div class="ts">Generazioni e partecipazione.</div></button>
+    <button class="tema-btn" data-tema="cultura"><div class="tl">Luoghi, cultura e cura</div><div class="ts">Welfare culturale e spazi ibridi.</div></button>
+  </div>
+  <button class="btn-vai" id="btn-vai" disabled>Mostrami i contenuti →</button>
+</div>
+
+<div class="step" id="step-contenuti">
+  <div style="display:flex; justify-content:space-between; margin-bottom:2rem;">
+    <h2 id="tema-titolo" style="font-family:'Inter'; font-size:1.8rem; color:var(--accent);"></h2>
+    <button onclick="location.reload()" style="cursor:pointer; padding:5px 12px; border-radius:5px; border:1px solid var(--border);">← cambia tema</button>
+  </div>
+
+  <div class="sez" id="sez-sc" style="display:none">
+    <div class="sez-header"><h3>Scaricabili</h3><span id="count-sc" style="font-size:0.8rem; color:var(--text-muted);"></span></div>
+    <div id="cards-sc" class="scard-grid"></div>
+  </div>
+
+  <div class="sez">
+    <div class="sez-header"><h3>Articoli</h3><span id="count-art"></span></div>
+    <div id="cards-art"></div>
+  </div>
+  <div class="sez">
+    <div class="sez-header"><h3>Podcast</h3><span id="count-pod"></span></div>
+    <div id="cards-pod"></div>
+  </div>
+  <div class="sez">
+    <div class="sez-header"><h3>Newsletter</h3><span id="count-nl"></span></div>
+    <div id="cards-nl"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+const CF = 'https://hidden-credit-a674.cantierewelfare-podcast.workers.dev/?url=';
+const WP = 'https://www.ilcantierewelfare.it/feed/';
+const POD = 'https://anchor.fm/s/1096ce4cc/podcast/rss';
+const POD_PAGE = 'https://www.ilcantierewelfare.it/podcast-cantiere-welfare/';
+
+const temi = {
+  nonAutosufficienza: { titolo: 'Non autosufficienza', kw: ['autosufficienza','anzian','rsa','domiciliar','caregiver','riforma','invecchiam','cura'] },
+  coprogettazione: { titolo: 'Co-progettazione e terzo settore', kw: ['coprogettazione','terzo settore','cooperativ','ets','sussidiarietà'] },
+  innovazione: { titolo: 'Innovazione e futuro', kw: ['innovazione','generativ','impresa sociale','pnrr','sperimentazione'] },
+  demografia: { titolo: 'Demografia e disuguaglianze', kw: ['demograf','disuguaglian','povertà','invecchiamento'] },
+  strumenti: { titolo: 'Strumenti e governance', kw: ['governance','piano di zona','ambito','programmazione','lep'] },
+  giovani: { titolo: 'Giovani e futuro', kw: ['giovan','generazione','neet'] },
+  cultura: { titolo: 'Luoghi, cultura e cura', kw: ['cultura','arte','ibridi','comunità'] }
+};
+
+// RIPRISTINO DATABASE SCARICABILI DAL TUO FILE ORIGINALE
+const scaricabili = {
+  coprogettazione: [
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  innovazione: [
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Materiali e trascrizione completa.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  strumenti: [
+    { titolo:'Senza Padroni n.1 — La libertà come infrastruttura sociale', desc:'Riflessione sul welfare territoriale.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
+    { titolo:'Senza Padroni n.2 — La libertà come potere di contestazione', desc:'Philip Pettit e la dominazione.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf' }
+  ]
+};
+
+const newsletter = [
+  { n:25, titolo:'Cosa rimane quando il progetto finisce?', link:'https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-cflef/', kw:['innovazione','progetto'] },
+  { n:17, titolo:'L\'economia della cura invisibile', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-xi1af/', kw:['cura','anzian','autosufficienza'] },
+  { n:14, titolo:'Abitare la longevità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-bkjof/', kw:['longevit','anzian','autosufficienza'] }
+];
+
+let wpCache = [], podCache = [], selectedTema = null;
+
+document.querySelectorAll('.tema-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedTema = btn.dataset.tema;
+    document.getElementById('btn-vai').disabled = false;
+  });
+});
+
+document.getElementById('btn-vai').addEventListener('click', async () => {
+  document.getElementById('tema-titolo').textContent = temi[selectedTema].titolo;
+  document.getElementById('step-tema').classList.remove('active');
+  document.getElementById('step-contenuti').classList.add('active');
+  await loadAndRender();
+});
+
+async function fetchFeed(url) {
+  try {
+    const res = await fetch(CF + encodeURIComponent(url));
+    const txt = await res.text();
+    const xml = new DOMParser().parseFromString(txt, 'application/xml');
+    return Array.from(xml.querySelectorAll('item')).map(i => ({
+      title: i.querySelector('title')?.textContent||'',
+      link: i.querySelector('link')?.textContent||'',
+      description: i.querySelector('description')?.textContent||'',
+      categories: Array.from(i.querySelectorAll('category')).map(c=>c.textContent.toLowerCase())
+    }));
+  } catch(e) { return []; }
+}
+
+async function loadAndRender() {
+  const kw = temi[selectedTema].kw;
+  if (!wpCache.length || !podCache.length) {
+    [wpCache, podCache] = await Promise.all([fetchFeed(WP), fetchFeed(POD)]);
+  }
+
+  // LOGICA SCARICABILI
+  const sc = scaricabili[selectedTema] || [];
+  const scEl = document.getElementById('sez-sc');
+  if(sc.length) {
+    scEl.style.display = 'block';
+    document.getElementById('count-sc').textContent = sc.length;
+    document.getElementById('cards-sc').innerHTML = sc.map(s => `
+      <div class="scard">
+        <div class="card-title">${s.titolo}</div>
+        <div class="card-desc">${s.desc}</div>
+        <a class="card-link" href="${s.link}" target="_blank">Scarica PDF →</a>
+      </div>
+    `).join('');
+  } else { scEl.style.display = 'none'; }
+
+  const art = wpCache.filter(i => !i.categories.includes('podcast') && !i.categories.includes('newsletter') && kw.some(k => (i.title+i.description).toLowerCase().includes(k)));
+  renderSez('cards-art', 'count-art', art.map(i => ({ titolo: i.title, desc: i.description.replace(/<[^>]*>?/gm, '').substring(0, 150)+'...', link: i.link })), 'Leggi articolo');
+
+  const pod = podCache.filter(i => kw.some(k => (i.title+i.description).toLowerCase().includes(k)));
+  renderSez('cards-pod', 'count-pod', pod.map(i => ({ titolo: i.title, desc: i.description.replace(/<[^>]*>?/gm, '').substring(0, 150)+'...', link: POD_PAGE })), 'Ascolta podcast');
+
+  const nl = newsletter.filter(n => kw.some(k => (n.titolo+n.kw.join(' ')).toLowerCase().includes(k)));
+  renderSez('cards-nl', 'count-nl', nl.map(n => ({ titolo: `#${n.n} — ${n.titolo}`, link: n.link })), 'Leggi su LinkedIn');
+}
+
+function renderSez(id, countId, items, label) {
+  const el = document.getElementById(id);
+  document.getElementById(countId).textContent = items.length;
+  if(!items.length) { el.innerHTML = '<p style="color:#999; padding:10px 0;">Nessun contenuto.</p>'; return; }
+  el.innerHTML = items.map(i => `<div class="card"><div class="card-title">${i.titolo}</div><div class="card-desc">${i.desc || ''}</div><a class="card-link" href="${i.link}" target="_blank">${label} →</a></div>`).join('');
+}
+</script>
+</body>
+</html>
