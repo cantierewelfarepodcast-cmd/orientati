@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cantiere del Welfare — Orientati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --text: #1A1A18;
+  --text-muted: #6B6B65;
+  --accent: #2B4C3F;
+  --border: #E2DDD6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Karla', sans-serif; font-size: 17px; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+/* HEADER CON LOGO E TITOLO */
+header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+.header-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 1.5rem; }
+.site-logo { height: 50px; width: auto; }
+
+main { max-width: 1300px; margin: 0 auto; padding: 2rem 1.5rem; }
+.step { display: none; } .step.active { display: block; }
+
+.hero { padding-bottom: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.hero-claim { font-family: 'Inter'; font-size: 1.8rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+
+/* GRIGLIA TEMI */
+.temi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 2rem 0; }
+.tema-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; cursor: pointer; text-align: left; min-height: 150px; transition: 0.2s; }
+.tema-btn.selected { border: 3px solid var(--accent); }
+.tema-btn .tl { font-family: 'Inter'; font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.tema-btn .ts { font-size: 0.9rem; color: var(--text-muted); }
+
+.btn-vai { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 1rem 2.5rem; font-family: 'Inter'; font-weight: 700; cursor: pointer; font-size: 1.1rem; }
+.btn-vai:disabled { opacity: 0.3; }
+
+/* RISULTATI: UNA SOTTO L'ALTRA (NO COLONNE) */
+.percorso-top { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.sez { margin-bottom: 3rem; }
+.sez-header { font-family: 'Inter'; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; letter-spacing: 1px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; display: flex; gap: 20px; align-items: flex-start; }
+.card-img { width: 150px; height: 100px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #eee; }
+.card-content { flex: 1; }
+.card-title { font-family: 'Inter'; font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; color: var(--text); line-height: 1.3; }
+.card-excerpt { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-link { color: var(--accent); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+
+@media (max-width: 1024px) { .temi { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .temi { grid-template-columns: 1fr; } .card { flex-direction: column; } .card-img { width: 100%; height: 180px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" class="site-logo" alt="Logo">
+    <div style="font-family:'Inter'; font-weight:700; font-size:1.3rem;">Il Cantiere del Welfare</div>
+  </div>
+</header>
+
+<main>
+  <div class="step active" id="step-tema">
+    <div class="hero">
+      <p class="hero-claim">Un ecosistema editoriale per chi lavora nel welfare.</p>
+      <p style="color:var(--text-muted)">Scegli un'area per esplorare tutti i contenuti di Davide Vairani.</p>
+    </div>
+    <div class="temi">
+      <button class="tema-btn" data-tema="nonAutosufficienza"><div class="tl">Non autosufficienza</div><div class="ts">Anziani, disabilità, RSA e domiciliarità. Riforma e lavoro di cura.</div></button>
+      <button class="tema-btn" data-tema="coprogettazione"><div class="tl">Co-progettazione e terzo settore</div><div class="ts">ETS, cooperative e sussidiarietà. Modelli di amministrazione condivisa.</div></button>
+      <button class="tema-btn" data-tema="innovazione"><div class="tl">Innovazione e futuro</div><div class="ts">Welfare generativo, nuovi modelli sperimentali e impatto del PNRR.</div></button>
+      <button class="tema-btn" data-tema="demografia"><div class="tl">Demografia e disuguaglianze</div><div class="ts">Invecchiamento, denatalità e divari territoriali.</div></button>
+      <button class="tema-btn" data-tema="strumenti"><div class="tl">Strumenti e governance</div><div class="ts">Piani di zona, LEP e programmazione sociale nella PA.</div></button>
+      <button class="tema-btn" data-tema="giovani"><div class="tl">Giovani e partecipazione</div><div class="ts">Nuove generazioni, lavoro e scenari di cittadinanza attiva.</div></button>
+      <button class="tema-btn" data-tema="cultura"><div class="tl">Luoghi, cultura e cura</div><div class="ts">Welfare culturale, spazi ibridi e comunità generative.</div></button>
+    </div>
+    <button class="btn-vai" id="btn-vai" disabled>Esplora i contenuti →</button>
+  </div>
+
+  <div class="step" id="step-contenuti">
+    <div class="percorso-top">
+      <h2 id="tema-titolo" style="font-family:'Inter'; font-size:1.8rem; color:var(--accent);"></h2>
+      <button onclick="location.reload()" style="cursor:pointer; padding:8px 15px; border:1px solid var(--border); border-radius:5px; background:white; font-weight:600;">← Torna ai temi</button>
+    </div>
+    <div class="sez">
+      <div class="sez-header">Articoli e Approfondimenti</div>
+      <div id="cards-art"></div>
+    </div>
+    <div class="sez" id="sez-sc" style="display:none">
+      <div class="sez-header">Documenti PDF Scaricabili</div>
+      <div id="cards-sc"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const CF = 'https://hidden-credit-a674.cantierewelfare-podcast.workers.dev/?url=';
+const WP = 'https://www.ilcantierewelfare.it/feed/';
+const LOGO_BACKUP = 'https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png';
+
+const temi = {
+  nonAutosufficienza: { kw: ['autosufficienza','anzian','rsa','caregiver','domiciliar','disabilit','riforma'] },
+  coprogettazione: { kw: ['coprogettazione','co-progettazione','terzo settore','cooperativ','sussidiarietà'] },
+  innovazione: { kw: ['innovazione','generativ','sperimentazione','pnrr','rigenerazione'] },
+  demografia: { kw: ['demograf','invecchiam','disuguaglian','povertà','denatalità'] },
+  strumenti: { kw: ['governance','piano di zona','programmazione','lep','ats','ambito'] },
+  giovani: { kw: ['giovan','generazione','gen z','neet','millennial'] },
+  cultura: { kw: ['cultura','arte','ibridi','spazi','comunità','luoghi'] }
+};
+
+const scaricabili = {
+  coprogettazione: [{ titolo:'Tracce n.1', desc:'Il welfare come infrastruttura generativa.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }],
+  strumenti: [
+    { titolo:'Senza Padroni n.1', desc:'La libertà come infrastruttura sociale.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
+    { titolo:'Senza Padroni n.2', desc:'La libertà come potere di contestazione.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf' }
+  ]
+};
+
+let selected = null;
+document.querySelectorAll('.tema-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selected = btn.dataset.tema;
+    document.getElementById('btn-vai').disabled = false;
+  });
+});
+
+document.getElementById('btn-vai').addEventListener('click', async () => {
+  const btn = document.querySelector('.tema-btn.selected');
+  document.getElementById('tema-titolo').textContent = btn.querySelector('.tl').textContent;
+  document.getElementById('step-tema').classList.remove('active');
+  document.getElementById('step-contenuti').classList.add('active');
+  await load(temi[selected].kw);
+});
+
+async function load(kw) {
+  const artEl = document.getElementById('cards-art');
+  artEl.innerHTML = "Caricamento contenuti...";
+  
+  try {
+    const res = await fetch(CF + encodeURIComponent(WP));
+    const txt = await res.text();
+    const xml = new DOMParser().parseFromString(txt, 'application/xml');
+    const items = Array.from(xml.querySelectorAll('item'));
+
+    const filtered = items.filter(i => {
+      const content = (i.querySelector('title').textContent + i.querySelector('description').textContent).toLowerCase();
+      return kw.some(k => content.includes(k.toLowerCase()));
+    });
+
+    artEl.innerHTML = filtered.map(i => {
+      const title = i.querySelector('title').textContent;
+      const link = i.querySelector('link').textContent;
+      const desc = i.querySelector('description').textContent;
+      
+      const tmp = document.createElement('div');
+      tmp.innerHTML = desc;
+      const text = tmp.textContent || tmp.innerText || "";
+      
+      let img = LOGO_BACKUP;
+      const match = desc.match(/<img[^>]+src=["']([^"']+)["']/);
+      if (match) img = match[1];
+
+      return `
+        <div class="card">
+          <img src="${img}" class="card-img" onerror="this.src='${LOGO_BACKUP}'">
+          <div class="card-content">
+            <div class="card-title">${title}</div>
+            <div class="card-excerpt">${text}</div>
+            <a href="${link}" target="_blank" class="card-link">Leggi l'articolo →</a>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const sc = scaricabili[selected] || [];
+    const scSez = document.getElementById('sez-sc');
+    if(sc.length) {
+      scSez.style.display = 'block';
+      document.getElementById('cards-sc').innerHTML = sc.map(s => `
+        <div class="card">
+          <div class="card-content">
+            <div class="card-title">${s.titolo}</div>
+            <div class="card-excerpt">${s.desc}</div>
+            <a href="${s.link}" target="_blank" class="card-link">Scarica PDF →</a>
+          </div>
+        </div>
+      `).join('');
+    } else { scSez.style.display = 'none'; }
+
+  } catch(e) { artEl.innerHTML = "Errore nel caricamento."; }
+}
+</script>
+</body>
+</html>
