@@ -21,90 +21,149 @@
   --nl-c: #5C3A1A;  --nl-bg: #F5EDE3;
   --sc-c: #3A1A5C;  --sc-bg: #EDE8F5;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Karla', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-header { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+body { 
+  font-family: 'Karla', sans-serif; 
+  font-size: 17px; /* Settaggio font Karla 17 richiesto */
+  background: var(--bg); 
+  color: var(--text); 
+  min-height: 100vh; 
+  line-height: 1.6;
+}
 
-main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
-.step { display: none; } .step.active { display: block; }
+header { 
+  padding: 1.25rem 2rem; 
+  border-bottom: 1px solid var(--border); 
+  background: var(--surface); 
+}
+
+.header-container {
+  max-width: 1300px; /* Allineamento larghezza sito */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-logo {
+  height: 40px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+main { 
+  max-width: 1300px; /* Struttura 1300px coerente */
+  margin: 0 auto; 
+  padding: 2rem 1.5rem; 
+}
+
+.step { display: none; } 
+.step.active { display: block; }
 
 .hero { padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1.75rem; }
-.hero-claim { font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: .625rem; max-width: 560px; }
-.hero-sub { font-family: 'Karla', sans-serif; font-size: 1rem; color: var(--text-muted); font-weight: 400; max-width: 480px; line-height: 1.6; }
+.hero-claim { font-family: 'Inter', sans-serif; font-size: 1.6rem; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: .625rem; max-width: 800px; }
+.hero-sub { font-size: 1.05rem; color: var(--text-muted); max-width: 700px; }
 
-.step-label { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: .75rem; }
-.step-question { font-family: 'DM Serif Display', serif; font-size: 1.65rem; font-weight: 400; line-height: 1.3; margin-bottom: .5rem; }
-.step-sub { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; margin-bottom: 1.75rem; max-width: 480px; }
+.step-label { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: .75rem; }
+.step-question { font-family: 'Inter', sans-serif; font-size: 1.65rem; font-weight: 700; line-height: 1.3; margin-bottom: .5rem; }
+.step-sub { font-size: 1rem; color: var(--text-muted); margin-bottom: 1.75rem; max-width: 600px; }
 
-.temi { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 1.5rem; }
-.tema-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; text-align: left; transition: all 0.15s; display: flex; flex-direction: column; min-height: 110px; }
-.tema-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+/* Griglia Temi */
+.temi { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px; 
+  margin-bottom: 2rem; 
+}
+
+.tema-btn { 
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: 10px; 
+  padding: 1.25rem; 
+  cursor: pointer; 
+  text-align: left; 
+  transition: all 0.2s; 
+  display: flex; 
+  flex-direction: column; 
+  min-height: 140px; 
+}
+.tema-btn:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 .tema-btn.selected { border: 2px solid var(--accent); background: var(--accent-light); }
-.tema-btn .tl { font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 700; color: var(--text); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-.tema-btn .ts { font-family: 'Karla', sans-serif; font-size: 0.825rem; color: var(--text-muted); font-weight: 400; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tema-btn .tl { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.tema-btn .ts { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
 
-.btn-vai { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 0.7rem 1.4rem; font-size: 0.875rem; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; transition: opacity 0.15s; }
+.btn-vai { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 1rem 2rem; font-size: 1rem; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; }
 .btn-vai:disabled { opacity: 0.35; cursor: not-allowed; }
-.btn-vai:not(:disabled):hover { opacity: 0.85; }
 
-/* PERCORSO */
-.percorso-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
-.percorso-top h2 { font-family: 'Inter', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: .35rem; }
-.percorso-top p { font-family: 'Karla', sans-serif; font-size: 0.875rem; color: var(--text-muted); font-weight: 400; max-width: 460px; }
-.btn-back { font-size: 0.78rem; color: var(--text-muted); background: none; border: 1px solid var(--border); border-radius: 5px; padding: 5px 11px; cursor: pointer; font-family: 'Karla', sans-serif; font-weight: 500; white-space: nowrap; }
-.btn-back:hover { color: var(--text); border-color: var(--text-muted); }
+/* FIX PERCORSO E DESCRIZIONE */
+.percorso-top { 
+  display: flex; 
+  align-items: flex-start; 
+  justify-content: space-between; 
+  margin-bottom: 2rem; 
+  gap: 2rem; 
+}
+.percorso-top-info { flex: 1; }
 
-/* SEZIONI ORIZZONTALI */
-.sez { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-.sez-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .625rem; border-bottom: 1px solid var(--border); }
-.sez-header h3 { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-.sez-count { font-size: 0.68rem; color: var(--text-faint); }
+.percorso-top h2 { font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: .5rem; color: var(--accent); }
+#tema-desc { 
+  font-size: 1.1rem; 
+  color: var(--text-muted); 
+  max-width: 900px !important; /* Correzione: ora il testo respira correttamente */
+  line-height: 1.6;
+}
 
-/* CARDS ORIZZONTALI */
-.cards-list { display: flex; flex-direction: column; gap: 0; }
-.card { padding: .75rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
-.card:last-child { border-bottom: none; padding-bottom: 0; }
-.card-img { width: 72px; height: 52px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: var(--bg); }
-.card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.card-title { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.4; }
-.card-desc { font-family: 'Karla', sans-serif; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; font-weight: 400; }
-.card-link { font-family: 'Karla', sans-serif; font-size: 0.78rem; color: var(--accent); text-decoration: none; font-weight: 600; }
-.card-link:hover { text-decoration: underline; }
+.btn-back { font-size: 0.85rem; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: 8px 16px; cursor: pointer; font-weight: 600; }
+
+/* SEZIONI CONTENUTI */
+.sez { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.sez-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: .75rem; border-bottom: 1px solid var(--border); }
+.sez-header h3 { font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+
+.cards-list { display: flex; flex-direction: column; }
+.card { padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; }
+.card:last-child { border-bottom: none; }
+.card-img { width: 120px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: var(--bg); }
+.card-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.card-title { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+.card-desc { font-size: 0.95rem; color: var(--text-muted); }
+.card-link { font-size: 0.9rem; color: var(--accent); text-decoration: none; font-weight: 700; margin-top: 4px; }
 
 /* SCARICABILI */
-.scard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-.scard { background: var(--sc-bg); border-radius: 8px; padding: .875rem; display: flex; flex-direction: column; gap: 6px; }
-.scard .card-title { color: var(--sc-c); font-size: 0.82rem; }
-.scard .card-desc { color: #5a4a7a; font-size: 0.8rem; }
-.scard .card-link { color: var(--sc-c); }
+.scard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+.scard { background: var(--sc-bg); border-radius: 8px; padding: 1.25rem; border-left: 4px solid var(--sc-c); }
 
-.empty { font-size: 0.78rem; color: var(--text-faint); font-style: italic; padding: .5rem 0; }
-.loading { font-size: 0.78rem; color: var(--text-faint); font-style: italic; }
-.status { font-size: 0.7rem; color: var(--text-faint); margin-bottom: 1rem; font-style: italic; }
+footer { text-align: center; padding: 3rem; font-size: 0.9rem; color: var(--text-faint); border-top: 1px solid var(--border); margin-top: 3rem; }
 
-.footer-links { margin-top: 1.25rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
-.footer-links a { color: var(--accent); font-weight: 500; text-decoration: none; }
-.footer-links a:hover { text-decoration: underline; }
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .temi { grid-template-columns: repeat(2, 1fr); }
+  .percorso-top { flex-direction: column; }
+}
 
-footer { text-align: center; padding: 1.25rem; font-family: 'Karla', sans-serif; font-size: 0.8rem; color: var(--text-faint); border-top: 1px solid var(--border); margin-top: 2rem; font-weight: 400; }
-footer a { color: var(--accent); text-decoration: none; }
-
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .temi { grid-template-columns: 1fr; }
-  .step-question { font-size: 1.35rem; }
-  main { padding: 1.25rem 1rem; }
-  header { padding: 1rem; }
-  .sez { padding: 1rem; }
+  .header-container { justify-content: center; flex-direction: column; text-align: center; }
+  .hero-claim { font-size: 1.3rem; }
+  main { padding: 1rem; }
+  .card { flex-direction: column; }
+  .card-img { width: 100%; height: 180px; }
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div style="display:flex;align-items:center;gap:1.25rem;">
-    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare" style="height:36px;display:block;">
-    <a href="https://www.ilcantierewelfare.it" target="_blank" style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;color:var(--text);text-decoration:none;">Il Cantiere del Welfare</a>
+  <div class="header-container">
+    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" 
+         alt="Logo Il Cantiere del Welfare" 
+         class="site-logo"
+         onerror="this.style.display='none'"> 
+    <a href="https://www.ilcantierewelfare.it" target="_blank" style="font-family:'Inter',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none;">Il Cantiere del Welfare</a>
   </div>
 </header>
 
@@ -113,99 +172,87 @@ footer a { color: var(--accent); text-decoration: none; }
 <div class="step active" id="step-tema">
   <div class="hero">
     <p class="hero-claim">Un ecosistema editoriale per chi lavora nel welfare e vuole pensare, non solo informarsi.</p>
-    <p class="hero-sub">Scegli un tema per orientarti tra podcast, articoli, newsletter e scaricabili. Un progetto di <a href="https://www.ilcantierewelfare.it/chi-sono/" target="_blank" style="color:var(--accent);font-weight:600;">Davide Vairani</a>.</p>
+    <p class="hero-sub">Scegli un tema per orientarti tra podcast, articoli, newsletter e scaricabili. Un progetto di <a href="https://www.ilcantierewelfare.it/chi-sono/" target="_blank" style="color:var(--accent);font-weight:600; text-decoration: none;">Davide Vairani</a>.</p>
   </div>
 
   <div class="step-label">Scegli un tema</div>
-  <div class="step-question" style="font-size:1.3rem;margin-bottom:.5rem">Cosa ti interessa esplorare?</div>
-  <div class="step-sub">Trova articoli, podcast, newsletter e scaricabili selezionati per tema.</div>
+  <div class="step-question">Cosa ti interessa esplorare?</div>
+  <div class="step-sub">Seleziona l'area tematica per visualizzare i contenuti filtrati.</div>
+  
   <div class="temi">
     <button class="tema-btn" data-tema="nonAutosufficienza">
       <div class="tl">Non autosufficienza</div>
-      <div class="ts">Anziani, disabilità, RSA e domiciliarità. Riforma della non autosufficienza e lavoro di cura.</div>
+      <div class="ts">Anziani, disabilità, RSA e domiciliarità. Riforma e lavoro di cura.</div>
     </button>
     <button class="tema-btn" data-tema="coprogettazione">
       <div class="tl">Co-progettazione e terzo settore</div>
-      <div class="ts">ETS, cooperative, appalti e sussidiarietà. Welfare aziendale e relazioni pubblico-privato.</div>
+      <div class="ts">ETS, cooperative, appalti e sussidiarietà. Welfare aziendale.</div>
     </button>
     <button class="tema-btn" data-tema="innovazione">
-      <div class="tl">Innovazione e futuro del welfare</div>
-      <div class="ts">Welfare generativo, impresa sociale e sperimentazione. Nuovi modelli e scenari futuri.</div>
+      <div class="tl">Innovazione e futuro</div>
+      <div class="ts">Welfare generativo, impresa sociale e nuovi modelli sperimentali.</div>
     </button>
     <button class="tema-btn" data-tema="demografia">
       <div class="tl">Demografia e disuguaglianze</div>
-      <div class="ts">Invecchiamento, immigrazione, genere e povertà. Divari territoriali e sfide demografiche.</div>
+      <div class="ts">Invecchiamento, immigrazione, povertà e divari territoriali.</div>
     </button>
     <button class="tema-btn" data-tema="strumenti">
       <div class="tl">Strumenti e governance</div>
-      <div class="ts">Piani di zona, ambiti, LEP e programmazione. Pubblica amministrazione e gestione associata.</div>
+      <div class="ts">Piani di zona, ambiti, LEP e programmazione PA.</div>
     </button>
     <button class="tema-btn" data-tema="giovani">
-      <div class="tl">Giovani e futuro</div>
-      <div class="ts">Generazioni, Gen Z, lavoro e partecipazione. Prospettive demografiche e scenari futuri.</div>
+      <div class="tl">Giovani e partecipazione</div>
+      <div class="ts">Generazioni, Gen Z, lavoro e nuovi scenari di cittadinanza.</div>
     </button>
     <button class="tema-btn" data-tema="cultura">
       <div class="tl">Luoghi, cultura e cura</div>
-      <div class="ts">Welfare culturale, prescrizione sociale e spazi ibridi. Impresa culturale e comunità generative.</div>
+      <div class="ts">Welfare culturale, spazi ibridi e comunità generative.</div>
     </button>
   </div>
-  <button class="btn-vai" id="btn-vai" disabled>Mostrami i contenuti →</button>
+  <button class="btn-vai" id="btn-vai" disabled>Esplora i contenuti →</button>
 </div>
 
 <div class="step" id="step-contenuti">
   <div class="percorso-top">
-    <div>
+    <div class="percorso-top-info">
       <h2 id="tema-titolo"></h2>
       <p id="tema-desc"></p>
     </div>
-    <button class="btn-back" id="btn-back">← cambia tema</button>
+    <button class="btn-back" id="btn-back">← Cambia tema</button>
   </div>
-  <div class="status" id="status"></div>
+  
+  <div class="status" id="status" style="margin-bottom: 1rem; font-style: italic; color: var(--text-faint);"></div>
 
-  <!-- Articoli -->
   <div class="sez">
     <div class="sez-header">
-      <h3>Articoli</h3>
+      <h3>Articoli scelti</h3>
       <span class="sez-count" id="count-art"></span>
     </div>
-    <div class="cards-list" id="cards-art"><div class="loading">Caricamento...</div></div>
+    <div class="cards-list" id="cards-art"><div class="loading">Ricerca in corso...</div></div>
   </div>
 
-  <!-- Podcast -->
   <div class="sez">
     <div class="sez-header">
-      <h3>Podcast</h3>
+      <h3>Podcast correlati</h3>
       <span class="sez-count" id="count-pod"></span>
     </div>
-    <div class="cards-list" id="cards-pod"><div class="loading">Caricamento...</div></div>
+    <div class="cards-list" id="cards-pod"></div>
   </div>
 
-  <!-- Newsletter -->
   <div class="sez">
     <div class="sez-header">
-      <h3>Newsletter</h3>
+      <h3>Newsletter Approfondimenti</h3>
       <span class="sez-count" id="count-nl"></span>
     </div>
-    <div class="cards-list" id="cards-nl"><div class="loading">Caricamento...</div></div>
+    <div class="cards-list" id="cards-nl"></div>
   </div>
 
-  <!-- Scaricabili -->
   <div class="sez" id="sez-sc" style="display:none">
     <div class="sez-header">
-      <h3>Scaricabili</h3>
+      <h3>Documenti Scaricabili</h3>
       <span class="sez-count" id="count-sc"></span>
     </div>
     <div class="scard-grid" id="cards-sc"></div>
-  </div>
-
-  <div class="footer-links">
-    Esplora tutto su <a href="https://www.ilcantierewelfare.it" target="_blank">ilcantierewelfare.it</a> &middot;
-    Ascolta su
-    <a href="https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0" target="_blank">Spotify</a>,
-    <a href="https://podcasts.apple.com/us/podcast/il-cantiere-del-welfare/id1841063269" target="_blank">Apple Podcast</a>,
-    <a href="https://music.amazon.it/podcasts/b5be0bb0-460a-4be5-bb61-edf9b07f7a2c/il-cantiere-del-welfare" target="_blank">Amazon Music</a>,
-    <a href="https://www.youtube.com/@cantieredelwelfare" target="_blank">YouTube</a> &middot;
-    Newsletter su <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7380841439028535296" target="_blank">LinkedIn</a>
   </div>
 </div>
 
@@ -220,37 +267,37 @@ const POD_PAGE = 'https://www.ilcantierewelfare.it/podcast-cantiere-welfare/';
 const temi = {
   nonAutosufficienza: {
     titolo: 'Non autosufficienza',
-    desc: 'Anziani, disabilità, RSA e domiciliarità. Riforma della non autosufficienza e lavoro di cura.',
+    desc: 'Esplora le sfide legate all’invecchiamento della popolazione, la gestione delle RSA, la domiciliarità e la recente riforma della non autosufficienza per un nuovo lavoro di cura.',
     kw: ['autosufficienza','anzian','rsa','domiciliar','badant','ltc','disabilit','cura','caregiver','riforma','residenzial','lombardia','invecchiam','spendiamo','vivere a lungo','dlgs 29','prestazione universale','progetto di vita','longevit']
   },
   coprogettazione: {
     titolo: 'Co-progettazione e terzo settore',
-    desc: 'ETS, cooperative, appalti e sussidiarietà. Welfare aziendale e relazioni pubblico-privato.',
+    desc: 'Approfondimenti sul Codice del Terzo Settore, l’amministrazione condivisa, i modelli di sussidiarietà e l’evoluzione delle cooperative sociali nel rapporto con la PA.',
     kw: ['co-progettazione','coprogettazione','terzo settore','cooperativ','ets','sussidiarietà','appalti','gara','affidamento','welfare aziendale','impresa sociale','economia sociale','codice del terzo settore','welfare in gara','contratto sociale','zandonai','venturi','maino']
   },
   innovazione: {
     titolo: 'Innovazione e futuro del welfare',
-    desc: 'Welfare generativo, impresa sociale e sperimentazione. Nuovi modelli e scenari futuri.',
+    desc: 'Verso un welfare generativo: analisi dei nuovi modelli di intervento, l’impatto del PNRR, la rigenerazione sociale e le sperimentazioni nei laboratori territoriali.',
     kw: ['innovazione','welfare generativ','impresa sociale','secondo welfare','ecosistem','sperimentazione','pnrr','rigenerazione','will','laboratorio','nuovo modello','neuro','behavioural','kublai','ctrl+z','328','infrastruttura','generativ','apprendimento istituzionale']
   },
   demografia: {
     titolo: 'Demografia e disuguaglianze',
-    desc: 'Invecchiamento, immigrazione, genere e povertà. Divari territoriali e sfide demografiche.',
+    desc: 'L’analisi dei mutamenti demografici, la denatalità, i flussi migratori e le crescenti disuguaglianze di genere e territoriali che sfidano la tenuta del sistema sociale.',
     kw: ['demograf','disuguaglian','immigrazione','genere','povertà','invecchiamento','denatalità','territorio','divario','migrant','donna','gender','asiatico','volontariato','classe','spendiamo','vivere a lungo','economia sociale è donna','cura invisibile']
   },
   strumenti: {
     titolo: 'Strumenti e governance',
-    desc: 'Piani di zona, ambiti, LEP e programmazione. Pubblica amministrazione e gestione associata.',
+    desc: 'Strumenti tecnici per la programmazione sociale: Piani di Zona, Ambienti Territoriali, definizione dei LEP e modelli di gestione associata dei servizi.',
     kw: ['governance','piano di zona','ambito','programmazione','lep','riforma','bilancio','comune','pubblica amministrazione','gestione associata','ats','distrett','ctrl+z','328','welfare in gara','neuro public','pa di prossimità','facilitare','cambiamento','servizi','collaborazione']
   },
   giovani: {
     titolo: 'Giovani e futuro',
-    desc: 'Generazioni, Gen Z, lavoro e partecipazione. Prospettive demografiche e scenari futuri.',
+    desc: 'Le nuove generazioni al centro: dalla Gen Z ai Millennial, analizzando il mercato del lavoro, la partecipazione civile e le prospettive di futuro in un Paese che invecchia.',
     kw: ['giovan','generazione','gen z','millennial','futuro','lavoro','neet','demografico','partecipazione','scuola','under','scomparsa','rosina','pierantoni','alfa','beta gen','secolo delle generazioni']
   },
   cultura: {
     titolo: 'Luoghi, cultura e cura',
-    desc: 'Welfare culturale, prescrizione sociale dell\'arte, spazi ibridi e impresa culturale.',
+    desc: 'Il welfare culturale come risorsa di salute: spazi ibridi, community hub, prescrizione sociale dell’arte e il ruolo della cultura nella rigenerazione delle comunità.',
     kw: ['cultura','welfare culturale','prescrizione','arte','spazi ibridi','ibridi','community hub','casa di quartiere','ecosistemi','impresa culturale','luoghi','cura','generativit','censis','non spettatori','partecipazione culturale']
   }
 };
@@ -283,14 +330,14 @@ const newsletter = [
 const scaricabili = {
   nonAutosufficienza: [],
   coprogettazione: [
-    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai su programmazione, sistemi integrati e apprendimento istituzionale. Con trascrizione completa della puntata.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai su programmazione e sistemi integrati.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
   ],
   innovazione: [
-    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai. Materiali, riferimenti bibliografici e trascrizione completa.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai. Materiali e riferimenti bibliografici.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
   ],
   demografia: [],
   strumenti: [
-    { titolo:'Senza Padroni n.1 — La libertà come infrastruttura sociale', desc:'Riflessione sul concetto di libertà come fondamento del welfare territoriale.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
+    { titolo:'Senza Padroni n.1 — La libertà come infrastruttura sociale', desc:'Riflessione sulla libertà come fondamento del welfare territoriale.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
     { titolo:'Senza Padroni n.2 — La libertà come potere di contestazione', desc:'Philip Pettit e la differenza tra subire un\'interferenza e vivere in stato di dominazione.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf' }
   ],
   giovani: [],
@@ -299,14 +346,11 @@ const scaricabili = {
 
 const articoliEsterni = {
   innovazione: [
-    { titolo: "Intelligenza artificiale e welfare sociale in Italia", desc: "Una mappa per livelli tra applicazioni esistenti, criticità strutturali e piste di sviluppo. Pubblicato su DiCultHer.", link: "https://www.diculther.it/rivista/intelligenza-artificiale-e-welfare-sociale-in-italiauna-mappa-per-livelli-tra-applicazioni-esistenti-criticita-strutturali-e-piste-di-sviluppo/" },
+    { titolo: "Intelligenza artificiale e welfare sociale in Italia", desc: "Una mappa tra applicazioni esistenti e piste di sviluppo. Pubblicato su DiCultHer.", link: "https://www.diculther.it/rivista/intelligenza-artificiale-e-welfare-sociale-in-italiauna-mappa-per-livelli-tra-applicazioni-esistenti-criticita-strutturali-e-piste-di-sviluppo/" },
   ],
   cultura: [
-    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-4-900x453.jpg", titolo: "L'arte come prescrizione sociale: l'Italia compie il grande passo", desc: "Il Protocollo d'intesa MiC-Salute sulla prescrizione sociale dell'arte: da sperimentazione a diritto esigibile.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/larte-come-prescrizione-sociale-litalia-compie-il-grande-passo/" },
-    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-3.jpg", titolo: "Censis 2025: la generatività come risposta al declino del desiderio di futuro", desc: "Il welfare familista italiano e il passaggio alla generatività sociale e al welfare culturale.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/censis-2025-la-generativita-come-risposta-al-declino-del-desiderio-di-futuro/" },
-    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-1.jpg", titolo: "Non spettatori: giovani in cerca di futuro", desc: "Come cambia la partecipazione generazionale e cosa può fare la cultura per intercettarla.", link: "https://www.agenziacult.it/letture-lente/politiche-per-la-cultura/non-spettatori-giovani-in-cerca-di-futuro/" },
-    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover.jpg", titolo: "Ecosistemi ibridi: traiettorie culturali per l'impresa sociale del futuro", desc: "Il ruolo delle imprese sociali nella produzione culturale: community hub, laboratori sociali e case di quartiere.", link: "https://www.agenziacult.it/letture-lente/politiche-per-la-cultura/ecosistemi-ibridi-traiettorie-culturali-per-limpresa-sociale-del-futuro/" },
-    { titolo: "Valutazione di impatto sociale: rendere visibile il cambiamento", desc: "Dalla misurazione degli output alla misurazione degli outcome e del valore co-prodotto.", link: "https://www.agenziacult.it/notiziario/valutazione-di-impatto-sociale-rendere-visibile-il-cambiamento/" },
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-4-900x453.jpg", titolo: "L'arte come prescrizione sociale: l'Italia compie il grande passo", desc: "Il Protocollo d'intesa MiC-Salute sulla prescrizione sociale dell'arte.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/larte-come-prescrizione-sociale-litalia-compie-il-grande-passo/" },
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-3.jpg", titolo: "Censis 2025: la generatività come risposta al declino", desc: "Il welfare familista italiano e il passaggio alla generatività sociale.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/censis-2025-la-generativita-come-risposta-al-declino-del-desiderio-di-futuro/" },
   ]
 };
 
@@ -328,12 +372,14 @@ document.getElementById('btn-vai').addEventListener('click', async () => {
   document.getElementById('tema-desc').textContent = t.desc;
   document.getElementById('step-tema').classList.remove('active');
   document.getElementById('step-contenuti').classList.add('active');
+  window.scrollTo(0,0);
   await loadAndRender();
 });
 
 document.getElementById('btn-back').addEventListener('click', () => {
   document.getElementById('step-contenuti').classList.remove('active');
   document.getElementById('step-tema').classList.add('active');
+  window.scrollTo(0,0);
 });
 
 function strip(html) {
@@ -400,7 +446,6 @@ async function loadAndRender() {
   }
   document.getElementById('status').textContent = '';
 
-  // Articoli
   let art;
   if (articoliEsterni[selectedTema] && articoliEsterni[selectedTema].length) {
     const wpArt = wpCache
@@ -423,13 +468,11 @@ async function loadAndRender() {
       .map(i => ({ titolo: i.title, desc: trunc(i.description, 110), link: i.link, img: i.img||'' }));
   }
 
-  // Podcast
   const pod = podCache
     .filter(i => matches(i.title+' '+strip(i.description), kw))
     .slice(0,4)
     .map(i => ({ titolo: i.title, desc: trunc(i.description, 110), link: POD_PAGE }));
 
-  // Newsletter
   const nl = newsletter
     .filter(n => matches(n.titolo+' '+n.kw.join(' '), kw))
     .slice(0,4)
@@ -439,7 +482,6 @@ async function loadAndRender() {
   renderSez('cards-pod', 'count-pod', pod, 'Ascolta la puntata', false);
   renderSez('cards-nl',  'count-nl',  nl,  'Leggi su LinkedIn', false);
 
-  // Scaricabili
   const sc = scaricabili[selectedTema] || [];
   const scEl = document.getElementById('sez-sc');
   if (sc.length) {
