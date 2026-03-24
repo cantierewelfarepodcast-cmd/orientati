@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cantiere del Welfare — Orientati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --text: #1A1A18;
+    --text-muted: #6B6B65;
+    --text-faint: #9E9E96;
+    --accent: #2B4C3F;
+    --accent-light: #E8F0ED;
+    --border: #E2DDD6;
+    --podcast-color: #1A3A5C;
+    --podcast-bg: #EBF1F8;
+    --articolo-color: #2B4C3F;
+    --articolo-bg: #E8F0ED;
+    --newsletter-color: #5C3A1A;
+    --newsletter-bg: #F5EDE3;
+    --scaricabile-color: #3A1A5C;
+    --scaricabile-bg: #EDE8F5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  header span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .step-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: .875rem;
+  }
+
+  .step-question {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: .625rem;
+    max-width: 540px;
+  }
+
+  .step-sub {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 1.75rem;
+    max-width: 480px;
+  }
+
+  .temi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+
+  .tema-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.125rem 1.125rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+
+  .tema-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tema-btn.selected {
+    border: 2px solid var(--accent);
+    background: var(--accent-light);
+  }
+
+  .tema-btn .tl {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .tema-btn .ts {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.45;
+  }
+
+  .btn-vai {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .btn-vai:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-vai:not(:disabled):hover { opacity: 0.85; }
+
+  /* STEP 2 */
+  .percorso-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .percorso-top h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: .25rem;
+  }
+
+  .percorso-top p {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 460px;
+  }
+
+  .btn-back {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-back:hover { color: var(--text); border-color: var(--text-muted); }
+
+  .sezione { margin-bottom: 2rem; }
+
+  .sezione-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: .875rem;
+    padding-bottom: .625rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sezione-header h3 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .sezione-count {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    font-weight: 300;
+  }
+
+  .cards { display: flex; flex-direction: column; gap: 8px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.125rem;
+    transition: border-color 0.12s;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .card:hover { border-color: var(--text-faint); }
+
+  .card-body { flex: 1; min-width: 0; }
+
+  .card-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-weight: 300;
+    margin-bottom: .5rem;
+  }
+
+  .card-link {
+    font-size: 0.775rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .card-link:hover { text-decoration: underline; }
+
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .tag-podcast { background: var(--podcast-bg); color: var(--podcast-color); }
+  .tag-articolo { background: var(--articolo-bg); color: var(--articolo-color); }
+  .tag-newsletter { background: var(--newsletter-bg); color: var(--newsletter-color); }
+  .tag-scaricabile { background: var(--scaricabile-bg); color: var(--scaricabile-color); }
+
+  .empty {
+    font-size: 0.825rem;
+    color: var(--text-faint);
+    font-style: italic;
+    padding: .5rem 0;
+  }
+
+  .loading {
+    font-size: 0.825rem;
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  .status {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    border-top: 1px solid var(--border);
+    font-weight: 300;
+    margin-top: 2rem;
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 520px) {
+    .temi { grid-template-columns: 1fr; }
+    .step-question { font-size: 1.4rem; }
+    main { padding: 1.5rem 1rem; }
+    header { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Il Cantiere del Welfare</h1>
+  <span>Orientati</span>
+</header>
+
+<main>
+
+  <!-- STEP 1: SCELTA TEMA -->
+  <div class="step active" id="step-tema">
+    <div class="step-label">Percorso personalizzato</div>
+    <div class="step-question">Cosa ti interessa esplorare?</div>
+    <div class="step-sub">Scegli un tema per trovare articoli, podcast, newsletter e scaricabili selezionati.</div>
+
+    <div class="temi">
+      <button class="tema-btn" data-tema="nonAutosufficienza">
+        <div class="tl">Non autosufficienza</div>
+        <div class="ts">Anziani, disabilità, RSA, domiciliarità, riforma e lavoro di cura</div>
+      </button>
+      <button class="tema-btn" data-tema="coprogettazione">
+        <div class="tl">Co-progettazione e terzo settore</div>
+        <div class="ts">ETS, cooperative, appalti, sussidiarietà e welfare aziendale</div>
+      </button>
+      <button class="tema-btn" data-tema="innovazione">
+        <div class="tl">Innovazione e futuro del welfare</div>
+        <div class="ts">Welfare generativo, impresa sociale, sperimentazione e nuovi modelli</div>
+      </button>
+      <button class="tema-btn" data-tema="demografia">
+        <div class="tl">Demografia e disuguaglianze</div>
+        <div class="ts">Invecchiamento, immigrazione, genere, povertà e divari territoriali</div>
+      </button>
+      <button class="tema-btn" data-tema="strumenti">
+        <div class="tl">Strumenti e governance</div>
+        <div class="ts">Piani di zona, ambiti, LEP, programmazione e pubblica amministrazione</div>
+      </button>
+      <button class="tema-btn" data-tema="giovani">
+        <div class="tl">Giovani e futuro</div>
+        <div class="ts">Generazioni, Gen Z, lavoro, partecipazione e prospettive demografiche</div>
+      </button>
+    </div>
+
+    <button class="btn-vai" id="btn-vai" disabled>Mostrami i contenuti →</button>
+  </div>
+
+  <!-- STEP 2: CONTENUTI PER TEMA -->
+  <div class="step" id="step-contenuti">
+    <div class="percorso-top">
+      <div>
+        <h2 id="tema-titolo"></h2>
+        <p id="tema-desc"></p>
+      </div>
+      <button class="btn-back" id="btn-back">← cambia tema</button>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div class="sezione" id="sez-articoli">
+      <div class="sezione-header">
+        <h3>Articoli</h3>
+        <span class="sezione-count" id="count-articoli"></span>
+      </div>
+      <div class="cards" id="cards-articoli"></div>
+    </div>
+
+    <div class="sezione" id="sez-podcast">
+      <div class="sezione-header">
+        <h3>Podcast</h3>
+        <span class="sezione-count" id="count-podcast"></span>
+      </div>
+      <div class="cards" id="cards-podcast"></div>
+    </div>
+
+    <div class="sezione" id="sez-newsletter">
+      <div class="sezione-header">
+        <h3>Newsletter</h3>
+        <span class="sezione-count" id="count-newsletter"></span>
+      </div>
+      <div class="cards" id="cards-newsletter"></div>
+    </div>
+
+    <div class="sezione" id="sez-scaricabili">
+      <div class="sezione-header">
+        <h3>Scaricabili</h3>
+        <span class="sezione-count" id="count-scaricabili"></span>
+      </div>
+      <div class="cards" id="cards-scaricabili"></div>
+    </div>
+
+    <div style="margin-top:1.5rem;font-size:0.825rem;color:var(--text-muted);font-weight:300;">
+      Esplora tutto su <a href="https://www.ilcantierewelfare.it" target="_blank" style="color:var(--accent);font-weight:500;">ilcantierewelfare.it</a> · Ascolta il podcast su <a href="https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0" target="_blank" style="color:var(--accent);font-weight:500;">Spotify</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <a href="https://www.ilcantierewelfare.it">Il Cantiere del Welfare</a> · Davide Vairani
+</footer>
+
+<script>
+const CF_WORKER = 'https://hidden-credit-a674.cantierewelfare-podcast.workers.dev/?url=';
+const WP_FEED = 'https://www.ilcantierewelfare.it/feed/';
+const POD_FEED = 'https://anchor.fm/s/1096ce4cc/podcast/rss';
+const SPOTIFY_SHOW = 'https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0';
+
+const temi = {
+  nonAutosufficienza: {
+    titolo: 'Non autosufficienza',
+    desc: 'Anziani, disabilità, RSA, domiciliarità, riforma e lavoro di cura.',
+    keywords: ['autosufficienza', 'anzian', 'rsa', 'domiciliar', 'badant', 'ltc', 'disabilit', 'cura', 'caregiver', 'riforma', 'non autosufficienza', 'residenzial', 'lombardia', 'invecchiam', 'spendiamo', 'vivere a lungo', 'dlgs 29', 'prestazione universale']
+  },
+  coprogettazione: {
+    titolo: 'Co-progettazione e terzo settore',
+    desc: 'ETS, cooperative, appalti, sussidiarietà e welfare aziendale.',
+    keywords: ['co-progettazione', 'coprogettazione', 'terzo settore', 'cooperativ', 'ets', 'sussidiarietà', 'appalti', 'gara', 'affidamento', 'welfare aziendale', 'impresa sociale', 'economia sociale', 'codice del terzo settore', 'welfare in gara', 'contratto sociale']
+  },
+  innovazione: {
+    titolo: 'Innovazione e futuro del welfare',
+    desc: 'Welfare generativo, impresa sociale, sperimentazione e nuovi modelli.',
+    keywords: ['innovazione', 'welfare generativ', 'impresa sociale', 'secondo welfare', 'ecosistem', 'sperimentazione', 'pnrr', 'rigenerazione', 'will', 'progetto', 'laboratorio', 'nuovo modello', 'neuro', 'behavioural', 'kublai', 'ctrl+z', '328']
+  },
+  demografia: {
+    titolo: 'Demografia e disuguaglianze',
+    desc: 'Invecchiamento, immigrazione, genere, povertà e divari territoriali.',
+    keywords: ['demograf', 'disuguaglian', 'immigrazione', 'genere', 'povertà', 'invecchiamento', 'denatalità', 'territorio', 'divario', 'migrant', 'donna', 'gender', 'asiatico', 'volontariato', 'classe', 'spendiamo', 'vivere a lungo', 'economia sociale è donna']
+  },
+  strumenti: {
+    titolo: 'Strumenti e governance',
+    desc: 'Piani di zona, ambiti, LEP, programmazione e pubblica amministrazione.',
+    keywords: ['governance', 'piano di zona', 'ambito', 'programmazione', 'lep', 'riforma', 'bilancio', 'comune', 'pa ', 'pubblica amministrazione', 'gestione associata', 'ats', 'distrett', 'ctrl+z', '328', 'welfare in gara', 'neuro public']
+  },
+  giovani: {
+    titolo: 'Giovani e futuro',
+    desc: 'Generazioni, Gen Z, lavoro, partecipazione e prospettive demografiche.',
+    keywords: ['giovan', 'generazione', 'gen z', 'millennial', 'futuro', 'lavoro', 'neet', 'demografico', 'partecipazione', 'scuola', 'under', 'scomparsa', 'rosina', 'pierantoni', 'alfa', 'beta gen']
+  }
+};
+
+const scaricabili = {
+  nonAutosufficienza: [],
+  coprogettazione: [
+    { titolo: 'Tracce n.1 — Il welfare come infrastruttura generativa', desc: 'Una conversazione con Flaviano Zandonai su programmazione, sistemi integrati e apprendimento istituzionale. Con trascrizione completa della puntata.', link: 'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  innovazione: [
+    { titolo: 'Tracce n.1 — Il welfare come infrastruttura generativa', desc: 'Una conversazione con Flaviano Zandonai su programmazione, sistemi integrati e apprendimento istituzionale.', link: 'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  demografia: [],
+  strumenti: [
+    { titolo: 'Senza Padroni n.1 — La libertà come infrastruttura sociale', desc: 'Riflessione sul concetto di libertà come fondamento del welfare. Una rubrica settimanale tra filosofia e welfare.', link: 'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
+    { titolo: 'Senza Padroni n.2 — La libertà come potere di contestazione', desc: 'Philip Pettit e la differenza tra subire un\'interferenza e vivere in uno stato di dominazione.', link: 'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf' }
+  ],
+  giovani: []
+};
+
+const newsletterManuale = [
+  { titolo: 'Le Fondamenta #25 — Cosa rimane quando il progetto finisce?', desc: 'Spunti dal progetto WILL e dalla conversazione con Marcella Messina sul ciclo dell\'innovazione nel welfare.', link: 'https://www.ilcantierewelfare.it/newsletter/', keywords: ['will', 'progetto', 'innovazione', 'sperimentazione', 'bergamo'] },
+  { titolo: 'Le Fondamenta #24 — Il welfare generativo', desc: 'Riferimenti e materiali sulla transizione verso modelli di welfare abilitante e generativo.', link: 'https://www.ilcantierewelfare.it/newsletter/', keywords: ['welfare generativ', 'modello', 'abilitante', 'innovazione'] },
+  { titolo: 'Le Fondamenta #23 — Co-programmazione: promessa o realtà?', desc: 'Analisi degli strumenti del Codice del Terzo Settore a due anni dalla riforma.', link: 'https://www.ilcantierewelfare.it/newsletter/', keywords: ['co-programmazione', 'coprogrammazione', 'terzo settore', 'codice', 'riforma'] },
+];
+
+let selectedTema = null;
+let wpItems = [];
+let podItems = [];
+
+document.querySelectorAll('.tema-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedTema = btn.dataset.tema;
+    document.getElementById('btn-vai').disabled = false;
+  });
+});
+
+document.getElementById('btn-vai').addEventListener('click', async () => {
+  const t = temi[selectedTema];
+  document.getElementById('tema-titolo').textContent = t.titolo;
+  document.getElementById('tema-desc').textContent = t.desc;
+  document.getElementById('step-tema').classList.remove('active');
+  document.getElementById('step-contenuti').classList.add('active');
+  await loadAndRender();
+});
+
+document.getElementById('btn-back').addEventListener('click', () => {
+  document.getElementById('step-contenuti').classList.remove('active');
+  document.getElementById('step-tema').classList.add('active');
+});
+
+function stripHtml(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html || '';
+  return (d.textContent || '').trim();
+}
+
+function truncate(str, n) {
+  const s = stripHtml(str);
+  return s.length > n ? s.slice(0, n).trimEnd() + '...' : s;
+}
+
+function matchesKeywords(text, keywords) {
+  const lower = text.toLowerCase();
+  return keywords.some(k => lower.includes(k.toLowerCase()));
+}
+
+async function fetchFeed(url) {
+  try {
+    const res = await fetch(CF_WORKER + encodeURIComponent(url));
+    const text = await res.text();
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, 'application/xml');
+    const items = xml.querySelectorAll('item');
+    return Array.from(items).map(item => ({
+      title: item.querySelector('title')?.textContent || '',
+      link: item.querySelector('link')?.textContent || item.querySelector('guid')?.textContent || '',
+      description: item.querySelector('description')?.textContent || '',
+      pubDate: item.querySelector('pubDate')?.textContent || '',
+      categories: Array.from(item.querySelectorAll('category')).map(c => c.textContent),
+      enclosure: item.querySelector('enclosure')?.getAttribute('url') || ''
+    }));
+  } catch(e) { return []; }
+}
+
+function renderCards(containerId, countId, items, tipo, emptyMsg) {
+  const container = document.getElementById(containerId);
+  const count = document.getElementById(countId);
+  if (items.length === 0) {
+    container.innerHTML = `<div class="empty">${emptyMsg}</div>`;
+    count.textContent = '';
+    return;
+  }
+  count.textContent = items.length + ' contenuti';
+  container.innerHTML = items.map(item => `
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">${item.titolo}</div>
+        ${item.desc ? `<div class="card-desc">${item.desc}</div>` : ''}
+        <a class="card-link" href="${item.link}" target="_blank">Vai al contenuto →</a>
+      </div>
+      <span class="tag tag-${tipo}">${tipo}</span>
+    </div>
+  `).join('');
+}
+
+async function loadAndRender() {
+  const status = document.getElementById('status');
+  const keywords = temi[selectedTema].keywords;
+
+  // Show loading
+  ['articoli','podcast','newsletter','scaricabili'].forEach(s => {
+    document.getElementById('cards-' + s).innerHTML = '<div class="loading">Caricamento...</div>';
+    document.getElementById('count-' + s).textContent = '';
+  });
+
+  // Fetch feeds if not already loaded
+  if (wpItems.length === 0 || podItems.length === 0) {
+    status.textContent = 'Caricamento contenuti dal sito...';
+    [wpItems, podItems] = await Promise.all([fetchFeed(WP_FEED), fetchFeed(POD_FEED)]);
+    status.textContent = '';
+  } else {
+    status.textContent = '';
+  }
+
+  // ARTICOLI
+  const articoli = wpItems
+    .filter(item => {
+      const isPodcast = item.categories.some(c => c.toLowerCase() === 'podcast');
+      const isNewsletter = item.categories.some(c => c.toLowerCase() === 'newsletter');
+      if (isPodcast || isNewsletter) return false;
+      const searchText = item.title + ' ' + stripHtml(item.description);
+      return matchesKeywords(searchText, keywords);
+    })
+    .slice(0, 6)
+    .map(item => ({
+      titolo: item.title,
+      desc: truncate(item.description, 120),
+      link: item.link
+    }));
+
+  // PODCAST
+  const podcast = podItems
+    .filter(item => {
+      const searchText = item.title + ' ' + stripHtml(item.description);
+      return matchesKeywords(searchText, keywords);
+    })
+    .slice(0, 4)
+    .map(item => ({
+      titolo: item.title,
+      desc: truncate(item.description, 120),
+      link: SPOTIFY_SHOW
+    }));
+
+  // NEWSLETTER
+  const newsletter = newsletterManuale
+    .filter(n => matchesKeywords(n.keywords.join(' '), keywords) || matchesKeywords(n.titolo + ' ' + n.desc, keywords))
+    .map(n => ({ titolo: n.titolo, desc: n.desc, link: n.link }));
+
+  // SCARICABILI
+  const sc = (scaricabili[selectedTema] || []).map(s => ({ titolo: s.titolo, desc: s.desc, link: s.link }));
+
+  renderCards('cards-articoli', 'count-articoli', articoli, 'articolo', 'Nessun articolo trovato per questo tema.');
+  renderCards('cards-podcast', 'count-podcast', podcast, 'podcast', 'Nessuna puntata trovata per questo tema.');
+  renderCards('cards-newsletter', 'count-newsletter', newsletter, 'newsletter', 'Nessuna newsletter trovata per questo tema.');
+  renderCards('cards-scaricabili', 'count-scaricabili', sc, 'scaricabile', 'Nessuno scaricabile disponibile per questo tema.');
+}
+</script>
+</body>
+</html>
