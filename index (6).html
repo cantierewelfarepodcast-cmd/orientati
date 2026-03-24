@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Cantiere del Welfare — Orientati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --text: #1A1A18;
+  --text-muted: #6B6B65;
+  --text-faint: #9E9E96;
+  --accent: #2B4C3F;
+  --accent-light: #E8F0ED;
+  --border: #E2DDD6;
+  --pod-c: #1A3A5C; --pod-bg: #EBF1F8;
+  --art-c: #2B4C3F; --art-bg: #E8F0ED;
+  --nl-c: #5C3A1A;  --nl-bg: #F5EDE3;
+  --sc-c: #3A1A5C;  --sc-bg: #EDE8F5;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+
+.hero { padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1.75rem; }
+.hero-claim { font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; line-height: 1.35; color: var(--text); margin-bottom: .5rem; max-width: 560px; }
+.hero-sub { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; max-width: 480px; }
+
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+.step { display: none; } .step.active { display: block; }
+
+.step-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: .75rem; }
+.step-question { font-family: 'DM Serif Display', serif; font-size: 1.65rem; font-weight: 400; line-height: 1.3; margin-bottom: .5rem; }
+.step-sub { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; margin-bottom: 1.75rem; max-width: 480px; }
+
+.temi { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.tema-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; text-align: left; transition: all 0.15s; }
+.tema-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+.tema-btn.selected { border: 2px solid var(--accent); background: var(--accent-light); }
+.tema-btn .tl { font-size: 0.875rem; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.tema-btn .ts { font-size: 0.775rem; color: var(--text-muted); font-weight: 300; line-height: 1.4; }
+
+.btn-vai { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 0.7rem 1.4rem; font-size: 0.875rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+.btn-vai:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn-vai:not(:disabled):hover { opacity: 0.85; }
+
+/* PERCORSO */
+.percorso-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+.percorso-top h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: .2rem; }
+.percorso-top p { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; max-width: 460px; }
+.btn-back { font-size: 0.78rem; color: var(--text-muted); background: none; border: 1px solid var(--border); border-radius: 5px; padding: 5px 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+.btn-back:hover { color: var(--text); border-color: var(--text-muted); }
+
+/* GRIGLIA 3 COLONNE */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 1.5rem; }
+.col { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.125rem; min-width: 0; }
+.col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: .625rem; border-bottom: 1px solid var(--border); }
+.col-header h3 { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.col-count { font-size: 0.68rem; color: var(--text-faint); }
+
+/* SCARICABILI sotto — full width */
+.scaricabili-row { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.125rem; margin-bottom: 1.5rem; }
+.scaricabili-row .col-header { margin-bottom: .875rem; }
+.scard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+
+.card { padding: .75rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-start; }
+.card:last-child { border-bottom: none; padding-bottom: 0; }
+.card-img { width: 56px; height: 42px; object-fit: cover; border-radius: 5px; flex-shrink: 0; background: var(--bg); }
+.card-body { flex: 1; min-width: 0; }
+.card-title { font-size: 0.82rem; font-weight: 500; color: var(--text); line-height: 1.4; margin-bottom: 3px; }
+.card-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.45; font-weight: 300; margin-bottom: .4rem; }
+.card-link { font-size: 0.74rem; color: var(--accent); text-decoration: none; font-weight: 500; }
+.card-link:hover { text-decoration: underline; }
+
+.scard { background: var(--sc-bg); border-radius: 8px; padding: .875rem; }
+.scard .card-title { color: var(--sc-c); }
+.scard .card-link { color: var(--sc-c); }
+
+.empty { font-size: 0.78rem; color: var(--text-faint); font-style: italic; padding: .5rem 0; }
+.loading { font-size: 0.78rem; color: var(--text-faint); font-style: italic; }
+.status { font-size: 0.7rem; color: var(--text-faint); margin-bottom: 1rem; font-style: italic; }
+
+.footer-links { margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+.footer-links a { color: var(--accent); font-weight: 500; text-decoration: none; }
+.footer-links a:hover { text-decoration: underline; }
+
+footer { text-align: center; padding: 1.25rem; font-size: 0.72rem; color: var(--text-faint); border-top: 1px solid var(--border); margin-top: 2rem; font-weight: 300; }
+footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 680px) {
+  .grid3 { grid-template-columns: 1fr; }
+  .temi { grid-template-columns: 1fr; }
+  .step-question { font-size: 1.35rem; }
+  main { padding: 1.25rem 1rem; }
+  header { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="https://www.ilcantierewelfare.it" target="_blank" class="header-logo">
+    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare" height="36">
+  </a>
+</header>
+
+<main>
+
+<div class="step active" id="step-tema">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-label">Ecosistema editoriale</div>
+      <h2 class="hero-title">Voci, strumenti e riferimenti<br>per agire il cambiamento nel welfare</h2>
+      <p class="hero-desc">Podcast, newsletter e articoli per orientarsi nelle traiettorie di cambiamento del welfare sociale territoriale italiano. Un progetto di <a href="https://www.ilcantierewelfare.it/chi-sono/" target="_blank">Davide Vairani</a>.</p>
+    </div>
+  </div>
+  <div class="step-label">Scegli un tema</div>
+  <div class="step-question" style="font-size:1.3rem;margin-bottom:.5rem">Cosa ti interessa esplorare?</div>
+  <div class="step-sub">Trova articoli, podcast, newsletter e scaricabili selezionati per tema.</div>
+  <div class="temi">
+    <button class="tema-btn" data-tema="nonAutosufficienza">
+      <div class="tl">Non autosufficienza</div>
+      <div class="ts">Anziani, disabilità, RSA, domiciliarità, riforma e lavoro di cura</div>
+    </button>
+    <button class="tema-btn" data-tema="coprogettazione">
+      <div class="tl">Co-progettazione e terzo settore</div>
+      <div class="ts">ETS, cooperative, appalti, sussidiarietà e welfare aziendale</div>
+    </button>
+    <button class="tema-btn" data-tema="innovazione">
+      <div class="tl">Innovazione e futuro del welfare</div>
+      <div class="ts">Welfare generativo, impresa sociale, sperimentazione e nuovi modelli</div>
+    </button>
+    <button class="tema-btn" data-tema="demografia">
+      <div class="tl">Demografia e disuguaglianze</div>
+      <div class="ts">Invecchiamento, immigrazione, genere, povertà e divari territoriali</div>
+    </button>
+    <button class="tema-btn" data-tema="strumenti">
+      <div class="tl">Strumenti e governance</div>
+      <div class="ts">Piani di zona, ambiti, LEP, programmazione e pubblica amministrazione</div>
+    </button>
+    <button class="tema-btn" data-tema="giovani">
+      <div class="tl">Giovani e futuro</div>
+      <div class="ts">Generazioni, Gen Z, lavoro, partecipazione e prospettive demografiche</div>
+    </button>
+    <button class="tema-btn" data-tema="cultura">
+      <div class="tl">Luoghi, cultura e cura</div>
+      <div class="ts">Welfare culturale, prescrizione sociale, spazi ibridi e impresa culturale</div>
+    </button>
+  </div>
+  <button class="btn-vai" id="btn-vai" disabled>Mostrami i contenuti →</button>
+</div>
+
+<div class="step" id="step-contenuti">
+  <div class="percorso-top">
+    <div>
+      <h2 id="tema-titolo"></h2>
+      <p id="tema-desc"></p>
+    </div>
+    <button class="btn-back" id="btn-back">← cambia tema</button>
+  </div>
+  <div class="status" id="status"></div>
+
+  <div class="grid3">
+    <div class="col">
+      <div class="col-header"><h3>Articoli</h3><span class="col-count" id="count-art"></span></div>
+      <div id="cards-art"><div class="loading">Caricamento...</div></div>
+    </div>
+    <div class="col">
+      <div class="col-header"><h3>Podcast</h3><span class="col-count" id="count-pod"></span></div>
+      <div id="cards-pod"><div class="loading">Caricamento...</div></div>
+    </div>
+    <div class="col">
+      <div class="col-header"><h3>Newsletter</h3><span class="col-count" id="count-nl"></span></div>
+      <div id="cards-nl"><div class="loading">Caricamento...</div></div>
+    </div>
+  </div>
+
+  <div class="scaricabili-row" id="sez-sc" style="display:none">
+    <div class="col-header"><h3>Scaricabili</h3><span class="col-count" id="count-sc"></span></div>
+    <div class="scard-grid" id="cards-sc"></div>
+  </div>
+
+  <div class="footer-links">
+    Esplora tutto su <a href="https://www.ilcantierewelfare.it" target="_blank">ilcantierewelfare.it</a> &middot;
+    Ascolta su
+    <a href="https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0" target="_blank">Spotify</a>,
+    <a href="https://podcasts.apple.com/us/podcast/il-cantiere-del-welfare/id1841063269" target="_blank">Apple Podcast</a>,
+    <a href="https://music.amazon.it/podcasts/b5be0bb0-460a-4be5-bb61-edf9b07f7a2c/il-cantiere-del-welfare" target="_blank">Amazon Music</a>,
+    <a href="https://www.youtube.com/@cantieredelwelfare" target="_blank">YouTube</a> &middot;
+    Newsletter su <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7380841439028535296" target="_blank">LinkedIn</a>
+  </div>
+</div>
+
+</main>
+
+<footer><a href="https://www.ilcantierewelfare.it">Il Cantiere del Welfare</a> · Davide Vairani</footer>
+
+<script>
+const CF = 'https://hidden-credit-a674.cantierewelfare-podcast.workers.dev/?url=';
+const WP = 'https://www.ilcantierewelfare.it/feed/';
+const POD = 'https://anchor.fm/s/1096ce4cc/podcast/rss';
+const POD_PAGE = 'https://www.ilcantierewelfare.it/podcast-cantiere-welfare/';
+
+const temi = {
+  nonAutosufficienza: {
+    titolo: 'Non autosufficienza',
+    desc: 'Anziani, disabilità, RSA, domiciliarità, riforma e lavoro di cura.',
+    kw: ['autosufficienza','anzian','rsa','domiciliar','badant','ltc','disabilit','cura','caregiver','riforma','residenzial','lombardia','invecchiam','spendiamo','vivere a lungo','dlgs 29','prestazione universale','progetto di vita','longevit']
+  },
+  coprogettazione: {
+    titolo: 'Co-progettazione e terzo settore',
+    desc: 'ETS, cooperative, appalti, sussidiarietà e welfare aziendale.',
+    kw: ['co-progettazione','coprogettazione','terzo settore','cooperativ','ets','sussidiarietà','appalti','gara','affidamento','welfare aziendale','impresa sociale','economia sociale','codice del terzo settore','welfare in gara','contratto sociale','zandonai','venturi','maino']
+  },
+  innovazione: {
+    titolo: 'Innovazione e futuro del welfare',
+    desc: 'Welfare generativo, impresa sociale, sperimentazione e nuovi modelli.',
+    kw: ['innovazione','welfare generativ','impresa sociale','secondo welfare','ecosistem','sperimentazione','pnrr','rigenerazione','will','laboratorio','nuovo modello','neuro','behavioural','kublai','ctrl+z','328','infrastruttura','generativ','apprendimento istituzionale']
+  },
+  demografia: {
+    titolo: 'Demografia e disuguaglianze',
+    desc: 'Invecchiamento, immigrazione, genere, povertà e divari territoriali.',
+    kw: ['demograf','disuguaglian','immigrazione','genere','povertà','invecchiamento','denatalità','territorio','divario','migrant','donna','gender','asiatico','volontariato','classe','spendiamo','vivere a lungo','economia sociale è donna','cura invisibile']
+  },
+  strumenti: {
+    titolo: 'Strumenti e governance',
+    desc: 'Piani di zona, ambiti, LEP, programmazione e pubblica amministrazione.',
+    kw: ['governance','piano di zona','ambito','programmazione','lep','riforma','bilancio','comune','pubblica amministrazione','gestione associata','ats','distrett','ctrl+z','328','welfare in gara','neuro public','pa di prossimità','facilitare','cambiamento','servizi','collaborazione']
+  },
+  giovani: {
+    titolo: 'Giovani e futuro',
+    desc: 'Generazioni, Gen Z, lavoro, partecipazione e prospettive demografiche.',
+    kw: ['giovan','generazione','gen z','millennial','futuro','lavoro','neet','demografico','partecipazione','scuola','under','scomparsa','rosina','pierantoni','alfa','beta gen','secolo delle generazioni']
+  },
+  cultura: {
+    titolo: 'Luoghi, cultura e cura',
+    desc: 'Welfare culturale, prescrizione sociale dell\'arte, spazi ibridi e impresa culturale.',
+    kw: ['cultura','welfare culturale','prescrizione','arte','spazi ibridi','ibridi','community hub','casa di quartiere','ecosistemi','impresa culturale','luoghi','cura','generativit','censis','non spettatori','partecipazione culturale']
+  }
+};
+
+// Newsletter con URL diretti e keyword per tema
+const newsletter = [
+  { n:25, titolo:'Cosa rimane quando il progetto finisce?', link:'https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-cflef/', kw:['innovazione','sperimentazione','progetto','will','bergamo'] },
+  { n:24, titolo:'Il procedimento non è il prodotto', link:'https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-6m9of/', kw:['governance','procedimento','pubblica amministrazione','strumenti'] },
+  { n:23, titolo:'Fiducia, tempo e collaborazione', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-tvr5f/', kw:['collaborazione','fiducia','coprogettazione','terzo settore'] },
+  { n:22, titolo:'Case di Quartiere', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-wgosf/', kw:['comunità','quartiere','prossimità','spazi','ibridi'] },
+  { n:21, titolo:'Welfare e territorio', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-vwm7f/', kw:['territorio','welfare','governance','ambito'] },
+  { n:20, titolo:'Oltre l\'emergenza', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-vwm7f/', kw:['emergenza','innovazione','futuro','modello'] },
+  { n:19, titolo:'Essere ibridi: welfare e luoghi', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-bji0f/', kw:['ibridi','luoghi','spazi','comunità','innovazione'] },
+  { n:18, titolo:'Sviluppo di comunità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-gzfff/', kw:['comunità','sviluppo','partecipazione','territorio'] },
+  { n:17, titolo:'L\'economia della cura invisibile', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-xi1af/', kw:['cura','genere','donna','economia','badant','disuguaglian'] },
+  { n:16, titolo:'PA di prossimità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-qhzpf/', kw:['pa','prossimità','pubblica amministrazione','governance','strumenti'] },
+  { n:15, titolo:'Il Progetto di Vita', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-e9kbf/', kw:['progetto di vita','disabilit','autosufficienza','riforma'] },
+  { n:14, titolo:'Abitare la longevità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-bkjof/', kw:['longevit','anzian','invecchiam','autosufficienza','cura'] },
+  { n:13, titolo:'Le Cooperative di Comunità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-kkvbc/', kw:['cooperativ','comunità','terzo settore','impresa sociale'] },
+  { n:12, titolo:'Le Comunità di Pratica', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-drbjf/', kw:['comunità','pratica','apprendimento','innovazione','organizzazione'] },
+  { n:11, titolo:'Biblioteche di prossimità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-hscdf/', kw:['prossimità','luoghi','comunità','spazi'] },
+  { n:10, titolo:'Essere ibridi per comunità generative', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-2tisf/', kw:['ibridi','generativ','comunità','innovazione','ecosistem'] },
+  { n:9,  titolo:'PSPP: rigenerare luoghi e comunità', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-et3of/', kw:['rigenerazione','luoghi','comunità','pnrr','innovazione'] },
+  { n:8,  titolo:'L\'Eta Beta delle politiche pubbliche', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-ish9f/', kw:['politiche','pubblica amministrazione','innovazione','futuro','governance'] },
+  { n:7,  titolo:'Facilitare il cambiamento nei servizi', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-y3ikf/', kw:['cambiamento','servizi','facilitare','strumenti','governance'] },
+  { n:6,  titolo:'Fare spazio alla collaborazione', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-y3ikf/', kw:['collaborazione','spazio','coprogettazione','terzo settore'] },
+  { n:5,  titolo:'Spazi ibridi socioculturali e welfare collaborativo', link:'https://www.linkedin.com/pulse/costruire-welfare-davide-vairani-hicef/', kw:['ibridi','spazi','collaborativo','comunità','innovazione'] },
+  { n:4,  titolo:'Welfare come infrastruttura generativa', link:'https://www.linkedin.com/pulse/curatore-editoriale-il-cantiere-del-welfare-davide-vairani-nr90f/', kw:['infrastruttura','generativ','welfare','innovazione','modello'] },
+];
+
+const scaricabili = {
+  nonAutosufficienza: [],
+  coprogettazione: [
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai su programmazione, sistemi integrati e apprendimento istituzionale. Con trascrizione completa della puntata.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  innovazione: [
+    { titolo:'Tracce n.1 — Il welfare come infrastruttura generativa', desc:'Conversazione con Flaviano Zandonai. Materiali, riferimenti bibliografici e trascrizione completa.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf' }
+  ],
+  demografia: [],
+  strumenti: [
+    { titolo:'Senza Padroni n.1 — La libertà come infrastruttura sociale', desc:'Riflessione sul concetto di libertà come fondamento del welfare territoriale.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf' },
+    { titolo:'Senza Padroni n.2 — La libertà come potere di contestazione', desc:'Philip Pettit e la differenza tra subire un\'interferenza e vivere in stato di dominazione.', link:'https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf' }
+  ],
+  giovani: [],
+  cultura: []
+};
+
+// Articoli esterni per tema cultura (AgenziaCult)
+const articoliEsterni = {
+  innovazione: [
+    { titolo: "Intelligenza artificiale e welfare sociale in Italia", desc: "Una mappa per livelli tra applicazioni esistenti, criticità strutturali e piste di sviluppo. Pubblicato su DiCultHer.", link: "https://www.diculther.it/rivista/intelligenza-artificiale-e-welfare-sociale-in-italiauna-mappa-per-livelli-tra-applicazioni-esistenti-criticita-strutturali-e-piste-di-sviluppo/" },
+  ],
+  cultura: [
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-4-900x453.jpg", titolo: "L'arte come prescrizione sociale: l'Italia compie il grande passo", desc: "Il Protocollo d'intesa MiC-Salute sulla prescrizione sociale dell'arte: da sperimentazione a diritto esigibile.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/larte-come-prescrizione-sociale-litalia-compie-il-grande-passo/" },
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-3.jpg", titolo: "Censis 2025: la generatività come risposta al declino del desiderio di futuro", desc: "Il welfare familista italiano e il passaggio alla generatività sociale e al welfare culturale.", link: "https://www.agenziacult.it/letture-lente/welfare-culturale/censis-2025-la-generativita-come-risposta-al-declino-del-desiderio-di-futuro/" },
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover-1.jpg", titolo: "Non spettatori: giovani in cerca di futuro", desc: "Come cambia la partecipazione generazionale e cosa può fare la cultura per intercettarla.", link: "https://www.agenziacult.it/letture-lente/politiche-per-la-cultura/non-spettatori-giovani-in-cerca-di-futuro/" },
+    { img: "https://www.agenziacult.it/wp-content/uploads/Vairani_immagine-cover.jpg", titolo: "Ecosistemi ibridi: traiettorie culturali per l'impresa sociale del futuro", desc: "Il ruolo delle imprese sociali nella produzione culturale: community hub, laboratori sociali e case di quartiere.", link: "https://www.agenziacult.it/letture-lente/politiche-per-la-cultura/ecosistemi-ibridi-traiettorie-culturali-per-limpresa-sociale-del-futuro/" },
+    { titolo: "Valutazione di impatto sociale: rendere visibile il cambiamento", desc: "Dalla misurazione degli output alla misurazione degli outcome e del valore co-prodotto.", link: "https://www.agenziacult.it/notiziario/valutazione-di-impatto-sociale-rendere-visibile-il-cambiamento/" },
+  ]
+};
+
+let selectedTema = null;
+let wpCache = [], podCache = [];
+
+document.querySelectorAll('.tema-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tema-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedTema = btn.dataset.tema;
+    document.getElementById('btn-vai').disabled = false;
+  });
+});
+
+document.getElementById('btn-vai').addEventListener('click', async () => {
+  const t = temi[selectedTema];
+  document.getElementById('tema-titolo').textContent = t.titolo;
+  document.getElementById('tema-desc').textContent = t.desc;
+  document.getElementById('step-tema').classList.remove('active');
+  document.getElementById('step-contenuti').classList.add('active');
+  await loadAndRender();
+});
+
+document.getElementById('btn-back').addEventListener('click', () => {
+  document.getElementById('step-contenuti').classList.remove('active');
+  document.getElementById('step-tema').classList.add('active');
+});
+
+function strip(html) {
+  const d = document.createElement('div'); d.innerHTML = html || '';
+  return (d.textContent || '').trim();
+}
+function trunc(str, n) {
+  const s = strip(str);
+  return s.length > n ? s.slice(0,n).trimEnd()+'...' : s;
+}
+function matches(text, kw) {
+  const low = text.toLowerCase();
+  return kw.some(k => low.includes(k.toLowerCase()));
+}
+
+async function fetchFeed(url) {
+  try {
+    const res = await fetch(CF + encodeURIComponent(url));
+    const txt = await res.text();
+    const xml = new DOMParser().parseFromString(txt, 'application/xml');
+    return Array.from(xml.querySelectorAll('item')).map(i => {
+      // Try to extract featured image from description
+      const desc = i.querySelector('description')?.textContent || '';
+      const imgMatch = desc.match(/<img[^>]+src=["']([^"']+)["']/);
+      const img = imgMatch ? imgMatch[1] : '';
+      return {
+        title: i.querySelector('title')?.textContent||'',
+        link: i.querySelector('link')?.textContent||i.querySelector('guid')?.textContent||'',
+        description: desc,
+        pubDate: i.querySelector('pubDate')?.textContent||'',
+        categories: Array.from(i.querySelectorAll('category')).map(c=>c.textContent),
+        img: img
+      };
+    });
+  } catch(e) { return []; }
+}
+
+function renderCol(cardId, countId, items, linkLabel, showImg) {
+  const el = document.getElementById(cardId);
+  const cnt = document.getElementById(countId);
+  if (!items.length) {
+    el.innerHTML = '<div class="empty">Nessun contenuto trovato.</div>';
+    cnt.textContent = '';
+    return;
+  }
+  cnt.textContent = items.length;
+  el.innerHTML = items.map(i => `
+    <div class="card">
+      ${showImg && i.img ? `<img src="${i.img}" alt="" class="card-img" loading="lazy">` : ''}
+      <div class="card-title">${i.titolo}</div>
+      ${i.desc ? `<div class="card-desc">${i.desc}</div>` : ''}
+      <a class="card-link" href="${i.link}" target="_blank">${linkLabel} →</a>
+    </div>
+  `).join('');
+}
+
+async function loadAndRender() {
+  const kw = temi[selectedTema].kw;
+  document.getElementById('status').textContent = 'Caricamento contenuti...';
+
+  if (!wpCache.length || !podCache.length) {
+    [wpCache, podCache] = await Promise.all([fetchFeed(WP), fetchFeed(POD)]);
+  }
+  document.getElementById('status').textContent = '';
+
+  // Articoli — usa esterni se disponibili per quel tema
+  let art;
+  if (articoliEsterni[selectedTema] && articoliEsterni[selectedTema].length) {
+    // Misto: prima esterni, poi dal feed WP
+    const wpArt = wpCache
+      .filter(i => {
+        const cats = i.categories.map(c=>c.toLowerCase());
+        if (cats.includes('podcast')||cats.includes('newsletter')) return false;
+        return matches(i.title+' '+strip(i.description), kw);
+      })
+      .slice(0,2)
+      .map(i => ({ titolo: i.title, desc: trunc(i.description, 110), link: i.link }));
+    art = [...articoliEsterni[selectedTema], ...wpArt];
+  } else {
+    art = wpCache
+      .filter(i => {
+        const cats = i.categories.map(c=>c.toLowerCase());
+        if (cats.includes('podcast')||cats.includes('newsletter')) return false;
+        return matches(i.title+' '+strip(i.description), kw);
+      })
+      .slice(0,5)
+      .map(i => ({ titolo: i.title, desc: trunc(i.description, 110), link: i.link, img: i.img||'' }));
+  }
+
+  // Podcast
+  const pod = podCache
+    .filter(i => matches(i.title+' '+strip(i.description), kw))
+    .slice(0,4)
+    .map(i => ({ titolo: i.title, desc: trunc(i.description, 110), link: POD_PAGE }));
+
+  // Newsletter
+  const nl = newsletter
+    .filter(n => matches(n.titolo+' '+n.kw.join(' '), kw))
+    .slice(0,4)
+    .map(n => ({ titolo: `#${n.n} — ${n.titolo}`, desc: '', link: n.link }));
+
+  renderCol('cards-art', 'count-art', art, 'Leggi l\'articolo', true);
+  renderCol('cards-pod', 'count-pod', pod, 'Ascolta la puntata', false);
+  renderCol('cards-nl',  'count-nl',  nl,  'Leggi su LinkedIn', false);
+
+  // Scaricabili
+  const sc = scaricabili[selectedTema] || [];
+  const scEl = document.getElementById('sez-sc');
+  if (sc.length) {
+    scEl.style.display = 'block';
+    document.getElementById('count-sc').textContent = sc.length;
+    document.getElementById('cards-sc').innerHTML = sc.map(s => `
+      <div class="scard">
+        <div class="card-title">${s.titolo}</div>
+        <div class="card-desc" style="color:#5a4a7a">${s.desc}</div>
+        <a class="card-link" href="${s.link}" target="_blank">Scarica PDF →</a>
+      </div>
+    `).join('');
+  } else {
+    scEl.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
