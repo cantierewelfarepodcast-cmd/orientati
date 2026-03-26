@@ -548,16 +548,18 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </head>
   
 <body>
-  <header>
-    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
-    <span class="brand">Il Cantiere del Welfare Sociale</span>
-    <span class="sep">·</span>
-    <span class="sub">Orientati</span>
-  </header>
 
-  <div id="progress-container">
-    <div id="progress-bar"></div>
-  </div>
+<header>
+  <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
+  <span class="brand">Il Cantiere del Welfare Sociale</span>
+  <span class="sep">·</span>
+  <span class="sub">Orientati</span>
+</header>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
 <main>
 
 
@@ -716,7 +718,7 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
-// --- LOGICA DI NAVIGAZIONE ---
+// --- LOGICA DI NAVIGAZIONE E UI ---
 let selectedProfilo = null;
 let selectedBisogno = null;
 
@@ -726,24 +728,31 @@ function updateUI(step) {
   
   if (!bar) return;
 
+  // Gestione Barra
   if (step === 1) bar.style.width = '33%';
-  if (step === 2) bar.style.width = '66%';
-  if (step === 3) bar.style.width = '100%';
+  else if (step === 2) bar.style.width = '66%';
+  else if (step === 3) bar.style.width = '100%';
 
+  // Gestione Pallini
   dots.forEach((dot, idx) => {
     if (idx + 1 < step) { 
       dot.classList.add('done'); 
+      dot.classList.remove('active');
       dot.textContent = '✓'; 
     } else if (idx + 1 === step) { 
       dot.classList.add('active'); 
-      dot.textContent = step === 3 ? '✓' : step;
+      dot.classList.remove('done');
+      dot.textContent = step === 3 ? '✓' : (idx + 1);
+    } else {
+      dot.classList.remove('active', 'done');
+      dot.textContent = (idx === 2) ? '→' : (idx + 1);
     }
   });
 
   window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
 }
 
-// Click Profili
+// Eventi Click Profili
 document.querySelectorAll('.profilo-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
@@ -753,7 +762,7 @@ document.querySelectorAll('.profilo-btn').forEach(btn => {
   });
 });
 
-// Click Bisogni
+// Eventi Click Bisogni
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
@@ -763,7 +772,7 @@ document.querySelectorAll('.bisogno-btn').forEach(btn => {
   });
 });
 
-// Passaggio Step 2
+// Bottoni di Navigazione
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
@@ -771,7 +780,6 @@ document.getElementById('btn-step2').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Passaggio Step 3 (Risultati)
 document.getElementById('btn-step3').addEventListener('click', () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
@@ -791,8 +799,6 @@ function restart() { location.reload(); }
 window.addEventListener('load', () => updateUI(1));
 
 // --- INIZIO CATALOGO ---
-
-  
 const CATALOGO = {
 
   operatore: {
