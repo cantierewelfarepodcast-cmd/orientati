@@ -546,6 +546,7 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 }
 </style>
 </head>
+  
 <body>
   <header>
     <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
@@ -553,11 +554,12 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
     <span class="sep">·</span>
     <span class="sub">Orientati</span>
   </header>
-<div id="progress-container">
-  <div id="progress-bar"></div>
-</div>
 
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
 <main>
+
 
 <!-- STEP 1 -->
 <div class="step active" id="step-profilo">
@@ -714,7 +716,6 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
-<script>
 // --- LOGICA DI NAVIGAZIONE ---
 let selectedProfilo = null;
 let selectedBisogno = null;
@@ -723,6 +724,8 @@ function updateUI(step) {
   const bar = document.getElementById('progress-bar');
   const dots = document.querySelectorAll('.step-dot');
   
+  if (!bar) return;
+
   if (step === 1) bar.style.width = '33%';
   if (step === 2) bar.style.width = '66%';
   if (step === 3) bar.style.width = '100%';
@@ -733,6 +736,7 @@ function updateUI(step) {
       dot.textContent = '✓'; 
     } else if (idx + 1 === step) { 
       dot.classList.add('active'); 
+      dot.textContent = step === 3 ? '✓' : step;
     }
   });
 
@@ -759,7 +763,7 @@ document.querySelectorAll('.bisogno-btn').forEach(btn => {
   });
 });
 
-// Navigazione
+// Passaggio Step 2
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
@@ -767,6 +771,7 @@ document.getElementById('btn-step2').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// Passaggio Step 3 (Risultati)
 document.getElementById('btn-step3').addEventListener('click', () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
@@ -785,7 +790,8 @@ function restart() { location.reload(); }
 
 window.addEventListener('load', () => updateUI(1));
 
-// --- CATALOGO ---
+// --- INIZIO CATALOGO ---
+
   
 const CATALOGO = {
 
