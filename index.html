@@ -718,7 +718,7 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
-// --- LOGICA DI NAVIGAZIONE E UI ---
+// --- LOGICA DI NAVIGAZIONE ---
 let selectedProfilo = null;
 let selectedBisogno = null;
 
@@ -728,31 +728,24 @@ function updateUI(step) {
   
   if (!bar) return;
 
-  // Gestione Barra
   if (step === 1) bar.style.width = '33%';
-  else if (step === 2) bar.style.width = '66%';
-  else if (step === 3) bar.style.width = '100%';
+  if (step === 2) bar.style.width = '66%';
+  if (step === 3) bar.style.width = '100%';
 
-  // Gestione Pallini
   dots.forEach((dot, idx) => {
     if (idx + 1 < step) { 
       dot.classList.add('done'); 
-      dot.classList.remove('active');
       dot.textContent = '✓'; 
     } else if (idx + 1 === step) { 
       dot.classList.add('active'); 
-      dot.classList.remove('done');
       dot.textContent = step === 3 ? '✓' : (idx + 1);
-    } else {
-      dot.classList.remove('active', 'done');
-      dot.textContent = (idx === 2) ? '→' : (idx + 1);
     }
   });
 
   window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
 }
 
-// Eventi Click Profili
+// Click Profili
 document.querySelectorAll('.profilo-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
@@ -762,7 +755,7 @@ document.querySelectorAll('.profilo-btn').forEach(btn => {
   });
 });
 
-// Eventi Click Bisogni
+// Click Bisogni
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
@@ -772,7 +765,7 @@ document.querySelectorAll('.bisogno-btn').forEach(btn => {
   });
 });
 
-// Bottoni di Navigazione
+// Tasto Continua (Step 1 -> 2)
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
@@ -780,6 +773,7 @@ document.getElementById('btn-step2').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// Tasto Mostra Percorso (Step 2 -> 3)
 document.getElementById('btn-step3').addEventListener('click', () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
@@ -798,9 +792,8 @@ function restart() { location.reload(); }
 
 window.addEventListener('load', () => updateUI(1));
 
-// --- INIZIO CATALOGO ---
+// --- DA QUI INIZIA IL TUO CATALOGO ---
 const CATALOGO = {
-
   operatore: {
     scenario: {
       titolo: "Il welfare che cambia, visto dal campo",
