@@ -743,37 +743,35 @@ function updateUI(step) {
 }
 
 document.querySelectorAll('.profilo-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedProfilo = btn.dataset.profilo;
     document.getElementById('btn-step2').disabled = false;
-  });
+  };
 });
 
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedBisogno = btn.dataset.bisogno;
     document.getElementById('btn-step3').disabled = false;
-  });
+  };
 });
 
-document.getElementById('btn-step2').addEventListener('click', () => {
+document.getElementById('btn-step2').onclick = () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
   updateUI(2);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+};
 
-document.getElementById('btn-step3').addEventListener('click', () => {
+document.getElementById('btn-step3').onclick = () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
   updateUI(3);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   if (typeof renderRisultati === "function") renderRisultati();
-});
+};
 
 function goBack() {
   document.getElementById('step-bisogno').classList.remove('active');
@@ -781,11 +779,10 @@ function goBack() {
   updateUI(1);
 }
 
-function restart() { location.reload(); }
-window.addEventListener('load', () => updateUI(1));
+window.onload = () => updateUI(1);
 
+// --- DA QUI NON TOCCARE NULLA, SEGUE IL TUO CATALOGO ---
 
-// --- DA QUI INIZIA IL TUO CATALOGO ---
 const CATALOGO = {
   operatore: {
     scenario: {
