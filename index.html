@@ -1162,7 +1162,34 @@ function sharePercorso() {
     setTimeout(() => el.classList.remove('show'), 2500);
   });
 }
+// AGGIUNGI QUESTO PEZZO QUI SOTTO
+function selectProfilo(id, btn) {
+  selectedProfilo = id;
+  document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btn-step2').disabled = false;
+  reportHeight();
+}
 
+function selectBisogno(id, btn) {
+  selectedBisogno = id;
+  document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btn-step3').disabled = false;
+  reportHeight();
+}
+
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  if (n === 1) document.getElementById('step-profilo').classList.add('active');
+  if (n === 2) document.getElementById('step-bisogno').classList.add('active');
+  if (n === 3) {
+    document.getElementById('step-risultati').classList.add('active');
+    renderRisultati();
+  }
+  reportHeight();
+}
+// FINE DEL PEZZO DA AGGIUNGERE
 // ═══════════════════════════════════════════
 // ALTEZZA AUTOMATICA PER IFRAME
 // ═══════════════════════════════════════════
