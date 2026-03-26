@@ -1,0 +1,185 @@
+const CATALOGO = {
+  operatore: {
+    scenario: {
+      podcast: [1, 2, 3, 21, 23, 24, 25, 26],
+      newsletter: [2, 10, 20, 22],
+      scaricabili: ["Senza Padroni", "Tracce", "Progetto di Vita"],
+      articoli: [
+        {
+          titolo: "Progetto di vita: lo strumento giusto, il sistema sbagliato",
+          desc: "Analisi critica sull'attuazione della riforma disabilità e le tensioni tra norma e realtà.",
+          link: "https://www.ilcantierewelfare.it/progetto-di-vita-lo-strumento-giusto-il-sistema-sbagliato/",
+          perche: "Ti aiuta a capire le sfide operative del D.Lgs 62/2024."
+        },
+        {
+          titolo: "Finalmente una legge sui caregiver",
+          desc: "Analisi del DDL e delle nuove tutele per chi assiste i propri cari.",
+          link: "https://www.ilcantierewelfare.it/finalmente-una-legge-sui-caregiver/",
+          perche: "Fondamentale per orientare le famiglie sulle nuove norme."
+        },
+        {
+          titolo: "Il Progetto di Vita alla prova dei fatti",
+          desc: "Bilanci e sfide dopo il primo anno di applicazione della riforma.",
+          link: "https://www.ilcantierewelfare.it/il-progetto-di-vita-alla-prova-dei-fatti-bilanci-e-sfide-dopo-il-primo-anno/",
+          perche: "Per confrontare la tua esperienza sul campo con l'andamento nazionale."
+        }
+      ]
+    },
+    pratica: {
+      podcast: [4, 5, 6, 7, 8, 9, 21, 22],
+      newsletter: [1, 3, 5, 12, 18, 24],
+      scaricabili: ["Matrice di Co-progettazione", "Mappa degli Stakeholder"],
+      articoli: [
+        {
+          titolo: "La cura non è una risorsa infinita",
+          desc: "Riflessione sul capitale sociale e sulla sostenibilità del lavoro di cura.",
+          link: "https://www.ilcantierewelfare.it/la-cura-non-e-una-risorsa-infinita/",
+          perche: "Utile per gestire le risorse e prevenire il burnout professionale."
+        },
+        {
+          titolo: "Non autosufficienza anziani in Lombardia",
+          desc: "Dati e riflessioni sulle politiche regionali e il supporto alle famiglie.",
+          link: "https://www.ilcantierewelfare.it/non-autosufficienza-anziani-in-lombardia/",
+          perche: "Per orientarti tra le norme locali se operi nel settore anziani."
+        }
+      ]
+    },
+    visione: {
+      podcast: [13, 15, 17, 20, 26],
+      newsletter: [4, 6, 8, 15, 25],
+      scaricabili: ["Il Ponte di Kublai Khan"],
+      articoli: [
+        {
+          titolo: "Né famiglia né individuo: la persona",
+          desc: "Oltre le categorie classiche: una visione antropologica del welfare.",
+          link: "https://www.ilcantierewelfare.it/ne-famiglia-ne-individuo-la-persona/",
+          perche: "Per ritrovare il senso profondo del servizio alla persona."
+        }
+      ]
+    }
+  },
+  dirigente: {
+    scenario: {
+      podcast: [10, 11, 12, 19, 24],
+      newsletter: [7, 9, 14, 21],
+      scaricabili: ["Riforma Disabilità 2024", "Manuale Progetto di Vita"],
+      articoli: [
+        {
+          titolo: "Eclissi della sapienza amministrativa?",
+          desc: "L'impatto dell'IA e delle competenze digitali sulla burocrazia.",
+          link: "https://www.ilcantierewelfare.it/eclissi-della-sapienza-amministrativa/",
+          perche: "Fondamentale per guidare la transizione digitale nella PA."
+        },
+        {
+          titolo: "Il paradosso dei LEPS: parametri certi, risorse incerte",
+          desc: "La sfida di garantire i livelli essenziali con bilanci sempre più stretti.",
+          link: "https://www.ilcantierewelfare.it/il-paradosso-dei-leps-parametri-certi-ma-risorse-ancora-incerte/",
+          perche: "Strategico per la programmazione finanziaria degli ATS."
+        },
+        {
+          titolo: "Dati, territori, welfare: la svolta dell’IDISE",
+          desc: "Come i nuovi indici di benessere territoriale devono guidare la programmazione.",
+          link: "https://www.ilcantierewelfare.it/dati-territori-welfare-la-svolta-dellidise/",
+          perche: "Per una pianificazione basata su evidenze numeriche e sociali."
+        }
+      ]
+    },
+    pratica: {
+      podcast: [14, 16, 18],
+      newsletter: [11, 13, 17, 19],
+      scaricabili: ["Vademecum Co-progettazione"],
+      articoli: [
+        {
+          titolo: "Neuro Public Administration",
+          desc: "Innovazione e neuroscienze applicate alla gestione pubblica.",
+          link: "https://www.ilcantierewelfare.it/neuro-public-administration/",
+          perche: "Per approcciare l'organizzazione del lavoro in modo innovativo."
+        },
+        {
+          titolo: "Welfare sociale: dal controllo del dato alla libertà di decidere",
+          desc: "Governance dei dati e sovranità digitale nel sistema dei servizi.",
+          link: "https://www.ilcantierewelfare.it/welfare-sociale-dal-controllo-del-dato-alla-liberta-di-decidere/",
+          perche: "Per una gestione consapevole dell'innovazione tecnologica."
+        }
+      ]
+    },
+    visione: {
+      podcast: [15, 20],
+      newsletter: [15, 16, 23],
+      scaricabili: ["Manifesto Welfare Generativo"],
+      articoli: [
+        {
+          titolo: "Censis 2025: la generatività come risposta al declino",
+          desc: "Analisi dei dati per invertire la rotta del declino sociale.",
+          link: "https://www.ilcantierewelfare.it/censis-2025-la-generativita-come-risposta-al-declino-del-desiderio-di-futuro/",
+          perche: "Per inquadrare la strategia locale in un contesto macro."
+        },
+        {
+          titolo: "Frizione: la mia parola 2026",
+          desc: "Perché la frizione tra mondi diversi è la scintilla dell'innovazione.",
+          link: "https://www.ilcantierewelfare.it/frizione-la-mia-parola-2026/",
+          perche: "Uno stimolo per esercitare una leadership capace di abitare il conflitto."
+        }
+      ]
+    }
+  },
+  terzoSettore: {
+    scenario: {
+      podcast: [21, 23, 25],
+      newsletter: [20, 22, 24],
+      scaricabili: ["Riforma Terzo Settore"],
+      articoli: [
+        {
+          titolo: "I nodi irrisolti dell’economia sociale italiana",
+          desc: "Scalabilità, innovazione e sfide del futuro per il non profit.",
+          link: "https://www.ilcantierewelfare.it/i-nodi-irrisolti-delleconomia-sociale-italiana/",
+          perche: "Per comprendere dove sta andando il settore in Italia."
+        },
+        {
+          titolo: "Oltre i Bandi: per un welfare condiviso",
+          desc: "Uscire dalla logica competitiva per abbracciare la co-programmazione.",
+          link: "https://www.ilcantierewelfare.it/oltre-i-bandi-per-un-welfare-condiviso/",
+          perche: "Per trasformare l'ente in un partner istituzionale reale."
+        }
+      ]
+    },
+    pratica: {
+      podcast: [22, 24],
+      newsletter: [18, 25],
+      scaricabili: ["Guida Crowdfunding Sociale"],
+      articoli: [
+        {
+          titolo: "Capitali di contesto nel crowdfunding",
+          desc: "Mappare fiducia e relazioni prima di cercare risorse economiche.",
+          link: "https://www.ilcantierewelfare.it/capitali-di-contesto-nel-crowdfunding-mappare-senso-fiducia-e-relazioni/",
+          perche: "Strategico per lo sviluppo di comunità."
+        },
+        {
+          titolo: "Innovazione Sociale aperta: la Via Italiana",
+          desc: "Il modello italiano tra economia sociale e co-progettazione.",
+          link: "https://www.ilcantierewelfare.it/innovazione-sociale-aperta-la-via-italiana/",
+          perche: "Ottimo spunto per progettare interventi territoriali."
+        }
+      ]
+    },
+    visione: {
+      podcast: [26],
+      newsletter: [25],
+      scaricabili: ["Ecosistemi Ibridi"],
+      articoli: [
+        {
+          titolo: "Innovazione sociale: servono gli ecosistemi",
+          desc: "Perché i singoli progetti non bastano più: fare rete è necessità.",
+          link: "https://www.ilcantierewelfare.it/innovazione-sociale-servono-gli-ecosistemi/",
+          perche: "Per orientare l'organizzazione verso partnership sistemiche."
+        },
+        {
+          titolo: "Chi seleziona il seme?",
+          desc: "Potere, innovazione e cooperative di comunità.",
+          link: "https://www.ilcantierewelfare.it/chi-seleziona-il-seme/",
+          perche: "Ideale per chi lavora sullo sviluppo locale."
+        }
+      ]
+    }
+  }
+};
