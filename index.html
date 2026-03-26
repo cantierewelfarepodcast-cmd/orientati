@@ -271,9 +271,9 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 .bisogno-nome { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.3rem; }
 .bisogno-sub { font-size: 0.8rem; color: var(--muted); font-weight: 400; line-height: 1.5; }
 
-/* BOTTONI */
+/* --- BOTTONI E NAVIGAZIONE --- */
 .btn-vai {
-  background: var(--border); /* Parte grigio chiaro quando disattivato */
+  background: var(--border);
   color: var(--muted);
   border: none;
   border-radius: 8px;
@@ -288,10 +288,11 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
 /* Quando il pulsante è pronto (non più disabled) diventa Arancione e Pulsa */
 .btn-vai:not(:disabled) {
-  background: var(--accent2) !important; /* Arancione Cantiere */
+  background: var(--accent2) !important;
   color: #fff !important;
   animation: pulse-orange 2s infinite;
   cursor: pointer;
+  opacity: 1 !important;
 }
 
 .btn-vai:disabled { 
@@ -319,7 +320,32 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 }
 .btn-back:hover { border-color: var(--text); color: var(--text); }
 
-/* RISULTATI */
+/* --- ILLUMINAZIONE E BARRA DI PROGRESSO --- */
+.profilo-btn.selected, .bisogno-btn.selected {
+  background-color: var(--accent) !important;
+  color: white !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 4px 12px rgba(43, 76, 63, 0.2);
+  transform: translateY(-2px);
+}
+
+#progress-container {
+  width: 100%;
+  height: 5px;
+  background: var(--border);
+  position: sticky;
+  top: 61px; /* Si posiziona perfettamente sotto l'header nero */
+  z-index: 1001;
+}
+
+#progress-bar {
+  width: 33%;
+  height: 100%;
+  background: var(--accent2) !important;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- RISULTATI --- */
 .risultati-header {
   display: flex;
   align-items: flex-start;
@@ -768,7 +794,74 @@ function restart() { location.reload(); }
 // Avvio automatico al caricamento
 window.addEventListener('load', () => updateUI(1));
   
+let selectedProfilo = null;
+let selectedBisogno = null;
+
+// Funzione che muove la barra arancione e aggiorna i pallini
+function updateUI(step) {
+  const bar = document.getElementById('progress-bar');
+  const dots = document.querySelectorAll('.step-dot');
   
+  // Posizioni della barra
+  if (step === 1) bar.style.width = '33%';
+  if (step === 2) bar.style.width = '66%';
+  if (step === 3) bar.style.width = '100%';
+
+  // Aggiorna i pallini numerati (1, 2, ✓)
+  dots.forEach((dot, idx) => {
+    if (idx + 1 < step) { 
+      dot.classList.add('done'); 
+      dot.textContent = '✓'; 
+    } else if (idx + 1 === step) { 
+      dot.classList.add('active'); 
+    }
+  });
+
+  // Notifica l'altezza per evitare scrollbar brutte
+  window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
+}
+
+// Gestione Click Profili (Illuminazione Verde)
+document.querySelectorAll('.profilo-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedProfilo = btn.dataset.profilo;
+    document.getElementById('btn-step2').disabled = false; // Accende il pulsante
+  });
+});
+
+// Gestione Click Bisogni (Illuminazione Arancio)
+document.querySelectorAll('.bisogno-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedBisogno = btn.dataset.bisogno;
+    document.getElementById('btn-step3').disabled = false; // Accende il pulsante
+  });
+});
+
+// Navigazione tra gli Step
+document.getElementById('btn-step2').addEventListener('click', () => {
+  document.getElementById('step-profilo').classList.remove('active');
+  document.getElementById('step-bisogno').classList.add('active');
+  updateUI(2);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('btn-step3').addEventListener('click', () => {
+  document.getElementById('step-bisogno').classList.remove('active');
+  document.getElementById('step-risultati').classList.add('active');
+  updateUI(3);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Chiama la funzione che genera i risultati dal tuo catalogo
+  if (typeof renderRisultati === "function") renderRisultati();
+});
+
+function restart() { location.reload(); }
+
+// Avvia la barra al caricamento
+window.addEventListener('load', () => updateUI(1));  
 const CATALOGO = {
 
   operatore: {
