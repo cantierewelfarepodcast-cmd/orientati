@@ -273,8 +273,8 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 
 /* BOTTONI */
 .btn-vai {
-  background: var(--accent);
-  color: #fff;
+  background: var(--border); /* Parte grigio chiaro quando disattivato */
+  color: var(--muted);
   border: none;
   border-radius: 8px;
   padding: 0.9rem 2.2rem;
@@ -283,10 +283,28 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
   font-weight: 600;
   cursor: pointer;
   letter-spacing: 0.01em;
-  transition: background 0.18s;
+  transition: all 0.3s ease;
 }
-.btn-vai:hover { background: #1e3830; }
-.btn-vai:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Quando il pulsante è pronto (non più disabled) diventa Arancione e Pulsa */
+.btn-vai:not(:disabled) {
+  background: var(--accent2) !important; /* Arancione Cantiere */
+  color: #fff !important;
+  animation: pulse-orange 2s infinite;
+  cursor: pointer;
+}
+
+.btn-vai:disabled { 
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
+
+@keyframes pulse-orange {
+  0% { box-shadow: 0 0 0 0 rgba(200, 114, 42, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(200, 114, 42, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(200, 114, 42, 0); }
+}
+
 .btn-back {
   background: none;
   border: 1.5px solid var(--border);
@@ -504,12 +522,17 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </head>
 <body>
 
-<header>
+</header>
+  <header>
   <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
   <span class="brand">Il Cantiere del Welfare Sociale</span>
   <span class="sep">&middot;</span>
   <span class="sub">Orientati</span>
 </header>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
 
 <main>
 
@@ -668,6 +691,84 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
+// --- LOGICA DI NAVIGAZIONE E ILLUMINAZIONE ---
+let selectedProfilo = null;
+let selectedBisogno = null;
+
+// Funzione che muove la barra e aggiorna i pallini (1, 2, ✓)
+function updateUI(step) {
+  const bar = document.getElementById('progress-bar');
+  const dots = document.querySelectorAll('.step-dot');
+  
+  if (step === 1) bar.style.width = '33%';
+  if (step === 2) bar.style.width = '66%';
+  if (step === 3) bar.style.width = '100%';
+
+  dots.forEach((dot, idx) => {
+    if (idx + 1 < step) { 
+      dot.classList.add('done'); 
+      dot.classList.remove('active'); 
+      dot.textContent = '✓'; 
+    } else if (idx + 1 === step) { 
+      dot.classList.add('active'); 
+      dot.classList.remove('done'); 
+      dot.textContent = step === 3 ? '✓' : step;
+    }
+  });
+
+  // Notifica l'altezza a WordPress per evitare scrollbar brutte
+  window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
+}
+
+// Gestione Click Profili (Illuminazione Verde)
+document.querySelectorAll('.profilo-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected'); // Questo attiva il CSS che abbiamo scritto
+    selectedProfilo = btn.dataset.profilo;
+    document.getElementById('btn-step2').disabled = false; // Accende il tasto "Continua"
+  });
+});
+
+// Gestione Click Bisogni (Illuminazione Arancio)
+document.querySelectorAll('.bisogno-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedBisogno = btn.dataset.bisogno;
+    document.getElementById('btn-step3').disabled = false; // Accende il tasto "Mostrami il percorso"
+  });
+});
+
+// Passaggio agli Step successivi
+document.getElementById('btn-step2').addEventListener('click', () => {
+  document.getElementById('step-profilo').classList.remove('active');
+  document.getElementById('step-bisogno').classList.add('active');
+  updateUI(2);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('btn-step3').addEventListener('click', () => {
+  document.getElementById('step-bisogno').classList.remove('active');
+  document.getElementById('step-risultati').classList.add('active');
+  updateUI(3);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (typeof renderRisultati === "function") renderRisultati();
+});
+
+// Funzioni di Reset
+function goBack() {
+  document.getElementById('step-bisogno').classList.remove('active');
+  document.getElementById('step-profilo').classList.add('active');
+  updateUI(1);
+}
+
+function restart() { location.reload(); }
+
+// Avvio automatico al caricamento
+window.addEventListener('load', () => updateUI(1));
+  
+  
 const CATALOGO = {
 
   operatore: {
