@@ -137,6 +137,27 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
   margin-bottom: 1rem;
   font-family: 'Karla', sans-serif;
 }
+/* --- AGGIUNTE PER FILTRI E PREFERITI ---RIGA 139 */
+.esplora-tabs { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; flex-wrap: wrap; }
+.esplora-tab {
+  background: none; border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 0.5rem 1.2rem; font-size: 0.85rem; cursor: pointer; color: var(--muted); font-weight: 500; font-family: 'Karla', sans-serif;
+}
+.esplora-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+.filter-hidden { display: none !important; }
+
+.card-perche { 
+  font-size: 0.9rem; color: var(--accent); background: var(--accent-light); 
+  padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent); margin-top: 0.8rem;
+}
+.card-perche-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px; }
+
+.btn-pref { background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--border); transition: 0.2s; padding: 5px; line-height: 1; }
+.btn-pref.is-active { color: var(--accent2); }
+
+/* Layout card per allineare la stellina a destra */
+.card-item { margin-bottom: 1.2rem; }
+.card { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; }
 
 /* ULTIME USCITE */
 .ultime-uscite {
@@ -965,24 +986,45 @@ function renderRisultati() {
   const container = document.getElementById('contenuti-risultati');
   container.innerHTML = '';
 
+  // --- AGGIUNTA FILTRI ---
+  let filtriHtml = `
+    <div class="esplora-tabs" style="display:flex; gap:10px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px; flex-wrap:wrap;">
+      <button class="esplora-tab active" onclick="filtraTipo('all', this)" style="background:var(--accent); color:white; border:none; padding:8px 15px; border-radius:20px; cursor:pointer; font-family:'Karla'; font-size:14px;">Tutti</button>
+      ${dati.podcast?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-podcast', this)" style="background:none; border:1px solid var(--border); padding:8px 15px; border-radius:20px; cursor:pointer; font-family:'Karla'; font-size:14px; color:var(--muted);">Podcast</button>` : ''}
+      ${dati.newsletter?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-newsletter', this)" style="background:none; border:1px solid var(--border); padding:8px 15px; border-radius:20px; cursor:pointer; font-family:'Karla'; font-size:14px; color:var(--muted);">Newsletter</button>` : ''}
+      ${dati.scaricabili?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-download', this)" style="background:none; border:1px solid var(--border); padding:8px 15px; border-radius:20px; cursor:pointer; font-family:'Karla'; font-size:14px; color:var(--muted);">Download</button>` : ''}
+    </div>
+  `;
+  const tabsDiv = document.createElement('div');
+  tabsDiv.innerHTML = filtriHtml;
+  container.appendChild(tabsDiv);
+
+  // --- RENDERING SEZIONI (CON CLASSI PER FILTRO) ---
   if (dati.podcast?.length) {
-    container.appendChild(makeSez('Podcast', dati.podcast.map((p, i) =>
+    const s = makeSez('Podcast', dati.podcast.map((p, i) =>
       makeCard('Ep. ' + p.ep, p.titolo, 'con ' + p.ospite + ' — ' + p.desc, p.perche, p.link, 'Ascolta', i)
-    )));
+    ));
+    s.classList.add('sez-filtro', 'sez-podcast');
+    container.appendChild(s);
   }
+  
   if (dati.newsletter?.length) {
-    container.appendChild(makeSez('Newsletter', dati.newsletter.map((n, i) =>
+    const s = makeSez('Newsletter', dati.newsletter.map((n, i) =>
       makeCard('Le Fondamenta #' + n.n, n.titolo, '', n.perche, n.link, 'Leggi su LinkedIn', i)
-    )));
+    ));
+    s.classList.add('sez-filtro', 'sez-newsletter');
+    container.appendChild(s);
   }
+
   if (dati.scaricabili?.length) {
     const sez = document.createElement('div');
-    sez.className = 'sez fade-in';
+    sez.className = 'sez fade-in sez-filtro sez-download';
     sez.innerHTML = '<div class="sez-header"><span class="sez-tipo">Scaricabili</span><span class="sez-count">' + dati.scaricabili.length + ' documento/i</span></div><div class="cards-list">' +
       dati.scaricabili.map(s => '<div class="card-download"><div><div class="card-title">' + s.titolo + '</div><div class="card-desc">' + s.desc + '</div></div><a class="card-download-link" href="' + s.link + '" target="_blank">&#8595; PDF</a></div>').join('') +
       '</div>';
     container.appendChild(sez);
   }
+}
 
   // Articoli blog
   const placeholder = document.createElement('div');
@@ -1148,6 +1190,40 @@ reportHeight();
     renderRisultati();
   }
 })();
+function filtraTipo(tipo, btn) {
+  // Gestione stile bottoni
+  btn.parentElement.querySelectorAll('.esplora-tab').forEach(b => {
+    b.style.background = 'none';
+    b.style.color = 'var(--muted)';
+    b.style.border = '1px solid var(--border)';
+  });
+  btn.style.background = 'var(--accent)';
+  btn.style.color = 'white';
+  btn.style.border = 'none';
+
+  // Filtro effettivo
+  document.querySelectorAll('.sez-filtro').forEach(sez => {
+    if (tipo === 'all') {
+      sez.style.display = 'block';
+    } else {
+      sez.style.display = sez.classList.contains(tipo) ? 'block' : 'none';
+    }
+  });
+  reportHeight();
+}
+
+function toggleFavorite(id, btn) {
+  let prefs = JSON.parse(localStorage.getItem('cantiere_prefs') || '[]');
+  if (prefs.includes(id)) {
+    prefs = prefs.filter(p => p !== id);
+    btn.style.color = 'var(--border)';
+  } else {
+    prefs.push(id);
+    btn.style.color = 'var(--accent2)';
+  }
+  localStorage.setItem('cantiere_prefs', JSON.stringify(prefs));
+}
+  
 </script>
 </body>
 </html>
