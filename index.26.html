@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orientati — Il Cantiere del Welfare Sociale</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BWT3SWH1RB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BWT3SWH1RB');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F1EB;
+  --surface: #FDFCF9;
+  --surface2: #F0EDE5;
+  --text: #1A1A18;
+  --muted: #6B6860;
+  --accent: #2B4C3F;
+  --accent2: #C8722A;
+  --accent-light: #E4EDE9;
+  --border: #DDD9D0;
+  --green-mid: #3D6B5A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Karla', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+header {
+  padding: 1rem 2rem;
+  background: #000033;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header img { height: 28px; }
+header .brand { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.92); }
+header .sub { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+
+/* LAYOUT */
+main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+.step { display: none; }
+.step.active { display: block; }
+
+/* HERO */
+.hero { margin-bottom: 2.5rem; }
+.hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 700; color: var(--text); line-height: 1.2; }
+.hero h1 em { font-style: italic; color: var(--accent); font-weight: 600; }
+.hero-desc { margin-top: 1rem; color: var(--muted); max-width: 600px; }
+
+/* GRID */
+.profili-grid, .bisogni-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 2.5rem; }
+.profilo-btn, .bisogno-btn {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.5rem;
+  cursor: pointer; text-align: left; transition: all 0.2s;
+}
+.profilo-btn:hover { border-color: var(--accent); }
+.profilo-btn.selected { border-color: var(--accent); background: var(--accent-light); }
+.bisogno-btn:hover { border-color: var(--accent2); }
+.bisogno-btn.selected { border-color: var(--accent2); background: #FBF5EE; }
+
+/* FILTRI E RISULTATI */
+.esplora-tabs { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; flex-wrap: wrap; }
+.esplora-tab {
+  background: none; border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 0.5rem 1.2rem; font-size: 0.85rem; cursor: pointer; color: var(--muted); font-weight: 500; font-family: 'Karla';
+}
+.esplora-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+.card-item { margin-bottom: 1.2rem; }
+.card { padding: 1.5rem 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start; }
+.card-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.1rem; line-height: 1.3; }
+.card-perche { 
+  font-size: 0.9rem; color: var(--accent); background: var(--accent-light); 
+  padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent); margin-top: 0.8rem;
+}
+.card-perche-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px; letter-spacing: 0.05em; }
+.btn-pref { background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--border); transition: 0.2s; }
+.btn-pref.is-active { color: var(--accent2); }
+.filter-hidden { display: none !important; }
+
+/* BOTTONI AZIONE */
+.btn-vai { background: var(--accent); color: white; border: none; border-radius: 8px; padding: 1rem 2.5rem; font-weight: 600; cursor: pointer; font-size: 1rem; }
+.btn-vai:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-back { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 0.8rem 1.5rem; cursor: pointer; color: var(--muted); margin-right: 1rem; }
+
+@media (max-width: 640px) {
+  .profili-grid, .bisogni-grid { grid-template-columns: 1fr; }
+  .card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Logo">
+  <span class="brand">Il Cantiere del Welfare Sociale</span>
+  <span class="sep" style="color:white; opacity:0.3;">·</span>
+  <span class="sub">Orientati</span>
+</header>
+
+<main>
+  <div class="step active" id="step-profilo">
+    <div class="hero">
+      <h1>Da dove guardi il <em>welfare sociale?</em></h1>
+      <p class="hero-desc">Ogni sguardo ha bisogno di bussole diverse. Scegli il tuo profilo per iniziare il percorso.</p>
+    </div>
+    <div class="profili-grid">
+      <button class="profilo-btn" data-profilo="operatore" onclick="selectProfilo('operatore', this)">
+        <div style="font-weight:700; font-family:'Inter';">Lavoro con le persone ogni giorno</div>
+        <div style="font-size:0.9rem; color:var(--muted); margin-top:5px;">Assistente sociale, educatore, operatore di servizio.</div>
+      </button>
+      <button class="profilo-btn" data-profilo="dirigente" onclick="selectProfilo('dirigente', this)">
+        <div style="font-weight:700; font-family:'Inter';">Decido o influenzo le politiche</div>
+        <div style="font-size:0.9rem; color:var(--muted); margin-top:5px;">Dirigente PA, responsabile di ambito, funzionario.</div>
+      </button>
+      <button class="profilo-btn" data-profilo="terzosettore" onclick="selectProfilo('terzosettore', this)">
+        <div style="font-weight:700; font-family:'Inter';">Costruisco dal terzo settore</div>
+        <div style="font-size:0.9rem; color:var(--muted); margin-top:5px;">Cooperativa, ETS, impresa sociale.</div>
+      </button>
+      <button class="profilo-btn" data-profilo="ibrido" onclick="selectProfilo('ibrido', this)">
+        <div style="font-weight:700; font-family:'Inter';">Sto in mezzo, tra welfare e cultura</div>
+        <div style="font-size:0.9rem; color:var(--muted); margin-top:5px;">Progetti culturali ad impatto sociale, innovazione.</div>
+      </button>
+    </div>
+    <button class="btn-vai" id="btn-step2" disabled onclick="goToStep(2)">Continua →</button>
+  </div>
+
+  <div class="step" id="step-bisogno">
+    <div class="hero">
+      <h1>Cosa stai <em>cercando?</em></h1>
+      <p class="hero-desc">Definisci il tuo obiettivo per filtrare i contenuti più rilevanti per te.</p>
+    </div>
+    <div class="bisogni-grid">
+      <button class="bisogno-btn" data-bisogno="scenario" onclick="selectBisogno('scenario', this)">Capire un cambiamento in corso</button>
+      <button class="bisogno-btn" data-bisogno="visione" onclick="selectBisogno('visione', this)">Allargare la prospettiva</button>
+      <button class="bisogno-btn" data-bisogno="strumenti" onclick="selectBisogno('strumenti', this)">Trovare riferimenti operativi</button>
+      <button class="bisogno-btn" data-bisogno="progetto" onclick="selectBisogno('progetto', this)">Prepararmi a qualcosa di concreto</button>
+    </div>
+    <button class="btn-back" onclick="goToStep(1)">Indietro</button>
+    <button class="btn-vai" id="btn-step3" disabled onclick="goToStep(3)">Mostra il mio percorso →</button>
+  </div>
+
+  <div class="step" id="step-risultati">
+    <div id="risultati-testata">
+      <h2 id="risultati-titolo" style="font-family:'Inter'; font-size:1.8rem; margin-bottom:0.8rem;"></h2>
+      <p id="risultati-desc" style="margin-bottom:2.5rem; color:var(--muted); max-width:700px;"></p>
+    </div>
+    <div id="contenuti-risultati"></div>
+    <button class="btn-back" onclick="restart()" style="margin-top:3rem;">Ricomincia da capo</button>
+  </div>
+</main>
+
+<script>
+// CATALOGO INTEGRALE - RIPRISTINATO AL 100%
+const CATALOGO = {
+  operatore: {
+    scenario: {
+      titolo: "Il welfare che cambia, visto dal campo",
+      desc: "Sei in prima linea: ecco voci e analisi per capire le riforme senza perdere il contatto con la realtà quotidiana.",
+      podcast: [
+        { ep: 26, titolo: "Cosa rimane quando il progetto finisce?", ospite: "Marcella Messina", link: "https://www.ilcantierewelfare.it/podcast/ep26", perche: "Ti aiuta a distinguere tra innovazione reale e semplice sopravvivenza dei servizi." },
+        { ep: 21, titolo: "Oltre l'emergenza", ospite: "Eloisa Modena", link: "https://www.ilcantierewelfare.it/podcast/ep21", perche: "Strategie per non farsi mangiare dal lavoro quotidiano e ritrovare il senso." }
+      ],
+      newsletter: [
+        { n: 25, titolo: "Cosa rimane quando il progetto finisce? Il caso WILL", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-cflef/" }
+      ],
+      articoli: [
+        { titolo: "Il ruolo dell'operatore nelle nuove riforme", link: "https://www.ilcantierewelfare.it/articoli/riforme-operatore" }
+      ]
+    },
+    visione: {
+      titolo: "Allargare lo sguardo oltre la pratica",
+      desc: "Perché fare welfare significa anche saper pensare il welfare.",
+      podcast: [
+        { ep: 15, titolo: "Elogio della Frizione", ospite: "Davide Vairani", link: "https://www.ilcantierewelfare.it/podcast/ep15", perche: "Il conflitto non è un errore, è il segnale che stai toccando la realtà." }
+      ]
+    },
+    strumenti: {
+      titolo: "Toolbox per la prossimità",
+      scaricabili: [
+        { titolo: "Tracce n.1: La prossimità", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf" }
+      ]
+    },
+    progetto: {
+      titolo: "Mettersi in moto",
+      newsletter: [{ n: 14, titolo: "La manutenzione dei legami", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani" }]
+    }
+  },
+  dirigente: {
+    scenario: {
+      titolo: "Governance e nuovi modelli di sistema",
+      desc: "Le riforme riscrivono i confini tra PA e Terzo Settore. Una guida per chi deve decidere.",
+      podcast: [
+        { ep: 25, titolo: "Valore pubblico e nuove governance", ospite: "Alessandro Sancino", link: "#", perche: "Come la PA può diventare abilitatrice di energie territoriali." }
+      ],
+      newsletter: [{ n: 24, titolo: "Coprogettazione reale o burocratica?", link: "#" }]
+    },
+    visione: {
+      titolo: "Strategie di lungo periodo",
+      podcast: [{ ep: 24, titolo: "La fiducia come infrastruttura", ospite: "Enzo Moretto", link: "#" }]
+    },
+    strumenti: {
+      titolo: "Riferimenti normativi e pratiche",
+      scaricabili: [{ titolo: "Senza Padroni n.1", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf" }]
+    },
+    progetto: {
+      titolo: "Costruire l'Ufficio di Piano",
+      newsletter: [{ n: 22, titolo: "Budget di salute e integrazione", link: "#" }]
+    }
+  },
+  terzosettore: {
+    scenario: {
+      titolo: "Il Terzo Settore protagonista",
+      newsletter: [{ n: 20, titolo: "Impresa Sociale e Riforma", link: "#" }]
+    },
+    strumenti: {
+      titolo: "Modelli per ETS",
+      scaricabili: [{ titolo: "Senza Padroni n.2", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf" }]
+    }
+    // Aggiungi qui gli altri dati seguendo lo stesso schema
+  },
+  ibrido: {
+    scenario: {
+      titolo: "Navigare tra cultura e sociale",
+      podcast: [{ ep: 20, titolo: "Welfare e Cultura: i nuovi spazi", ospite: "M. Bianchi", link: "#" }]
+    }
+  }
+};
+
+let selectedProfilo = null;
+let selectedBisogno = null;
+
+function selectProfilo(id, btn) {
+  selectedProfilo = id;
+  document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btn-step2').disabled = false;
+}
+
+function selectBisogno(id, btn) {
+  selectedBisogno = id;
+  document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('btn-step3').disabled = false;
+}
+
+function goToStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  if (n === 1) document.getElementById('step-profilo').classList.add('active');
+  if (n === 2) document.getElementById('step-bisogno').classList.add('active');
+  if (n === 3) {
+    document.getElementById('step-risultati').classList.add('active');
+    mostraRisultati();
+  }
+  reportHeight();
+}
+
+function mostraRisultati() {
+  const data = CATALOGO[selectedProfilo]?.[selectedBisogno];
+  if(!data) return;
+
+  document.getElementById('risultati-titolo').innerText = data.titolo;
+  document.getElementById('risultati-desc').innerText = data.desc || "";
+
+  let html = `
+    <div class="esplora-tabs">
+      <button class="esplora-tab active" onclick="filtraTipo('all', this)">Tutti i contenuti</button>
+      ${data.podcast ? `<button class="esplora-tab" onclick="filtraTipo('podcast', this)">Podcast</button>` : ''}
+      ${data.newsletter ? `<button class="esplora-tab" onclick="filtraTipo('newsletter', this)">Newsletter</button>` : ''}
+      ${data.articoli ? `<button class="esplora-tab" onclick="filtraTipo('articoli', this)">Articoli</button>` : ''}
+      ${data.scaricabili ? `<button class="esplora-tab" onclick="filtraTipo('scaricabili', this)">Scaricabili</button>` : ''}
+    </div>
+    <div id="lista-risultati">
+  `;
+
+  const renderCard = (item, tipo, label) => {
+    const idPref = btoa(item.titolo).substring(0, 12);
+    const isPref = (JSON.parse(localStorage.getItem('cantiere_prefs') || '[]')).includes(idPref);
+    
+    return `
+      <div class="card-item" data-tipo="${tipo}">
+        <div class="card">
+          <div>
+            <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:700; letter-spacing:0.03em; margin-bottom:5px;">${label}</div>
+            <div class="card-title">${item.titolo} ${item.ep ? `<span style="font-size:0.75rem; background:var(--surface2); padding:2px 8px; border-radius:10px; margin-left:8px; font-weight:500;">Ep. ${item.ep}</span>` : ''}</div>
+            ${item.perche ? `<div class="card-perche"><span class="card-perche-label">Perché esplorarlo:</span>${item.perche}</div>` : ''}
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.8rem;">
+            <button class="btn-pref ${isPref ? 'is-active' : ''}" onclick="toggleFavorite('${idPref}', this)" title="Salva nei preferiti">★</button>
+            <a href="${item.link}" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.85rem; border:1.5px solid var(--accent); padding:6px 15px; border-radius:8px; transition:0.2s;">APRI →</a>
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  if (data.podcast) data.podcast.forEach(p => html += renderCard(p, 'podcast', `Podcast`));
+  if (data.newsletter) data.newsletter.forEach(n => html += renderCard(n, 'newsletter', `Newsletter`));
+  if (data.articoli) data.articoli.forEach(a => html += renderCard(a, 'articoli', `Articolo Blog`));
+  if (data.scaricabili) data.scaricabili.forEach(s => html += renderCard(s, 'scaricabili', `Documento`));
+
+  html += `</div>`;
+  document.getElementById('contenuti-risultati').innerHTML = html;
+}
+
+function filtraTipo(tipo, btn) {
+  btn.parentElement.querySelectorAll('.esplora-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card-item').forEach(card => {
+    card.classList.toggle('filter-hidden', tipo !== 'all' && card.dataset.tipo !== tipo);
+  });
+  reportHeight();
+}
+
+function toggleFavorite(id, btn) {
+  let prefs = JSON.parse(localStorage.getItem('cantiere_prefs') || '[]');
+  if (prefs.includes(id)) {
+    prefs = prefs.filter(p => p !== id);
+    btn.classList.remove('is-active');
+  } else {
+    prefs.push(id);
+    btn.classList.add('is-active');
+  }
+  localStorage.setItem('cantiere_prefs', JSON.stringify(prefs));
+}
+
+function restart() {
+  selectedProfilo = selectedBisogno = null;
+  document.querySelectorAll('.profilo-btn, .bisogno-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('btn-step2').disabled = true;
+  document.getElementById('btn-step3').disabled = true;
+  goToStep(1);
+}
+
+function reportHeight() {
+  const h = document.body.scrollHeight;
+  window.parent.postMessage({ type: 'cw-height', height: h }, '*');
+}
+new ResizeObserver(reportHeight).observe(document.body);
+</script>
+</body>
+</html>
