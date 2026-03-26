@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --verde: #2B4C3F; --bg: #fdfcf9; --text: #1a1a1a; --border: #e5e5e5; }
+        
+        /* CONTAINER LIQUIDO PER IL TUO SITO */
+        #orientati-app { 
+            font-family: 'Karla', sans-serif; 
+            font-size: 17px; 
+            color: var(--text); 
+            width: 100%; 
+            max-width: 1000px; /* Si stringe se il contenitore è più piccolo */
+            margin: 0 auto; 
+            padding: 20px; 
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+        
+        /* HEADER - Font Inter come da richiesta */
+        .logo-cantiere { font-family: 'Inter'; font-size: 12px; font-weight: 700; color: var(--verde); text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-bottom: 10px; }
+        .claim { font-family: 'Inter'; text-align: center; font-size: clamp(24px, 5vw, 32px); font-weight: 700; margin-bottom: 40px; color: #111; letter-spacing: -0.5px; }
+
+        /* PROFILI RESPONSIVE */
+        .grid-profili { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 15px; 
+        }
+        .card-profilo { 
+            background: #fff; 
+            border: 1px solid var(--border); 
+            padding: 25px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex;
+            flex-direction: column;
+        }
+        .card-profilo:hover { border-color: var(--verde); background: #f9faf9; }
+        .card-profilo h3 { font-family: 'Inter'; font-size: 16px; margin: 0 0 10px 0; color: var(--verde); text-transform: uppercase; }
+        .card-profilo p { font-size: 14px; margin: 0; color: #555; }
+
+        /* AREA PERCORSO */
+        #area-percorso { margin-top: 10px; }
+        .titolo-percorso { font-family: 'Inter'; font-size: 22px; font-weight: 700; margin-bottom: 30px; color: #111; border-left: 4px solid var(--verde); padding-left: 15px; }
+        
+        .blocco-cat { margin-bottom: 35px; }
+        .header-cat { font-family: 'Inter'; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #aaa; letter-spacing: 1.5px; margin-bottom: 12px; display: flex; align-items: center; }
+        .header-cat::after { content: ''; flex: 1; height: 1px; background: #eee; margin-left: 15px; }
+
+        /* TABELLA RESPONSIVE */
+        .lista-risorse { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .lista-risorse td { padding: 12px 0; border-bottom: 1px solid #f2f2f2; word-wrap: break-word; }
+        
+        .tag { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; margin-right: 10px; display: inline-block; min-width: 75px; text-align: center; }
+        .tag-podcast { background: #e3f2fd; color: #1976d2; }
+        .tag-news { background: #fff3e0; color: #e65100; }
+        .tag-articolo { background: #e8f5e9; color: #2e7d32; }
+        .tag-pdf { background: #ffebee; color: #c62828; }
+
+        .titolo-link { color: #111; text-decoration: none; font-weight: 700; font-size: 16px; line-height: 1.3; }
+        .data-meta { color: #aaa; font-size: 11px; white-space: nowrap; margin-left: 10px; }
+
+        /* SEARCH CONTAINER ADATTIVO */
+        .search-container { margin-top: 40px; padding: 30px 15px; background: #fff; border: 1px solid var(--border); border-radius: 8px; text-align: center; }
+        #search-input { width: 100%; max-width: 400px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px; font-family: 'Karla'; font-size: 16px; box-sizing: border-box; }
+
+        .btn-home { display: inline-block; margin-top: 25px; font-family: 'Inter'; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #999; cursor: pointer; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+
+        /* FOOTER SOCIAL */
+        .footer-social { margin-top: 60px; text-align: center; border-top: 1px solid var(--border); padding-top: 40px; }
+        .social-links { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .s-btn { font-family: 'Inter'; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 10px 20px; border-radius: 4px; text-decoration: none; transition: 0.2s; }
+        .s-news { background: var(--verde); color: #fff; }
+        .s-link { border: 1px solid var(--verde); color: var(--verde); }
+
+        /* FIX PER MOBILE STRETTO */
+        @media (max-width: 600px) {
+            .data-meta { display: block; margin-left: 0; margin-top: 5px; }
+            .tag { margin-bottom: 5px; }
+            .claim { font-size: 24px; }
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="orientati-app">
+    <div class="logo-cantiere">Il Cantiere del Welfare</div>
+    <h1 class="claim" id="main-claim">Cosa vuoi approfondire oggi?</h1>
+
+    <div class="grid-profili" id="grid-iniziale">
+        <div class="card-profilo" onclick="renderPercorso('operatore')">
+            <h3>Operatore</h3>
+            <p>Strumenti pratici, gestione dei casi e operatività sul campo.</p>
+        </div>
+        <div class="card-profilo" onclick="renderPercorso('dirigente')">
+            <h3>Dirigente & PA</h3>
+            <p>Riforme, governance e strategie per decisori pubblici.</p>
+        </div>
+        <div class="card-profilo" onclick="renderPercorso('terzoSettore')">
+            <h3>Enti Terzo Settore</h3>
+            <p>Co-progettazione, bandi e posizionamento politico.</p>
+        </div>
+    </div>
+
+    <div id="area-percorso" class="hidden">
+        <h2 class="titolo-percorso" id="percorso-nome">Percorso</h2>
+
+        <div id="box-podcast" class="blocco-cat">
+            <div class="header-cat">Podcast</div>
+            <table class="lista-risorse" id="list-podcast"></table>
+        </div>
+        <div id="box-news" class="blocco-cat">
+            <div class="header-cat">Newsletter</div>
+            <table class="lista-risorse" id="list-news"></table>
+        </div>
+        <div id="box-articoli" class="blocco-cat">
+            <div class="header-cat">Articoli</div>
+            <table class="lista-risorse" id="list-articoli"></table>
+        </div>
+        <div id="box-pdf" class="blocco-cat">
+            <div class="header-cat">Scaricabili</div>
+            <table class="lista-risorse" id="list-pdf"></table>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Cerca una parola chiave..." onkeyup="avviaRicerca()">
+            <br>
+            <div class="btn-home" onclick="vaiAllaHome()">← Torna ai profili</div>
+        </div>
+    </div>
+
+    <div class="footer-social">
+        <div class="social-links">
+            <a href="#" class="s-btn s-news">Newsletter</a>
+            <a href="#" class="s-btn s-link">LinkedIn</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const DB = [
+    { d: "26/03/2026", t: "Senza Padroni #3 - Report Strategico", l: "#", cat: "pdf", p: ["dirigente", "terzoSettore"] },
+    { d: "15/02/2026", t: "Le Fondamenta #25: Comunicare il sociale", l: "#", cat: "news", p: ["terzoSettore", "dirigente"] },
+    { d: "05/01/2026", t: "Ecosistemi ibridi: impresa sociale", l: "#", cat: "articolo", p: ["terzoSettore", "dirigente"] },
+    { d: "29/12/2025", t: "Ep. 26 Podcast: Abitare la longevità", l: "#", cat: "podcast", p: ["operatore", "dirigente"] }
+    // Qui incollerai tutti i 111 record
+];
+
+let currentProfile = "";
+
+function renderPercorso(pId) {
+    currentProfile = pId;
+    document.getElementById('grid-iniziale').classList.add('hidden');
+    document.getElementById('main-claim').classList.add('hidden');
+    document.getElementById('area-percorso').classList.remove('hidden');
+    const label = {operatore: "Percorso Operatore", dirigente: "Percorso Dirigente & PA", terzoSettore: "Percorso Terzo Settore"};
+    document.getElementById('percorso-nome').innerText = label[pId];
+    popola(pId);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function popola(pId, query = "") {
+    const q = query.toLowerCase();
+    const filtrati = DB.filter(i => (pId === 'search' || i.p.includes(pId)) && i.t.toLowerCase().includes(q));
+    
+    const cats = ['podcast', 'news', 'articoli', 'pdf'];
+    cats.forEach(c => {
+        const targetId = c === 'articoli' ? 'list-articoli' : 'list-' + c;
+        const dbCat = c === 'articoli' ? 'articolo' : c;
+        const data = filtrati.filter(item => item.cat === dbCat);
+        const list = document.getElementById(targetId);
+        const box = document.getElementById('box-' + c);
+        
+        if (data.length === 0) { box.classList.add('hidden'); } 
+        else {
+            box.classList.remove('hidden');
+            list.innerHTML = data.map(i => `
+                <tr>
+                    <td>
+                        <span class="tag tag-${i.cat}">${i.cat}</span>
+                        <a href="${i.l}" class="titolo-link">${i.t}</a>
+                        <span class="data-meta">${i.d}</span>
+                    </td>
+                </tr>`).join('');
+        }
+    });
+}
+
+function avviaRicerca() {
+    const val = document.getElementById('search-input').value;
+    if (val.length > 2) { 
+        document.getElementById('percorso-nome').innerText = "Risultati: " + val;
+        popola('search', val); 
+    } else { 
+        renderPercorso(currentProfile); 
+    }
+}
+
+function vaiAllaHome() {
+    document.getElementById('grid-iniziale').classList.remove('hidden');
+    document.getElementById('main-claim').classList.remove('hidden');
+    document.getElementById('area-percorso').classList.add('hidden');
+}
+</script>
+</body>
+</html>
