@@ -718,16 +718,14 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
-// --- LOGICA DI NAVIGAZIONE ---
 let selectedProfilo = null;
 let selectedBisogno = null;
 
 function updateUI(step) {
   const bar = document.getElementById('progress-bar');
   const dots = document.querySelectorAll('.step-dot');
-  
   if (!bar) return;
-
+  
   if (step === 1) bar.style.width = '33%';
   if (step === 2) bar.style.width = '66%';
   if (step === 3) bar.style.width = '100%';
@@ -741,11 +739,9 @@ function updateUI(step) {
       dot.textContent = step === 3 ? '✓' : (idx + 1);
     }
   });
-
   window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
 }
 
-// Click Profili
 document.querySelectorAll('.profilo-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
@@ -755,7 +751,6 @@ document.querySelectorAll('.profilo-btn').forEach(btn => {
   });
 });
 
-// Click Bisogni
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
@@ -765,7 +760,6 @@ document.querySelectorAll('.bisogno-btn').forEach(btn => {
   });
 });
 
-// Tasto Continua (Step 1 -> 2)
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
@@ -773,7 +767,6 @@ document.getElementById('btn-step2').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Tasto Mostra Percorso (Step 2 -> 3)
 document.getElementById('btn-step3').addEventListener('click', () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
@@ -789,8 +782,8 @@ function goBack() {
 }
 
 function restart() { location.reload(); }
-
 window.addEventListener('load', () => updateUI(1));
+
 
 // --- DA QUI INIZIA IL TUO CATALOGO ---
 const CATALOGO = {
