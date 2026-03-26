@@ -917,37 +917,44 @@ async function fetchArticoli(profilo, bisogno) {
     }));
   } catch(e) { return []; }
 }
-
 // ═══════════════════════════════════════════
-// LOGICA APP
+// STATO E LOGICA APP
 // ═══════════════════════════════════════════
 let selectedProfilo = null;
 let selectedBisogno = null;
+let esploraTabAttiva = 'podcast';
 
+// Gestione Clic Profili (Step 1)
 document.querySelectorAll('.profilo-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedProfilo = btn.dataset.profilo;
     document.getElementById('btn-step2').disabled = false;
+    reportHeight();
   });
 });
 
+// Avanti a Step 2
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  reportHeight();
 });
 
+// Gestione Clic Bisogni (Step 2)
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedBisogno = btn.dataset.bisogno;
     document.getElementById('btn-step3').disabled = false;
+    reportHeight();
   });
 });
 
+// Avanti a Risultati (Step 3)
 document.getElementById('btn-step3').addEventListener('click', () => {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-risultati').classList.add('active');
@@ -959,6 +966,7 @@ function goBack() {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-profilo').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  reportHeight();
 }
 
 function restart() {
@@ -971,8 +979,12 @@ function restart() {
   document.getElementById('step-risultati').classList.remove('active');
   document.getElementById('step-profilo').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  reportHeight();
 }
 
+// ═══════════════════════════════════════════
+// RENDERING RISULTATI CON FILTRI E STELLINE
+// ═══════════════════════════════════════════
 function renderRisultati() {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'percorso_completato', { profilo: selectedProfilo, bisogno: selectedBisogno });
@@ -986,6 +998,47 @@ function renderRisultati() {
   const container = document.getElementById('contenuti-risultati');
   container.innerHTML = '';
 
+  // Generazione Tab Filtri
+  let filtriHtml = `
+    <div class="esplora-tabs">
+      <button class="esplora-tab active" onclick="filtraTipo('all', this)">Tutti</button>
+      ${dati.podcast?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-podcast', this)">Podcast</button>` : ''}
+      ${dati.newsletter?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-newsletter', this)">Newsletter</button>` : ''}
+      ${dati.scaricabili?.length ? `<button class="esplora-tab" onclick="filtraTipo('sez-download', this)">Download</button>` : ''}
+    </div>
+  `;
+  const tabsDiv = document.createElement('div');
+  tabsDiv.innerHTML = filtriHtml;
+  container.appendChild(tabsDiv);
+
+  // Sezioni Risultati
+  if (dati.podcast?.length) {
+    const s = makeSez('Podcast', dati.podcast.map((p, i) =>
+      makeCard('Ep. ' + p.ep, p.titolo, 'con ' + p.ospite + ' — ' + p.desc, p.perche, p.link, 'Ascolta', i)
+    ));
+    s.classList.add('sez-filtro', 'sez-podcast');
+    container.appendChild(s);
+  }
+  
+  if (dati.newsletter?.length) {
+    const s = makeSez('Newsletter', dati.newsletter.map((n, i) =>
+      makeCard('Le Fondamenta #' + n.n, n.titolo, '', n.perche, n.link, 'Leggi su LinkedIn', i)
+    ));
+    s.classList.add('sez-filtro', 'sez-newsletter');
+    container.appendChild(s);
+  }
+
+  if (dati.scaricabili?.length) {
+    const s = document.createElement('div');
+    s.className = 'sez fade-in sez-filtro sez-download';
+    s.innerHTML = '<div class="sez-header"><span class="sez-tipo">Scaricabili</span><span class="sez-count">' + dati.scaricabili.length + ' documento/i</span></div><div class="cards-list">' +
+      dati.scaricabili.map(item => '<div class="card-download"><div><div class="card-title">' + item.titolo + '</div><div class="card-desc">' + item.desc + '</div></div><a class="card-download-link" href="' + item.link + '" target="_blank">&#8595; PDF</a></div>').join('') +
+      '</div>';
+    container.appendChild(s);
+  }
+  
+  reportHeight();
+}
   // --- AGGIUNTA FILTRI ---
   let filtriHtml = `
     <div class="esplora-tabs" style="display:flex; gap:10px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px; flex-wrap:wrap;">
