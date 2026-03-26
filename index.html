@@ -547,15 +547,12 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </style>
 </head>
 <body>
-
-</header>
   <header>
-  <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
-  <span class="brand">Il Cantiere del Welfare Sociale</span>
-  <span class="sep">&middot;</span>
-  <span class="sub">Orientati</span>
-</header>
-
+    <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
+    <span class="brand">Il Cantiere del Welfare Sociale</span>
+    <span class="sep">·</span>
+    <span class="sub">Orientati</span>
+  </header>
 <div id="progress-container">
   <div id="progress-bar"></div>
 </div>
@@ -717,11 +714,11 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
 </main>
 
 <script>
-// --- LOGICA DI NAVIGAZIONE E ILLUMINAZIONE ---
+<script>
+// --- LOGICA DI NAVIGAZIONE ---
 let selectedProfilo = null;
 let selectedBisogno = null;
 
-// Funzione che muove la barra e aggiorna i pallini (1, 2, ✓)
 function updateUI(step) {
   const bar = document.getElementById('progress-bar');
   const dots = document.querySelectorAll('.step-dot');
@@ -733,40 +730,36 @@ function updateUI(step) {
   dots.forEach((dot, idx) => {
     if (idx + 1 < step) { 
       dot.classList.add('done'); 
-      dot.classList.remove('active'); 
       dot.textContent = '✓'; 
     } else if (idx + 1 === step) { 
       dot.classList.add('active'); 
-      dot.classList.remove('done'); 
-      dot.textContent = step === 3 ? '✓' : step;
     }
   });
 
-  // Notifica l'altezza a WordPress per evitare scrollbar brutte
   window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
 }
 
-// Gestione Click Profili (Illuminazione Verde)
+// Click Profili
 document.querySelectorAll('.profilo-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected'); // Questo attiva il CSS che abbiamo scritto
+    btn.classList.add('selected');
     selectedProfilo = btn.dataset.profilo;
-    document.getElementById('btn-step2').disabled = false; // Accende il tasto "Continua"
+    document.getElementById('btn-step2').disabled = false;
   });
 });
 
-// Gestione Click Bisogni (Illuminazione Arancio)
+// Click Bisogni
 document.querySelectorAll('.bisogno-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedBisogno = btn.dataset.bisogno;
-    document.getElementById('btn-step3').disabled = false; // Accende il tasto "Mostrami il percorso"
+    document.getElementById('btn-step3').disabled = false;
   });
 });
 
-// Passaggio agli Step successivi
+// Navigazione
 document.getElementById('btn-step2').addEventListener('click', () => {
   document.getElementById('step-profilo').classList.remove('active');
   document.getElementById('step-bisogno').classList.add('active');
@@ -782,7 +775,6 @@ document.getElementById('btn-step3').addEventListener('click', () => {
   if (typeof renderRisultati === "function") renderRisultati();
 });
 
-// Funzioni di Reset
 function goBack() {
   document.getElementById('step-bisogno').classList.remove('active');
   document.getElementById('step-profilo').classList.add('active');
@@ -791,77 +783,10 @@ function goBack() {
 
 function restart() { location.reload(); }
 
-// Avvio automatico al caricamento
 window.addEventListener('load', () => updateUI(1));
+
+// --- CATALOGO ---
   
-let selectedProfilo = null;
-let selectedBisogno = null;
-
-// Funzione che muove la barra arancione e aggiorna i pallini
-function updateUI(step) {
-  const bar = document.getElementById('progress-bar');
-  const dots = document.querySelectorAll('.step-dot');
-  
-  // Posizioni della barra
-  if (step === 1) bar.style.width = '33%';
-  if (step === 2) bar.style.width = '66%';
-  if (step === 3) bar.style.width = '100%';
-
-  // Aggiorna i pallini numerati (1, 2, ✓)
-  dots.forEach((dot, idx) => {
-    if (idx + 1 < step) { 
-      dot.classList.add('done'); 
-      dot.textContent = '✓'; 
-    } else if (idx + 1 === step) { 
-      dot.classList.add('active'); 
-    }
-  });
-
-  // Notifica l'altezza per evitare scrollbar brutte
-  window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
-}
-
-// Gestione Click Profili (Illuminazione Verde)
-document.querySelectorAll('.profilo-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedProfilo = btn.dataset.profilo;
-    document.getElementById('btn-step2').disabled = false; // Accende il pulsante
-  });
-});
-
-// Gestione Click Bisogni (Illuminazione Arancio)
-document.querySelectorAll('.bisogno-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedBisogno = btn.dataset.bisogno;
-    document.getElementById('btn-step3').disabled = false; // Accende il pulsante
-  });
-});
-
-// Navigazione tra gli Step
-document.getElementById('btn-step2').addEventListener('click', () => {
-  document.getElementById('step-profilo').classList.remove('active');
-  document.getElementById('step-bisogno').classList.add('active');
-  updateUI(2);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-document.getElementById('btn-step3').addEventListener('click', () => {
-  document.getElementById('step-bisogno').classList.remove('active');
-  document.getElementById('step-risultati').classList.add('active');
-  updateUI(3);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Chiama la funzione che genera i risultati dal tuo catalogo
-  if (typeof renderRisultati === "function") renderRisultati();
-});
-
-function restart() { location.reload(); }
-
-// Avvia la barra al caricamento
-window.addEventListener('load', () => updateUI(1));  
 const CATALOGO = {
 
   operatore: {
