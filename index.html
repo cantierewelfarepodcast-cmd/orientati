@@ -1,524 +1,284 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orientati — Il Cantiere del Welfare Sociale</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BWT3SWH1RB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BWT3SWH1RB');
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #F4F1EB;
-  --surface: #FDFCF9;
-  --surface2: #F0EDE5;
-  --text: #1A1A18;
-  --muted: #6B6860;
-  --accent: #2B4C3F;
-  --accent2: #C8722A;
-  --accent-light: #E4EDE9;
-  --border: #DDD9D0;
-  --green-mid: #3D6B5A;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Karla', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-header {
-  padding: 1rem 2rem;
-  background: #000033;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-header img { height: 28px; }
-
-header .brand {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: rgba(255,255,255,0.92);
-}
-
-header .sep { color: rgba(255,255,255,0.3); }
-
-header .sub {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.65);
-  font-weight: 400;
-}
-
-#progress-container {
-  width: 100%;
-  height: 6px;
-  background: var(--border);
-  position: sticky;
-  top: 60px;
-  z-index: 999;
-}
-
-#progress-bar {
-  width: 33.33%;
-  height: 100%;
-  background: var(--accent2);
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem 6rem;
-  width: 100%;
-  flex: 1;
-}
-
-.step { display: none; }
-.step.active { 
-  display: block;
-  animation: fadeIn 0.4s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero { margin-bottom: 3rem; }
-.hero h1 {
-  font-family: 'Inter', sans-serif;
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent);
-}
-.hero p {
-  font-size: 1.15rem;
-  color: var(--muted);
-}
-
-.profili-grid, .bisogni-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 3rem;
-}
-
-.profilo-btn, .bisogno-btn {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  padding: 1.75rem;
-  border-radius: 14px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.25s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.profilo-btn:hover, .bisogno-btn:hover {
-  border-color: var(--accent);
-  background: var(--surface2);
-  transform: translateY(-2px);
-}
-
-.profilo-btn.selected, .bisogno-btn.selected {
-  border-color: var(--accent);
-  background: var(--accent-light);
-  box-shadow: 0 4px 12px rgba(43, 76, 63, 0.1);
-}
-
-.profilo-btn b, .bisogno-btn b {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  display: block;
-}
-
-.profilo-btn small {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.btn-vai {
-  background: var(--border);
-  color: var(--muted);
-  border: none;
-  padding: 1.1rem 2.5rem;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: not-allowed;
-  transition: all 0.3s ease;
-}
-
-.btn-vai:not(:disabled) {
-  background: var(--accent2) !important;
-  color: white !important;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(200, 114, 42, 0.3);
-}
-
-.btn-vai:not(:disabled):hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-}
-
-.btn-back {
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Risultati */
-.risultati-header { margin-bottom: 2.5rem; }
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.75rem;
-  margin-bottom: 1.25rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  transition: all 0.2s ease;
-}
-.card:hover { border-color: var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-
-.card-body { flex: 1; }
-.card-num { 
-  font-size: 0.7rem; 
-  font-weight: 700; 
-  text-transform: uppercase; 
-  color: var(--accent2);
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.05em;
-}
-.card-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.3;
-}
-.card-link {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 700;
-  padding: 0.8rem 1.4rem;
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-.card-link:hover { background: var(--accent); color: white; }
-
-@media (max-width: 650px) {
-  .profili-grid, .bisogni-grid { grid-template-columns: 1fr; }
-  .card { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
-  .card-link { width: 100%; text-align: center; }
-  header { padding: 1rem; }
-  header .brand { font-size: 0.85rem; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientati — Il Cantiere del Welfare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #F4F1EB; --surface: #FDFCF9; --accent: #2B4C3F; --text: #1A1A18; --muted: #6B6860; }
+        body { font-family: 'Karla', sans-serif; font-size: 17px; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
+ 
+        .cantiere-wrapper { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+ 
+        #colonna-fissa { width: 20% !important; position: sticky; top: 20px; }
+        #contenuto-articolo { width: 60% !important; background: var(--surface); padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); min-height: 85vh; }
+        .colonna-destra-padre { width: 20% !important; position: sticky; top: 20px; }
+        .box-laterale { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px 20px; margin-bottom: 25px; }
+        .titolo-box { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.6px; color: #111; margin: 0 0 14px 0; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+ 
+        #search-input { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 8px; font-family: 'Karla'; margin-bottom: 10px; font-size: 16px; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
+        #search-input:focus { border-color: var(--accent); }
+        #contatore { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+        .btn-nav { display: block; width: 100%; padding: 12px; margin-bottom: 8px; border: 1px solid #ddd; background: #fff; border-radius: 6px; cursor: pointer; text-align: left; font-family: 'Karla'; transition: 0.2s; font-size: 15px; }
+        .btn-nav.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .btn-nav:hover:not(.active) { background: #f0f0f0; }
+        .risorsa-card { background: #fff; border: 1px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 8px; transition: box-shadow 0.2s; }
+        .risorsa-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+        .tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; margin-right: 5px; }
+        .tag-articolo { background: #E8F5E9; color: #2E7D32; }
+        .tag-news { background: #FFF3E0; color: #E65100; }
+        .tag-podcast { background: #E3F2FD; color: #1976D2; }
+        .tag-pdf { background: #FFEBEE; color: #C62828; }
+ 
+        .link-risorsa { color: var(--accent); font-weight: 700; text-decoration: none; font-size: 16px; display: inline-block; margin-top: 10px; }
+        .link-risorsa:hover { text-decoration: underline; }
+        .download-link { font-size: 14px; color: #C62828; text-decoration: none; font-weight: bold; display: block; margin-bottom: 10px; }
+        .download-link:hover { text-decoration: underline; }
+        .nessun-risultato { color: var(--muted); font-style: italic; padding: 20px 0; }
+        .badge-nuovo { font-size: 10px; background: #FFF3E0; color: #E65100; padding: 1px 6px; border-radius: 3px; margin-left: 6px; font-weight: 700; vertical-align: middle; }
+        @media (max-width: 1024px) {
+            .cantiere-wrapper { flex-direction: column; }
+            #colonna-fissa, .colonna-destra-padre, #contenuto-articolo { width: 100% !important; position: static; }
+        }
+    </style>
 </head>
 <body>
-
-<header>
-  <img src="https://www.ilcantierewelfare.it/wp-content/uploads/2026/01/LOGO-SOTTILE.png" alt="Il Cantiere del Welfare">
-  <span class="brand">Il Cantiere del Welfare Sociale</span>
-  <span class="sep">·</span>
-  <span class="sub">Orientati</span>
-</header>
-
-<div id="progress-container">
-  <div id="progress-bar"></div>
-</div>
-
-<main>
-  <div class="step active" id="step-profilo">
-    <div class="hero">
-      <h1>Da dove guardi il <em>welfare?</em></h1>
-      <p>Scegli il punto di osservazione più vicino alla tua realtà.</p>
-    </div>
-    
-    <div class="profili-grid">
-      <button class="profilo-btn" data-profilo="operatore">
-        <b>Lavoro con le persone</b>
-        <small>Sei un educatore, assistente sociale, psicologo o lavori sul campo.</small>
-      </button>
-      <button class="profilo-btn" data-profilo="dirigente">
-        <b>Decido le politiche</b>
-        <small>Amministratore pubblico, dirigente di ente locale o decisore politico.</small>
-      </button>
-      <button class="profilo-btn" data-profilo="terzosettore">
-        <b>Costruisco dal terzo settore</b>
-        <small>Cooperative, associazioni, imprese sociali o fondazioni.</small>
-      </button>
-      <button class="profilo-btn" data-profilo="ibrido">
-        <b>Sto in mezzo</b>
-        <small>Chi lavora tra cultura e sociale, spazi rigenerati o innovazione sociale.</small>
-      </button>
-    </div>
-
-    <button class="btn-vai" id="btn-step2" disabled>Continua →</button>
-  </div>
-
-  <div class="step" id="step-bisogno">
-    <div class="hero">
-      <h1>Cosa stai <em>cercando?</em></h1>
-      <p>Seleziona l'obiettivo che meglio descrive la tua ricerca oggi.</p>
-    </div>
-
-    <div class="bisogni-grid">
-      <button class="bisogno-btn" data-bisogno="scenario">
-        <b>Capire i cambiamenti</b>
-        <small>Dati e analisi per interpretare le nuove vulnerabilità.</small>
-      </button>
-      <button class="bisogno-btn" data-bisogno="visione">
-        <b>Allargare la visione</b>
-        <small>Prospettive esterne per uscire dalla bolla del quotidiano.</small>
-      </button>
-      <button class="bisogno-btn" data-bisogno="strumenti">
-        <b>Strumenti operativi</b>
-        <small>Metodi, pratiche e modelli pronti per essere applicati.</small>
-      </button>
-      <button class="bisogno-btn" data-bisogno="progetto">
-        <b>Preparare un progetto</b>
-        <small>Focus su co-progettazione e sostenibilità organizzativa.</small>
-      </button>
-    </div>
-
-    <div class="nav-actions">
-      <button class="btn-back" onclick="goBack()">← Cambia profilo</button>
-      <button class="btn-vai" id="btn-step3" disabled>Mostra il mio percorso →</button>
-    </div>
-  </div>
-
-  <div class="step" id="step-risultati">
-    <div class="risultati-header">
-      <h1 id="risultati-titolo">Il tuo percorso</h1>
-      <p id="risultati-desc"></p>
-    </div>
-
-    <div id="contenuti-risultati"></div>
-
-    <div style="margin-top: 4rem; text-align: center; border-top: 1px solid var(--border); padding-top: 2rem;">
-      <p style="color: var(--muted); margin-bottom: 1.5rem;">Vuoi esplorare un altro punto di vista?</p>
-      <button onclick="location.reload()" class="btn-back" style="margin: 0 auto;">Ricomincia da capo</button>
-    </div>
-  </div>
-</main>
-
-<script>
-// --- LOGICA DI NAVIGAZIONE ---
-let selectedProfilo = null;
-let selectedBisogno = null;
-
-function updateUI(step) {
-  const bar = document.getElementById('progress-bar');
-  if (bar) {
-    if (step === 1) bar.style.width = '33.33%';
-    if (step === 2) bar.style.width = '66.66%';
-    if (step === 3) bar.style.width = '100%';
-  }
-  // Comunica l'altezza a un eventuale iframe
-  window.parent.postMessage({ type: 'cw-height', height: document.body.scrollHeight }, '*');
-}
-
-// Click Profili
-document.querySelectorAll('.profilo-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.profilo-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedProfilo = btn.dataset.profilo;
-    document.getElementById('btn-step2').disabled = false;
-  });
-});
-
-// Click Bisogni
-document.querySelectorAll('.bisogno-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.bisogno-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedBisogno = btn.dataset.bisogno;
-    document.getElementById('btn-step3').disabled = false;
-  });
-});
-
-// Cambia Step
-document.getElementById('btn-step2').addEventListener('click', () => {
-  document.getElementById('step-profilo').classList.remove('active');
-  document.getElementById('step-bisogno').classList.add('active');
-  updateUI(2);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-document.getElementById('btn-step3').addEventListener('click', () => {
-  document.getElementById('step-bisogno').classList.remove('active');
-  document.getElementById('step-risultati').classList.add('active');
-  updateUI(3);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  renderRisultati();
-});
-
-function goBack() {
-  document.getElementById('step-bisogno').classList.remove('active');
-  document.getElementById('step-profilo').classList.add('active');
-  updateUI(1);
-}
-
-// --- CATALOGO DATI (Tutti i tuoi dati originali) ---
-const CATALOGO = {
-  profili: {
-    operatore: {
-      titolo: "Percorso per chi abita la relazione",
-      desc: "Contenuti selezionati per chi lavora sul campo, tra casi complessi e la ricerca di un senso quotidiano."
-    },
-    dirigente: {
-      titolo: "Percorso per chi governa i sistemi",
-      desc: "Analisi e scenari per chi deve prendere decisioni, gestire risorse e guardare al lungo periodo."
-    },
-    terzosettore: {
-      titolo: "Percorso per chi costruisce organizzazione",
-      desc: "Materiali sulla sostenibilità, l'identità e la missione delle imprese sociali e del non profit."
-    },
-    ibrido: {
-      titolo: "Percorso per gli esploratori di confini",
-      desc: "Spunti per chi lavora tra cultura, sociale e nuovi spazi di innovazione ancora da definire."
-    }
-  },
-  
-  percorsi: {
-    "operatore-scenario": ["P26", "N25", "N20", "N19", "N13"],
-    "operatore-visione": ["P22", "P21", "N24", "N22", "N18"],
-    "operatore-strumenti": ["P24", "N21", "N20", "N17", "N10"],
-    "operatore-progetto": ["P25", "N23", "N22", "N15", "N11"],
-    
-    "dirigente-scenario": ["P26", "N25", "N19", "N16", "N14"],
-    "dirigente-visione": ["P22", "P16", "N25", "N24", "N22"],
-    "dirigente-strumenti": ["N21", "N20", "N18", "N17", "N14"],
-    "dirigente-progetto": ["P25", "N23", "N22", "N15", "N12"],
-    
-    "terzosettore-scenario": ["P26", "N25", "N24", "N19", "N16"],
-    "terzosettore-visione": ["P22", "P21", "N25", "N24", "N22"],
-    "terzosettore-strumenti": ["P24", "N21", "N20", "N18", "N11"],
-    "terzosettore-progetto": ["P25", "N23", "N22", "N15", "N12"],
-    
-    "ibrido-scenario": ["P26", "N25", "N19", "N18", "N13"],
-    "ibrido-visione": ["P22", "P21", "P16", "N25", "N22"],
-    "ibrido-strumenti": ["P24", "N21", "N17", "N16", "N10"],
-    "ibrido-progetto": ["P25", "N23", "N22", "N15", "N11"]
-  },
-
-  contenuti: {
-    "P26": { tipo: "podcast", num: "Ep. 26", titolo: "Cosa rimane quando il progetto finisce?", desc: "Con Franca Olivetti Manoukian riflettiamo sul lavoro sociale come 'mantenimento' e cura dei legami.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/26--Cosa-rimane-quando-il-progetto-finisce--con-Franca-Olivetti-Manoukian-e2ogvcl", label: "Ascolta" },
-    "P25": { tipo: "podcast", num: "Ep. 25", titolo: "Perché la coprogettazione è in crisi?", desc: "Un'analisi schietta sulle fatiche del progettare insieme, oltre i formalismi.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/25--Perch-la-coprogettazione--in-crisi--con-Pasquale-Bonasora-e2nkiq7", label: "Ascolta" },
-    "P24": { tipo: "podcast", num: "Ep. 24", titolo: "L'abitare come frontiera del welfare", desc: "Non solo case: come i legami sociali trasformano i luoghi dell'abitare.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/24--Labitare-come-frontiera-del-welfare--con-Marianna-Filandri-e2mb6h9", label: "Ascolta" },
-    "P22": { tipo: "podcast", num: "Ep. 22", titolo: "Welfare Culturale: oltre l'evento", desc: "Come la cultura diventa strumento di salute e benessere sociale reale.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/22--Welfare-Culturale-oltre-levento--con-Alessandra-Gariboldi-e2jq7k4", label: "Ascolta" },
-    "P21": { tipo: "podcast", num: "Ep. 21", titolo: "I nuovi poveri: chi sono?", desc: "Analisi delle povertà emergenti e della classe media che scivola verso il basso.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/21--I-nuovi-poveri-chi-sono--con-Chiara-Saraceno-e2ij7j4", label: "Ascolta" },
-    "P16": { tipo: "podcast", num: "Ep. 16", titolo: "Il welfare aziendale serve davvero?", desc: "Analisi critica dell'impatto del welfare privato sui servizi pubblici.", link: "https://podcasters.spotify.com/pod/show/il-cantiere-del-welfare/episodes/16--Il-welfare-aziendale-serve-davvero-e24k5m1", label: "Ascolta" },
-    
-    "N25": { tipo: "newsletter", num: "#25", titolo: "Fondamenta: il caso Will", desc: "Come l'informazione può generare comunità e mobilitazione sociale.", link: "https://ilcantieredelwelfare.substack.com/p/25-fondamenta-il-caso-will", label: "Leggi" },
-    "N24": { tipo: "newsletter", num: "#24", titolo: "La manutenzione dei legami", desc: "Perché prendersi cura di ciò che già esiste è più rivoluzionario di innovare.", link: "https://ilcantieredelwelfare.substack.com/p/24-la-manutenzione-dei-legami", label: "Leggi" },
-    "N23": { tipo: "newsletter", num: "#23", titolo: "Il tempo della cura", desc: "Riflessioni sul tempo nel lavoro sociale: cronos vs kairos.", link: "https://ilcantieredelwelfare.substack.com/p/23-il-tempo-della-cura", label: "Leggi" },
-    "N22": { tipo: "newsletter", num: "#22", titolo: "Oltre la partecipazione formale", desc: "Come evitare che la coprogettazione diventi un adempimento burocratico.", link: "https://ilcantieredelwelfare.substack.com/p/22-oltre-la-partecipazione-formale", label: "Leggi" },
-    "N21": { tipo: "newsletter", num: "#21", titolo: "Mappe per orientarsi nel caos", desc: "Strumenti visivi per leggere la complessità dei servizi territoriali.", link: "https://ilcantieredelwelfare.substack.com/p/21-mappe-per-orientarsi-nel-caos", label: "Leggi" },
-    "N20": { tipo: "newsletter", num: "#20", titolo: "L'algoritmo del welfare", desc: "L'impatto dell'intelligenza artificiale sui servizi alla persona.", link: "https://ilcantieredelwelfare.substack.com/p/20-lalgoritmo-del-welfare", label: "Leggi" },
-    "N19": { tipo: "newsletter", num: "#19", titolo: "Denatalità e futuro", desc: "Cosa succede ai servizi quando mancano le nuove generazioni.", link: "https://ilcantieredelwelfare.substack.com/p/19-denatalita-e-futuro", label: "Leggi" },
-    "N18": { tipo: "newsletter", num: "#18", titolo: "La solitudine è un tema politico", desc: "Perché l'isolamento sociale non è un fatto privato.", link: "https://ilcantieredelwelfare.substack.com/p/18-la-solitudine-e-un-tema-politico", label: "Leggi" },
-    "N17": { tipo: "newsletter", num: "#17", titolo: "Valutare l'impatto sociale", desc: "Oltre i numeri: come misurare il cambiamento reale delle vite.", link: "https://ilcantieredelwelfare.substack.com/p/17-valutare-limpatto-sociale", label: "Leggi" },
-    "N16": { tipo: "newsletter", num: "#16", titolo: "Il welfare della prossimità", desc: "Piccole azioni territoriali per grandi cambiamenti sistemici.", link: "https://ilcantieredelwelfare.substack.com/p/16-il-welfare-della-prossimita", label: "Leggi" },
-    "N15": { tipo: "newsletter", num: "#15", titolo: "Diritto al desiderio", desc: "Perché nel welfare non bastano solo i bisogni primari.", link: "https://ilcantieredelwelfare.substack.com/p/15-diritto-al-desiderio", label: "Leggi" },
-    "N14": { tipo: "newsletter", num: "#14", titolo: "Politiche di genere e servizi", desc: "Come costruire un welfare che riconosca le differenze.", link: "https://ilcantieredelwelfare.substack.com/p/14-politiche-di-genere-e-servizi", label: "Leggi" },
-    "N13": { tipo: "newsletter", num: "#13", titolo: "Welfare e periferie", desc: "Rigenerazione urbana come strumento di inclusione.", link: "https://ilcantieredelwelfare.substack.com/p/13-welfare-e-periferie", label: "Leggi" },
-    "N12": { tipo: "newsletter", num: "#12", titolo: "La riforma del Terzo Settore", desc: "Punto della situazione su leggi e opportunità.", link: "https://ilcantieredelwelfare.substack.com/p/12-la-riforma-del-terzo-settore", label: "Leggi" },
-    "N11": { tipo: "newsletter", num: "#11", titolo: "Co-programmare il futuro", desc: "Coinvolgere i cittadini nella definizione delle priorità.", link: "https://ilcantieredelwelfare.substack.com/p/11-co-programmare-il-futuro", label: "Leggi" },
-    "N10": { tipo: "newsletter", num: "#10", titolo: "Design dei servizi", desc: "Rendere i servizi facili da usare per le persone.", link: "https://ilcantieredelwelfare.substack.com/p/10-design-dei-servizi", label: "Leggi" }
-  }
-};
-
-function renderRisultati() {
-  const container = document.getElementById('contenuti-risultati');
-  const pathKey = `${selectedProfilo}-${selectedBisogno}`;
-  
-  const profiloInfo = CATALOGO.profili[selectedProfilo];
-  document.getElementById('risultati-titolo').textContent = profiloInfo.titolo;
-  document.getElementById('risultati-desc').textContent = profiloInfo.desc;
-  
-  const ids = CATALOGO.percorsi[pathKey] || [];
-  
-  if (ids.length === 0) {
-    container.innerHTML = "<p style='color:var(--muted)'>Nessun contenuto specifico trovato per questa combinazione.</p>";
-    return;
-  }
-  
-  let html = "";
-  ids.forEach((id, index) => {
-    const c = CATALOGO.contenuti[id];
-    if (c) {
-      html += `
-        <div class="card" style="animation-delay: ${index * 0.1}s">
-          <div class="card-body">
-            <div class="card-num">${c.num}</div>
-            <div class="card-title">${c.titolo}</div>
-            <p style="font-size: 0.95rem; color: var(--muted); margin-top: 0.5rem;">${c.desc}</p>
-          </div>
-          <a class="card-link" href="${c.link}" target="_blank">${c.label} →</a>
+<div class="cantiere-wrapper">
+    <aside id="colonna-fissa">
+        <div class="box-laterale">
+            <div class="titolo-box">Esplora</div>
+            <button class="btn-nav active" onclick="filterType('all', this)">Tutto l'Archivio</button>
+            <button class="btn-nav" onclick="filterType('articolo', this)">Articoli</button>
+            <button class="btn-nav" onclick="filterType('news', this)">Newsletter</button>
+            <button class="btn-nav" onclick="filterType('podcast', this)">Podcast</button>
+            <button class="btn-nav" onclick="filterType('pdf', this)">Solo Scaricabili</button>
         </div>
-      `;
-    }
-  });
-  
-  container.innerHTML = html;
-  updateUI(3);
+        <div class="box-laterale">
+            <div class="titolo-box">Categorie</div>
+            <button class="btn-nav" onclick="filterCat('Anziani', this)">Anziani / LTC</button>
+            <button class="btn-nav" onclick="filterCat('Disabilità', this)">Disabilità</button>
+            <button class="btn-nav" onclick="filterCat('Ponte di Kublai', this)">Ponte di Kublai</button>
+            <button class="btn-nav" onclick="filterCat('Ecosistemi Ibridi', this)">Ecosistemi Ibridi</button>
+            <button class="btn-nav" onclick="filterCat('Futuro', this)">Futuro</button>
+            <button class="btn-nav" onclick="filterCat('Strumenti', this)">Strumenti / PA</button>
+        </div>
+    </aside>
+    <main id="contenuto-articolo">
+        <input type="text" id="search-input" placeholder="Cerca tra articoli, podcast, newsletter e PDF..." onkeyup="search()">
+        <div id="contatore"></div>
+        <div id="risultati"></div>
+    </main>
+    <aside class="colonna-destra-padre">
+        <div class="box-laterale">
+            <div class="titolo-box">📥 Scaricabili (PDF)</div>
+            <a href="https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf" target="_blank" class="download-link">→ Tracce n.1</a>
+            <a href="https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf" target="_blank" class="download-link">→ Senza Padroni n.1</a>
+            <a href="https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf" target="_blank" class="download-link">→ Senza Padroni n.2</a>
+        </div>
+        <div class="box-laterale">
+            <div class="titolo-box">🎙 Podcast</div>
+            <a href="https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0" target="_blank" class="download-link">→ Ascolta su Spotify</a>
+            <a href="https://www.ilcantierewelfare.it/podcast-cantiere-welfare/" target="_blank" class="download-link">→ Tutti gli episodi</a>
+        </div>
+        <div class="box-laterale">
+            <div class="titolo-box">📬 Newsletter</div>
+            <a href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7380841439028535296" target="_blank" class="download-link">→ Iscriviti su LinkedIn</a>
+        </div>
+    </aside>
+</div>
+<script>
+// ─── MAPPA CATEGORIE WORDPRESS ───────────────────────────────────────────────
+const CAT_MAP = {
+    42: "Anziani", 76: "Cultura", 85: "Demografia", 40: "Disabilità",
+    63: "Disuguaglianze", 46: "Ecosistemi Ibridi", 16: "Futuro", 112: "Giovani",
+    31: "Ponte di Kublai", 93: "Lavoro", 37: "LTC", 30: "Newsletter",
+    141: "PA", 11: "Podcast", 80: "Strumenti", 1: "Altro"
+};
+// Categorie da escludere come primarie (tecniche)
+const CAT_ESCLUSE = new Set([30, 11, 1]);
+ 
+function getCatName(cats) {
+    if (!cats || cats.length === 0) return "Altro";
+    const primaria = cats.find(c => !CAT_ESCLUSE.has(c));
+    return CAT_MAP[primaria || cats[0]] || "Altro";
 }
-
-// Inizializzazione
-window.addEventListener('DOMContentLoaded', () => {
-  updateUI(1);
-});
+ 
+// ─── DB STATICO (aggiornato al 26 marzo 2026) ────────────────────────────────
+const DB = [
+    // SCARICABILI / PDF
+    { t: "Tracce n.1: Nuove traiettorie per il Terzo Settore", l: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/TRACCE-n.-1.pdf", type: "pdf", cat: "Report" },
+    { t: "Senza Padroni n.1: Manuale di Autonomia Sociale", l: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf", type: "pdf", cat: "Documenti" },
+    { t: "Senza Padroni n.2: Manuale di Autonomia Sociale", l: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf", type: "pdf", cat: "Documenti" },
+ 
+    // NEWSLETTER
+    { t: "Le Fondamenta #25: Il caso WILL e il sociale", l: "https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=7380841439028535296", type: "news", cat: "Newsletter" },
+ 
+    // ARTICOLI (69 articoli dal sito — aggiornati al 26 marzo 2026)
+    { t: "Eclissi della sapienza amministrativa?", l: "https://www.ilcantierewelfare.it/ia-pa-rischio-competenze/", type: "articolo", cat: "PA" },
+    { t: "Progetto di vita: lo strumento giusto, il sistema sbagliato", l: "https://www.ilcantierewelfare.it/progetto-di-vita-sistema-locale-icf/", type: "articolo", cat: "Disabilità" },
+    { t: "Riforma disabilità 2027: cosa manca davvero", l: "https://www.ilcantierewelfare.it/riforma-disabilita-2027/", type: "articolo", cat: "Disabilità" },
+    { t: "Non autosufficienza anziani in Lombardia", l: "https://www.ilcantierewelfare.it/non-autosufficienza-anziani-in-lombardia/", type: "articolo", cat: "Anziani" },
+    { t: "Non si fa Ctrl+Z", l: "https://www.ilcantierewelfare.it/non-si-fa-ctrlz/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Il contratto sociale che si lascia evaporare", l: "https://www.ilcantierewelfare.it/contratto-sociale-welfare-italiano/", type: "articolo", cat: "Futuro" },
+    { t: "Né famiglia né individuo: la persona", l: "https://www.ilcantierewelfare.it/tutela-minori-famiglia-individuo-falso-dilemma/", type: "articolo", cat: "Disuguaglianze" },
+    { t: "Neuro Public Administration", l: "https://www.ilcantierewelfare.it/neuro-public-administration/", type: "articolo", cat: "PA" },
+    { t: "Il secolo asiatico bussa già alla porta. E noi?", l: "https://www.ilcantierewelfare.it/welfare-territoriale-immigrazione-secolo-asiatico/", type: "articolo", cat: "Demografia" },
+    { t: "Vivere a lungo non basta", l: "https://www.ilcantierewelfare.it/invecchiamento-disuguaglianze-italia-welfare-genere-territorio/", type: "articolo", cat: "Disuguaglianze" },
+    { t: "L'economia sociale è donna?", l: "https://www.ilcantierewelfare.it/economia-sociale-leadership-femminile-gender-gap/", type: "articolo", cat: "Disuguaglianze" },
+    { t: "Spendiamo male per invecchiare", l: "https://www.ilcantierewelfare.it/non-autosufficienza-anziani-italia/", type: "articolo", cat: "Anziani" },
+    { t: "Volontariato italiano: un lusso per pochi?", l: "https://www.ilcantierewelfare.it/volontariato-italiano-europa-un-lusso-per-pochi/", type: "articolo", cat: "Futuro" },
+    { t: "Welfare in gara", l: "https://www.ilcantierewelfare.it/welfare-in-gara-appalti-servizi-sociali/", type: "articolo", cat: "Strumenti" },
+    { t: "Anziani: l'emergenza invisibile", l: "https://www.ilcantierewelfare.it/anziani-non-autosufficienza-emergenza-invisibile/", type: "articolo", cat: "Anziani" },
+    { t: "Lo sguardo che classifica", l: "https://www.ilcantierewelfare.it/lstigma-nel-welfare-lo-sguardo-che-classifica/", type: "articolo", cat: "Disuguaglianze" },
+    { t: "Chi seleziona il seme?", l: "https://www.ilcantierewelfare.it/chi-seleziona-il-seme/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "L'innovazione sociale italiana sa replicarsi?", l: "https://www.ilcantierewelfare.it/innovazione-sociale-italiana-sa-replicarsi/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Il conflitto che non sappiamo usare", l: "https://www.ilcantierewelfare.it/istituzioni-cieche-segregazione-epistemica-welfare-territoriale/", type: "articolo", cat: "Strumenti" },
+    { t: "La Valutazione di Impatto Generazionale", l: "https://www.ilcantierewelfare.it/valutazione-impatto-generazionale-vig-legge-parma/", type: "articolo", cat: "Giovani" },
+    { t: "Oltre la prestazione: il welfare dell'impatto", l: "https://www.ilcantierewelfare.it/welfare-impatto-reggio-emilia/", type: "articolo", cat: "Strumenti" },
+    { t: "Finalmente una legge sui caregiver", l: "https://www.ilcantierewelfare.it/finalmente-una-legge-sui-caregiver/", type: "articolo", cat: "Anziani" },
+    { t: "La cura non è una risorsa infinita", l: "https://www.ilcantierewelfare.it/la-cura-non-e-una-risorsa-infinita/", type: "articolo", cat: "Anziani" },
+    { t: "Innovazione sociale: servono gli ecosistemi", l: "https://www.ilcantierewelfare.it/iinnovazione-sociale-servono-gli-ecosistemi/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "L'AI la decidono gli altri. Per ora", l: "https://www.ilcantierewelfare.it/lai-la-decidono-gli-altri-per-ora/", type: "articolo", cat: "Strumenti" },
+    { t: "I nodi irrisolti dell'economia sociale italiana", l: "https://www.ilcantierewelfare.it/i-nodi-irrisolti-economia-sociale-italiana/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Innovazione Sociale aperta: la Via Italiana", l: "https://www.ilcantierewelfare.it/economia-sociale-e-innovazione/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Dal welfare segregante al welfare integrativo", l: "https://www.ilcantierewelfare.it/dal-welfare-segregante-al-welfare-integrativo/", type: "articolo", cat: "Lavoro" },
+    { t: "Dal lavoro senza democrazia al welfare mercificato", l: "https://www.ilcantierewelfare.it/dal-lavoro-senza-democrazia-al-welfare-mercificato/", type: "articolo", cat: "Lavoro" },
+    { t: "Cosa significa Valore Pubblico?", l: "https://www.ilcantierewelfare.it/cosa-significa-valore-pubblico/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Europa: la geografia del declino demografico", l: "https://www.ilcantierewelfare.it/europa-la-geografia-del-declino-demografico/", type: "articolo", cat: "Demografia" },
+    { t: "Il sistema dei LEPS tra programmazione e sostenibilità", l: "https://www.ilcantierewelfare.it/leps-programmazione-e-sostenibilita/", type: "articolo", cat: "Strumenti" },
+    { t: "Welfare culturale: la bellezza come cura", l: "https://www.ilcantierewelfare.it/welfare-culturale-la-bellezza-come-cura/", type: "articolo", cat: "Cultura" },
+    { t: "Le dieci dimensioni della cura (Parte 2)", l: "https://www.ilcantierewelfare.it/le-dieci-dimensioni-della-cura-parte-2/", type: "articolo", cat: "Futuro" },
+    { t: "Le dieci dimensioni della cura (Parte 1)", l: "https://www.ilcantierewelfare.it/le-dieci-dimensioni-della-cura-parte-1/", type: "articolo", cat: "Futuro" },
+    { t: "Resistere o Adattarsi?", l: "https://www.ilcantierewelfare.it/resistere-o-adattarsi/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "Bucare la gentrificazione: il welfare di resistenza nello spazio urbano", l: "https://www.ilcantierewelfare.it/welfare-di-resistenza-nello-spazio-urbano/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "Quando la Mission sostituisce il Carisma", l: "https://www.ilcantierewelfare.it/quando-la-mission-sostituisce-il-carisma/", type: "articolo", cat: "Futuro" },
+    { t: "L'Italia dell'Economia Sociale", l: "https://www.ilcantierewelfare.it/italia-economia-sociale/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "Il lavoro senza democrazia", l: "https://www.ilcantierewelfare.it/lavoro-senza-democrazia/", type: "articolo", cat: "Lavoro" },
+    { t: "La scomparsa dei giovani: se la realtà supera le previsioni", l: "https://www.ilcantierewelfare.it/scomparsa-giovani-default-patto-sociale/", type: "articolo", cat: "Futuro" },
+    { t: "Senza perdere la tenerezza", l: "https://www.ilcantierewelfare.it/senza-perdere-la-tenerezza/", type: "articolo", cat: "Futuro" },
+    { t: "Oltre l'adempimento: la sfida del Progetto di Vita", l: "https://www.ilcantierewelfare.it/oltre-ladempimento-la-sfida-del-progetto-di-vita/", type: "articolo", cat: "Disabilità" },
+    { t: "Capitali di contesto nel crowdfunding: mappare senso, fiducia e relazioni", l: "https://www.ilcantierewelfare.it/capitali-di-contesto-nel-crowdfunding-mappare-senso-fiducia-e-relazioni/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "L'infrastruttura invisibile: l'economia della cura", l: "https://www.ilcantierewelfare.it/linfrastruttura-invisibile-leconomia-della-cura/", type: "articolo", cat: "Anziani" },
+    { t: "Perché i dati Oxfam non scandalizzano più", l: "https://www.ilcantierewelfare.it/perche-i-dati-oxfam-non-scandalizzano-piu/", type: "articolo", cat: "Disuguaglianze" },
+    { t: "Progetto di Vita e IA: nuovi strumenti per la disabilità", l: "https://www.ilcantierewelfare.it/progetto-vita-disabilita-ia/", type: "articolo", cat: "Disabilità" },
+    { t: "Il Cantiere del Welfare: abitare la complessità per rigenerare il sociale", l: "https://www.ilcantierewelfare.it/abitare-la-complessita-welfare-sociale/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Welfare sociale: dal controllo del dato alla libertà di decidere", l: "https://www.ilcantierewelfare.it/welfare-sociale-dal-controllo-del-dato-alla-liberta-di-decidere/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "DDL Caregiver: quando il riconoscimento diventa svalutazione", l: "https://www.ilcantierewelfare.it/ddl-caregiver-quando-il-riconoscimento-diventa-svalutazione/", type: "articolo", cat: "Anziani" },
+    { t: "Oltre i Bandi: per un welfare condiviso", l: "https://www.ilcantierewelfare.it/oltre-i-bandi-per-un-welfare-condiviso/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "L'impatto sociale non è un foglio Excel", l: "https://www.ilcantierewelfare.it/vis-terzo-settore-patto-politico/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "L'antropologia del sottosuolo: oltre l'Hotel Abisso", l: "https://www.ilcantierewelfare.it/lantropologia-del-sottosuolo-oltre-lhotel-abisso/", type: "articolo", cat: "Futuro" },
+    { t: "La Frizione come infrastruttura: un paradigma di generatività sociale", l: "https://www.ilcantierewelfare.it/la-frizione-come-infrastruttura-un-paradigma-di-generativita-sociale/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Dati, territori, welfare: la svolta dell'IDISE", l: "https://www.ilcantierewelfare.it/dati-territori-welfare-la-svolta-dellidise/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "IA: perché il Welfare è una questione di senso", l: "https://www.ilcantierewelfare.it/ia-perche-il-welfare-e-una-questione-di-senso/", type: "articolo", cat: "Futuro" },
+    { t: "Il Progetto di Vita tra riforma e territorio", l: "https://www.ilcantierewelfare.it/il-progetto-di-vita-tra-riforma-e-territorio/", type: "articolo", cat: "Disabilità" },
+    { t: "Il paradosso dei LEPS: parametri certi, ma risorse ancora incerte", l: "https://www.ilcantierewelfare.it/il-paradosso-dei-leps-parametri-certi-ma-risorse-ancora-incerte/", type: "articolo", cat: "Anziani" },
+    { t: "Sussidiarietà e Welfare pubblico: verso una co-titolarità reale?", l: "https://www.ilcantierewelfare.it/sussidiarieta-e-welfare-pubblico-verso-una-co-titolarita-reale/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Non spettatori: giovani in cerca di futuro", l: "https://www.ilcantierewelfare.it/non-spettatori-giovani-in-cerca-di-futuro/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "Ecosistemi ibridi: traiettorie culturali per l'impresa sociale del futuro", l: "https://www.ilcantierewelfare.it/ecosistemi-ibridi-traiettorie-culturali-per-limpresa-sociale-del-futuro/", type: "articolo", cat: "Ecosistemi Ibridi" },
+    { t: "Famiglie in transizione: dal mito della resilienza alla speranza operosa", l: "https://www.ilcantierewelfare.it/famiglie-in-transizione-dal-mito-della-resilienza-alla-speranza-operosa/", type: "articolo", cat: "Demografia" },
+    { t: "Perché le disuguaglianze crescono, ma la domanda di equità fatica a diventare consenso politico?", l: "https://www.ilcantierewelfare.it/perche-le-disuguaglianze-crescono-ma-la-domanda-di-equita-fatica-a-diventare-consenso-politico/", type: "articolo", cat: "Ponte di Kublai" },
+    { t: "Alice e l'Italia che non fa più figli", l: "https://www.ilcantierewelfare.it/alice-e-litalia-che-non-fa-piu-figli/", type: "articolo", cat: "Futuro" },
+    { t: "Caregiver familiari: l'anello debole di una riforma che non decolla", l: "https://www.ilcantierewelfare.it/caregiver-familiari-lanello-debole-di-una-riforma-che-non-decolla/", type: "articolo", cat: "Anziani" },
+    { t: "Il Progetto di Vita alla prova dei fatti: bilanci e sfide dopo il primo anno", l: "https://www.ilcantierewelfare.it/il-progetto-di-vita-alla-prova-dei-fatti-dopo-il-primo-anno/", type: "articolo", cat: "Disabilità" },
+    { t: "Frizione: la mia parola 2026", l: "https://www.ilcantierewelfare.it/frizione-la-mia-parola-2026/", type: "articolo", cat: "Futuro" },
+    { t: "Censis 2025: la generatività come risposta al declino del desiderio di futuro", l: "https://www.ilcantierewelfare.it/censis-2025-la-generativita-come-risposta-al-declino-del-desiderio-di-futuro/", type: "articolo", cat: "Futuro" },
+    { t: "Abitare la longevità: infrastrutture di prossimità contro la crisi della cura", l: "https://www.ilcantierewelfare.it/abitare-la-longevita-infrastrutture-di-prossimita-contro-la-crisi-della-cura/", type: "articolo", cat: "LTC" }
+];
+ 
+// ─── STATO ───────────────────────────────────────────────────────────────────
+let currentFilter = 'all';
+let currentCat = null;
+const linkGiaPresenti = new Set(DB.map(i => i.l));
+ 
+// ─── FETCH AUTOMATICO NUOVI ARTICOLI DA WORDPRESS ────────────────────────────
+// Carica i 20 articoli più recenti e aggiunge quelli non ancora nel DB
+async function fetchNuoviArticoli() {
+    try {
+        const url = 'https://www.ilcantierewelfare.it/wp-json/wp/v2/posts?per_page=20&page=1&_fields=id,title,link,categories';
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const posts = await res.json();
+        let aggiunti = 0;
+        posts.forEach(post => {
+            if (!linkGiaPresenti.has(post.link)) {
+                DB.unshift({
+                    t: post.title.rendered,
+                    l: post.link,
+                    type: 'articolo',
+                    cat: getCatName(post.categories),
+                    nuovo: true
+                });
+                linkGiaPresenti.add(post.link);
+                aggiunti++;
+            }
+        });
+        if (aggiunti > 0) search();
+    } catch (e) {
+        // CORS o rete non disponibile: usa solo il DB statico
+    }
+}
+ 
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function getLabelType(type) {
+    const labels = { articolo: 'ARTICOLO', news: 'NEWSLETTER', podcast: 'PODCAST', pdf: 'DOCUMENTO PDF' };
+    return labels[type] || type.toUpperCase();
+}
+ 
+function render(data) {
+    const container = document.getElementById('risultati');
+    const contatore = document.getElementById('contatore');
+    contatore.textContent = data.length + ' risultati';
+    if (data.length === 0) {
+        container.innerHTML = '<p class="nessun-risultato">Nessun risultato trovato. Prova con altre parole chiave.</p>';
+        return;
+    }
+    container.innerHTML = data.map(item => `
+        <div class="risorsa-card">
+            <span class="tag tag-${item.type}">${getLabelType(item.type)}</span>
+            <span style="font-size: 12px; color: #888;">${item.cat}</span>
+            ${item.nuovo ? '<span class="badge-nuovo">NUOVO</span>' : ''}
+            <div style="margin-top:5px;">
+                <a href="${item.l}" target="_blank" class="link-risorsa">${item.t}</a>
+            </div>
+        </div>
+    `).join('');
+}
+ 
+// ─── FILTRI ───────────────────────────────────────────────────────────────────
+function filterType(type, btn) {
+    currentFilter = type;
+    currentCat = null;
+    document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    search();
+}
+ 
+function filterCat(cat, btn) {
+    currentCat = currentCat === cat ? null : cat;
+    currentFilter = 'all';
+    document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+    if (currentCat) btn.classList.add('active');
+    else document.querySelector('.btn-nav').classList.add('active');
+    search();
+}
+ 
+function search() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const filtered = DB.filter(item => {
+        const matchType = currentFilter === 'all' || item.type === currentFilter;
+        const matchCat = !currentCat || item.cat === currentCat ||
+            (currentCat === 'Anziani' && item.cat === 'LTC') ||
+            (currentCat === 'Strumenti' && item.cat === 'PA');
+        const matchQuery = !query || item.t.toLowerCase().includes(query) || item.cat.toLowerCase().includes(query);
+        return matchType && matchCat && matchQuery;
+    });
+    render(filtered);
+}
+ 
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+render(DB);
+fetchNuoviArticoli();
 </script>
-
 </body>
 </html>
