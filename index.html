@@ -520,15 +520,15 @@ main { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
   <div class="ultime-uscite">
     <div class="ultima-card">
       <div class="ultima-label">Ultimo podcast</div>
-      <div class="ultima-titolo">Cura, mercato e territorio</div>
-      <div class="ultima-meta">con Massimo Tacchini &middot; Ep. 30</div>
-      <a class="ultima-link" href="https://open.spotify.com/episode/4gIbmj8H7vbvPt9N50nA4C" target="_blank">Ascolta &rarr;</a>
+      <div class="ultima-titolo">Per una società longeva</div>
+      <div class="ultima-meta">con Paolo Manfredi &middot; Ep. 40</div>
+      <a class="ultima-link" href="https://open.spotify.com/episode/3n4brr71GFUsjBxRaF7yeu" target="_blank">Ascolta &rarr;</a>
     </div>
     <div class="ultima-card">
       <div class="ultima-label">Ultimo articolo</div>
-      <div class="ultima-titolo">Il welfare che non si misura</div>
-      <div class="ultima-meta">Dati &middot; 17 aprile 2026</div>
-      <a class="ultima-link" href="https://www.ilcantierewelfare.it/il-welfare-che-non-si-misura/" target="_blank">Leggi &rarr;</a>
+      <div class="ultima-titolo">Il Lodo Welfare non basta: i soldi non curano</div>
+      <div class="ultima-meta">Il Ponte di Kublai &middot; 14 luglio 2026</div>
+      <a class="ultima-link" href="https://www.ilcantierewelfare.it/lodo-welfare-perche-i-soldi-non-bastano/" target="_blank">Leggi &rarr;</a>
     </div>
   </div>
 
@@ -1093,6 +1093,16 @@ function makeCard(num, titolo, desc, perche, link, label, i) {
 // ESPLORA TUTTO
 // ═══════════════════════════════════════════
 const TUTTI_PODCAST = [
+  { ep: 40, titolo: "Per una società longeva", ospite: "Paolo Manfredi", link: "https://open.spotify.com/episode/3n4brr71GFUsjBxRaF7yeu" },
+  { ep: 39, titolo: "Col.ibrì e l'arte di iniziare", ospite: "Giulia Bugnoni", link: "https://open.spotify.com/episode/7yaJJy7LcTeWkt25QXwAzI" },
+  { ep: 38, titolo: "Partecipare si impara. Il Comune di Trento e la comunità di pratica", ospite: "Federica Graffer, Maria Antonia Bellini, Teresa Pedretti", link: "https://open.spotify.com/episode/21QEQ7UjCaS6jEqIAQ4SYG" },
+  { ep: 37, titolo: "Coltivare il sociale: conversazione con Marco Cavedon", ospite: "Marco Cavedon", link: "https://open.spotify.com/episode/6YJ2BQ7b22iXBtB2U58zOi" },
+  { ep: 36, titolo: "Ripensare l'inclusione come strategia di sistema", ospite: "Andrea Podesvova", link: "https://open.spotify.com/episode/5KjEQ7VqSmdWlbqMb2dpxc" },
+  { ep: 35, titolo: "Benessere organizzativo: costruire la cattedrale", ospite: "Anna Abbate, Mario Cusmai", link: "https://open.spotify.com/episode/55XrIa7lALBFDryMlO7NSz" },
+  { ep: 34, titolo: "Il welfare aziendale può diventare welfare territoriale?", ospite: "Valentino Santoni", link: "https://open.spotify.com/episode/6URWB0DBBkx6sBzYfhQAwR" },
+  { ep: 33, titolo: "L'accompagnamento come servizio", ospite: "Michela Conti", link: "https://open.spotify.com/episode/7FQ6edFWKTAWJOiWIiMn6O" },
+  { ep: 32, titolo: "Cosa si perde quando i Comuni si svuotano", ospite: "Marco Dotti", link: "https://open.spotify.com/episode/3bYgm9wrcn2zi5TpewJadP" },
+  { ep: 31, titolo: "Chi disegna il welfare conosce le generazioni con cui lavora?", ospite: "Isabella Pierantoni", link: "https://open.spotify.com/episode/1yTtDfAElBn4geSsodIel0" },
   { ep: 30, titolo: "Cura, mercato e territorio", ospite: "Massimo Tacchini", link: "https://open.spotify.com/episode/4gIbmj8H7vbvPt9N50nA4C" },
   { ep: 29, titolo: "Il welfare che non vede il territorio", ospite: "Luca Blengino", link: "https://open.spotify.com/episode/0oJDoWE3e8Mbjfiv1hhnLO" },
   { ep: 28, titolo: "La cura come rivoluzione politica", ospite: "Riccardo Sollini", link: "https://dub.sh/bWwpyNt" },
@@ -1122,6 +1132,18 @@ const TUTTI_PODCAST = [
   { ep: 4,  titolo: "Il welfare come infrastruttura generativa", ospite: "Flaviano Zandonai", link: "https://open.spotify.com/show/3YsZK2Yj0QTtDX3DDAI6d0" }
 ];
 const TUTTE_NEWSLETTER = [
+  { n: 41, titolo: "Abitare il cambiamento", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-q0z9f/" },
+  { n: 40, titolo: "Togliersi gli occhiali", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-bniif/" },
+  { n: 39, titolo: "Prima di parlare con i cittadini", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-3ehcf/" },
+  { n: 38, titolo: "Progettare come ingegneri, rendicontare come commercialisti", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-zfqvf/" },
+  { n: 37, titolo: "Riforma disabilità e LEPS: il rischio di un diritto senza copertura finanziaria", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-cafwf/" },
+  { n: 36, titolo: "Il benessere non si fa in un pomeriggio", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-k101f/" },
+  { n: 35, titolo: "L'Italia si svuota. Contro i falsi miti.", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-rwlbf/" },
+  { n: 34, titolo: "3,5 miliardi di euro", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-wp9vf/" },
+  { n: 33, titolo: "Cosa rimane quando le persone se ne vanno", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-u2wwf/" },
+  { n: 32, titolo: "Quello che le famiglie non riescono più a fare da sole", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-ij3ye/" },
+  { n: 31, titolo: "Cosa si perde quando i Comuni si svuotano", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-sxmvf/" },
+  { n: 30, titolo: "Generazioni e Welfare territoriale", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-z9wmf/" },
   { n: 29, titolo: "Il mercato della cura che lo Stato non vede", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-tg0gf/" },
   { n: 28, titolo: "Il welfare che non vede il territorio", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-cnlsf/" },
   { n: 27, titolo: "La cura come rivoluzione politica", link: "https://www.linkedin.com/pulse/le-fondamenta-davide-vairani-f5enf/" },
@@ -1155,7 +1177,7 @@ const TUTTI_SCARICABILI = [
   { titolo: "Senza Padroni n.1", desc: "La libertà come infrastruttura sociale", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-1.pdf" },
   { titolo: "Senza Padroni n.2", desc: "La libertà come potere di contestazione", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-2.pdf" },
   { titolo: "Senza Padroni n.3", desc: "La Cura come infrastruttura di libertà", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/SENZA-PADRONI-n.-3.pdf" },
-  { titolo: "Senza Padroni n.4", desc: "Prossimità cognitiva, silos e intersettorialità nella PA locale", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-4.pdf" }
+  { titolo: "Senza Padroni n.4", desc: "Il portamento della libertà", link: "https://www.ilcantierewelfare.it/wp-content/uploads/2026/03/Senza-Padroni-n.-4.pdf" }
 ];
 
 // ═══════════════════════════════════════════
@@ -1171,6 +1193,7 @@ let esploraOpenPreview = null;  // id stringa item aperto
 // ARTICOLI HARDCODED (70 + ultimo di oggi)
 // ═══════════════════════════════════════════
 const ARTICOLI_HARDCODED = [
+  { t: "Il Lodo Welfare non basta: i soldi non curano", l: "https://www.ilcantierewelfare.it/lodo-welfare-perche-i-soldi-non-bastano/", d: "14 luglio 2026", cat: "Il Ponte di Kublai", tags: ["#Cura","#Previdenza","#Welfare"] },
   { t: "Il welfare che non si misura", l: "https://www.ilcantierewelfare.it/il-welfare-che-non-si-misura/", d: "17 aprile 2026", cat: "Dati", tags: ["#statistica","#welfare territoriale","#dati"] },
   { t: "C'è un'alternativa alle RSA?", l: "https://www.ilcantierewelfare.it/alternativa-alle-rsa/", d: "17 aprile 2026", cat: "Anziani", tags: ["#RSA","#domiciliarità","#nonautosufficienza"] },
   { t: "Welfare aziendale territoriale e il problema della governance", l: "https://www.ilcantierewelfare.it/welfare-aziendale-territoriale-e-il-problema-della-governance/", d: "10 aprile 2026", cat: "Ecosistemi ibridi", tags: ["#welfare aziendale","#territorio","#governance"] },
